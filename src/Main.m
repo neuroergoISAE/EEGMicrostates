@@ -17,7 +17,8 @@ s = p00_settings();
 % Override old outputs?
 s.todo.override = true;
 %analysis steps 
-s.todo.load_data                        = true;
+s.todo.eyes_epoching = false;
+s.todo.load_data                        = true; % Two options : already epoched on closed eyes or epoching needs to be done
 s.todo.microstates_gfppeaks             = true; 
 s.todo.microstates_segmentation         = true; 
 s.todo.microstates_reorderProto         = true;
