@@ -14,26 +14,25 @@ else
     end
     fn_info = 'info.mat'; % fn ~ file name
     fn_eegdata = 'eegdata.mat';
-    % do both files exist?
+    % do both eeg_files exist?
     all_files_exist = exist([fp_output,fn_eegdata],'file') == 2 && exist([fp_output,fn_info],'file') == 2;
     
-    %if not all output files exist or (||) override requested, continue
+    %if not all output eeg_files exist or (||) override requested, continue
     if ~all_files_exist || s.todo.override
         %if override requested & old process folder of the subject exists
         if s.todo.override && (exist(fp_output,'dir') == 7)
             try
-                rmdir(fp_output, 's') %..delete it with all the files in it (just to really start from scratch again)
+                rmdir(fp_output, 's') %..delete it with all the eeg_files in it (just to really start from scratch again)
                 mkdir(fp_output) %and create the folder again
             catch
                 disp("Folder could not be remove");
             end
         end
         
-        %% info file creation for current subject
-        %make info file (meta data for the current file)
+        %% Info file creation for current subject
         info = [];
         info.subjectID = inputfolder.name;
-        info.inputpath = [inputfolder.folder,filesep, inputfolder.name,filesep, 'eeg', filesep,];
+        info.inputpath = [inputfolder.folder,filesep, inputfolder.name,filesep, 'eeg', filesep];
         info.inputname = '';
         info.inputpathname = '';
         info.outputpath = '';
@@ -42,26 +41,34 @@ else
         info.zerodata = false;
         
         %% check if file of interest in the input folder 
-        files = dir(info.inputpath);
-        files = files(...
-            contains({files.name},'p') ...
-            & contains({files.name},'.mat') ...
-            & ~contains({files.name},'reduced') ... % string should not contain 'reduced'
+        eeg_files = dir(info.inputpath);
+        eeg_files = eeg_files(...
+            contains({eeg_files.name},'p') ...
+            & contains({eeg_files.name},'.mat') ...
+            & ~contains({eeg_files.name},'reduced') ... % string should not contain 'reduced'
             );
-        info.nofile = isempty(files); % true if no file
-        %if no files of interest in the folder, skip processing
-        if info.nofile
-            disp(['..skipping due to inexisting input file: ',inputfolder.folder,filesep,inputfolder.name]) % skip subject
-        else % if files of interests exist..
+        %% Load EEG file
+        disp('.. load eeg file'); 
+        info.nofile = isempty(eeg_files); % true if no file
+        if ~info.nofile % if no EEG file of interest available
+            load([eeg_files.folder,filesep,eeg_files.name],'EEG'); % load EEG to determine Nsamples
+            info.numsamples= EEG.pnts;
             % update info file
-            info.inputname = [files.name];
-            info.inputpathname = [files.folder,filesep,files.name];
+            info.inputname = [eeg_files.name];
+            info.inputpathname = [eeg_files.folder,filesep,eeg_files.name];
+            % only save this file if  enough samples
+            if info.numsamples <= s.data.nGoodSamples % if not enough samples
+                disp(['..skipping this file because not enough (good) samples: ',inputfolder.name]) % skip subject
+            end
+        else
+            disp(['..skipping due to inexisting input file: ',inputfolder.folder,filesep,inputfolder.name]) % skip subject
         end
-        
-        %copy eegdata in gfp directory
-        disp(['..copying file in gfp direcotyr: ',files.folder,filesep,files.name]);
-        copyfile([files.folder,filesep,files.name], [fp_output,fn_eegdata]);
-        %save info file in gfp directory      
+
+        %% Save Files in GFP directory
+        disp(['..copying file in gfp directory: ',fp_output, fn_eegdata]);
+        %save eegdata
+        save([fp_output, fn_eegdata],'EEG');
+        %save info file
         save([fp_output,fn_info],'info');
     end
 end

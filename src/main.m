@@ -31,6 +31,7 @@ s.todo.features_to_csv                  = true;
 p01_load_data(s); % load data, move and rename eeg_data file in the gfp directory for easier use. If required: extract eye closed epochs
 p02_gfp_peaks(s);
 p03_microstates_segmentation(s);
+p0
 
 
 end

@@ -24,8 +24,7 @@ if ~isfolder(fp_output_plots)
     mkdir(fp_output_plots);
 end
 fn_gfppeaks= 'gfppeaks.mat';
-fn_segmentation = [inputfolder.name,'_microstate_segmentation.mat'];
-output_files_exist = exist([fp_output,fn_gfppeaks],'file') == 2 && exist([fp_output,fn_segmentation],'file') == 2;
+output_files_exist = exist([fp_output,fn_gfppeaks],'file') == 2;
 %%
 % if all input exists & output does not exist yet (or should be
 % overriden), continue
@@ -33,7 +32,6 @@ if input_files_exist && (~output_files_exist || settings.todo.override)
     % if override & output files exist, delete them
     if settings.todo.override && output_files_exist
         delete([fp_output,fn_gfppeaks]);
-        delete([fp_output,fn_segmentation]);
     end
     
     %% load info file, add some defaults & load segmented data
@@ -47,7 +45,7 @@ if input_files_exist && (~output_files_exist || settings.todo.override)
         load([fp_input,fn_eegdata],'EEG')
         
         %% try gfp peak detection & get peaks
-        %try
+        try
             
             %how many peaks should be taken
             if settings.microstate.gfppeaks.takeAllPeaks % if all available peaks should be taken
@@ -86,9 +84,9 @@ if input_files_exist && (~output_files_exist || settings.todo.override)
             fn_chanlocs = 'chanlocs.mat';
             save([fp_output,fn_chanlocs],'chanlocs');
             
-%         catch
-%             disp('!! Error in gfp peak extraction!!')
-%         end
+        catch
+            disp('!! Error in gfp peak extraction!!')
+        end
         
         %save info file
         save([fp_output,fn_info],'info');
