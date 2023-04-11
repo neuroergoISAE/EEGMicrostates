@@ -79,33 +79,33 @@ function settings = p00_settings(settings)
   settings.averageref = 0; % DEJA FAIT DANS LE PREPROCESSING 
   
   %% data segmentation (used in p01_load_segment_data)
-  settings.segment = {}; 
-  settings.segment.fun = 'restingsegment';
-  settings.segment.path = {};
-  settings.segment.eyesclosed.events = 'EC'; % eyes-closed events
-  settings.segment.eyesclosed.timelimits = [0 30]; % cut out the first 30 seconds of each epoch (the last 10 seconds = transition period)
+%   settings.segment = {}; 
+%   settings.segment.fun = 'restingsegment';
+%   settings.segment.path = {};
+%   settings.segment.eyesclosed.events = 'EC'; % eyes-closed events
+%   settings.segment.eyesclosed.timelimits = [0 30]; % cut out the first 30 seconds of each epoch (the last 10 seconds = transition period)
 
 % %   settings.segment.eyesopen.events = 'RC_EO'; % eyes-open events
 % %   settings.segment.eyesopen.timelimits = [??]; % cut out 1 sec at the onset and 1 sec before the end
 
   %% further data (pre-)processing (used in p01_load_segment_data)
-  settings.spectro = {};
-  settings.spectro.fun = 'restingspectro';
-  settings.spectro.path = {};
-  settings.spectro.sr = 500; % sampling rate
-  % settings for the filtering
-  settings.spectro.notch.lpf = 48; 
-  settings.spectro.notch.hpf = 52; 
-  settings.spectro.bandpass.lpf = 2;
-  settings.spectro.bandpass.hpf = 20; 
-  % settings to exclude data epochs exceeding a certain amplitude threshold
-  settings.spectro.winlength = 1000; % = 2 Seconds
-  settings.spectro.timelimits = [0 1000]; % 0 to 2 Seconds
-  settings.spectro.mvmax = 90; % maximum millivoltage to clean data
-  
-  % ?? needed
-  settings.spectro.fbands = {};
-  settings.spectro.doplot= 1;
+%   settings.spectro = {};
+%   settings.spectro.fun = 'restingspectro';
+%   settings.spectro.path = {};
+%   settings.spectro.sr = 500; % sampling rate
+%   % settings for the filtering
+%   settings.spectro.notch.lpf = 48; 
+%   settings.spectro.notch.hpf = 52; 
+%   settings.spectro.bandpass.lpf = 2;
+%   settings.spectro.bandpass.hpf = 20; 
+%   % settings to exclude data epochs exceeding a certain amplitude threshold
+%   settings.spectro.winlength = 1000; % = 2 Seconds
+%   settings.spectro.timelimits = [0 1000]; % 0 to 2 Seconds
+%   settings.spectro.mvmax = 90; % maximum millivoltage to clean data
+%   
+%   % ?? needed
+%   settings.spectro.fbands = {};
+%   settings.spectro.doplot= 1;
   
   %% some basic requirements of the data 
 %   settings.data.checkqualityratings = true; % set to false if automagic was not used to pre-process the data
@@ -159,7 +159,7 @@ function settings = p00_settings(settings)
   settings.microstate.backfitting.smooth_type = 'reject segments';
   settings.microstate.backfitting.minTime = 30;
   settings.microstate.backfitting.polarity = 0;
-  settings.microstate.backfitting.Nmicrostates = [4];
+  settings.microstate.backfitting.Nmicrostates = [3:4];
   
   % which stats (features) to extract
   settings.microstate.stats = {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'}; %GLOBAL Explained Variance (il faut entre 60 et 80%)

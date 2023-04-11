@@ -22,7 +22,7 @@ s.todo.eyes_epoching = false;
 s.todo.load_data                        = true; % Two options : already epoched on closed eyes or epoching needs to be done
 s.todo.microstates_gfppeaks             = true; 
 s.todo.microstates_segmentation         = true; 
-s.todo.microstates_reorderProto         = true;
+s.todo.microstates_reordering           = true;
 s.todo.microstates_backfitting          = true;
 s.todo.features_to_csv                  = true;
 
@@ -31,7 +31,11 @@ s.todo.features_to_csv                  = true;
 p01_load_data(s); % load data, move and rename eeg_data file in the gfp directory for easier use. If required: extract eye closed epochs
 p02_gfp_peaks(s);
 p03_microstates_segmentation(s);
-p0
+
+% if list of N microstate > 1 : select nMicrostates (backfitting will be
+% done on only one choice of nMicrostates
+
+p04_microstates_reordering(s); % ask reordering to user for the last level and reorder sub levels. OR : reorder based on template
 
 
 end
