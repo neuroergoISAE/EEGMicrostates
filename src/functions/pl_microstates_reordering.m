@@ -1,6 +1,5 @@
 function pl_microstates_reordering(toreorder_folder,s,lastlevel_orderedmicrostates,nMS,chanlocs)
 
-  warning('off');
   fn_microstates = [toreorder_folder.folder,filesep,toreorder_folder.name];
   fn_microstates_ordered = insertBefore(fn_microstates,'.mat','_reordered'); % name for the reordered file
   

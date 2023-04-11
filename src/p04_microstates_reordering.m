@@ -12,7 +12,7 @@ if settings.todo.microstates_reordering==1
         %% Path
         microstates_path = dir([level_path,'**\*microstate*.mat']); % Path containing all prototypes .mat files
         microstates_path = microstates_path(contains({microstates_path.name},['prototypes_',num2str(h),'MS'])& ...
-            ~contains({microstates_path.name},'reordered'));
+            ~contains({microstates_path.name},'reordered')); % exclude already reordered files, will be overriden if required
         
         for i=1:length(microstates_path) % Reorder each MS prototype found in the path (1 for group level, Nb participants for participant level, Nb participants * Nb sessions for session level)
             %% Files
