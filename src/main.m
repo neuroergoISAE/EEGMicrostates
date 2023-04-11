@@ -37,6 +37,8 @@ p03_microstates_segmentation(s);
 
 p04_microstates_reordering(s); % ask reordering to user for the last level and reorder sub levels. OR : reorder based on template
 
+%if ms reordered : BACKFITTING
+
 
 end
 

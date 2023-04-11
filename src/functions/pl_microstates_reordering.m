@@ -1,5 +1,6 @@
 function pl_microstates_reordering(toreorder_folder,s,lastlevel_orderedmicrostates,nMS,chanlocs)
 
+  warning('off');
   fn_microstates = [toreorder_folder.folder,filesep,toreorder_folder.name];
   fn_microstates_ordered = insertBefore(fn_microstates,'.mat','_reordered'); % name for the reordered file
   
@@ -32,7 +33,8 @@ function pl_microstates_reordering(toreorder_folder,s,lastlevel_orderedmicrostat
       %t = tiledlayout(1,nMS);
       mycolormap = customcolormap_preset(s.figure.customColorMap.colors);
       for q = 1:nMS
-          nexttile
+          %nexttile
+          subplot(1,nMS,q);
           topoplot(microstate_ordered(:,q),chanlocs, 'maplimits', s.figure.customColorMap.range);
           set(gcf,'color','w'); % set backround color to white
           colormap(mycolormap); % use customized color map

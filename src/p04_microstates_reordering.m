@@ -1,5 +1,4 @@
 function p04_microstates_reordering(settings)
-
 %% If required: Ask for reordering on last level
 
 %if this step is required
@@ -49,8 +48,10 @@ if settings.todo.microstates_reordering==1
             
             %plot not-ordered prototypes
             mycolormap = customcolormap_preset(settings.figure.customColorMap.colors);
+           % t = tiledlayout(1,h);
             for i = 1:h
-                nexttile
+                %nexttile
+                subplot(1,h,i);
                 topoplot(samplePrototypes(:,i),chanlocs, 'maplimits', settings.figure.customColorMap.range);
                 title(i); % add title
                 set(gcf,'color','w'); % set backround color to white
@@ -81,8 +82,10 @@ if settings.todo.microstates_reordering==1
             close;
             %plot the ordered prototypes...
             mycolormap = customcolormap_preset(settings.figure.customColorMap.colors);
+            %t = tiledlayout(1,h);
             for q = 1:h
-                nexttile
+                %nexttile
+                subplot(1,h,q);
                 topoplot(samplePrototypes_ordered(:,q),chanlocs, 'maplimits', settings.figure.customColorMap.range);
                 title(q); % add title
                 set(gcf,'color','w'); %set backround color to white
