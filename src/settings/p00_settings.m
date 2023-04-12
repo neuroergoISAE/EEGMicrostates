@@ -48,6 +48,11 @@ function settings = p00_settings(settings)
   if ~isfolder(settings.path.gfp) 
     mkdir(settings.path.gfp); 
   end
+   %backfitting results path
+  settings.path.backfitting=[settings.path.results,'backfitting',filesep]; %backfitting output (participant or session levels)
+  if ~isfolder(settings.path.backfitting) 
+    mkdir(settings.path.backfitting); 
+  end
   
   
   % paths to scripts, code
