@@ -33,7 +33,7 @@ if settings.multipleSessions %three levels of clustering : session, participant 
     end
 %% THIRD LEVEL CLUSTERING : Group
     participantFolder = dir(settings.path.results);
-    p_char =  char(extractBetween(settings.path.participant,settings.path.results,'\')); % how the participant folder is called
+    p_char =  char(extractBetween(settings.path.participant,settings.path.results,filesep)); % how the participant folder is called
     participantFolder = participantFolder(contains({participantFolder.name},p_char));
     outputGroup = settings.path.group;
     pl_microstates_Segmentation(participantFolder, outputGroup, settings,3);

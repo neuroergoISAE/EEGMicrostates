@@ -7,8 +7,10 @@ if settings.todo.load_data
     folders = dir(settings.path.data); % get folder content of (input) data folder
     folders = folders(contains({folders.name},'sub')); % get only the content containing 'NDAR'
     
+    dir([settings.path.data,**]
+    folders = folders(contains({folders.name},'*eeg.mat'))
     %% Reading Files
-    if settings.multipleSessions == true
+    if settings.levels == 3 %settings.multipleSessions == true% First Level : Sessions
         %Case : Multiple Sessions, loop over each participant and each sessions
         for i=1:length(folders) %each participant
             pFolder = dir([folders(i).folder, filesep, folders(i).name]);
@@ -20,9 +22,7 @@ if settings.todo.load_data
                 pl_load_data(sFile,outputfile, settings); % perform the MSA-specific pre-processing on each session of each participant
             end
         end
-    else
-        %1 Session:
-        %loop over folders resp. all subjects
+    else % First level : Participants
         for i=1:length(folders)
             disp(['p01 Load Data: ', num2str(i), '/ ', num2str(length(folders))])
             pl_load_data(folders(i), settings.path.gfp, settings); % perform the MSA-specific pre-processing

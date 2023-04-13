@@ -2,8 +2,8 @@ function pl_microstates_states(fp_microstates,level,h,s)
 
 
     output_table = table; %empty table
-    fn_output_mat = [s.path.tables,'stats_',level,'_',num2str(h),'MS.mat']; % output table with all files stats
-    fn_output_csv = [s.path.csv,'stats_',level,'_',num2str(h),'MS.csv']; % output csv with all files stats
+    fn_output_mat = [s.path.tables,'stats_',level,'_backfit_',num2str(h),'MS.mat']; % output table with all files stats
+    fn_output_csv = [s.path.csv,'stats_',level,'_backfit_',num2str(h),'MS.csv']; % output csv with all files stats
 
     if ~(exist(fn_output_csv,'file')==2 && exist(fn_output_mat,'file')==2) || s.todo.override
         %if override & files already exist, delete the files

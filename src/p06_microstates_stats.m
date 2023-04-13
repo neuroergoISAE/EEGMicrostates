@@ -6,7 +6,7 @@ if settings.todo.microstates_stats
         for l=settings.levels
             level = char(l);
             disp(['p06 Save Stats : ',level, ' ',num2str(h),' MS']);
-            fp_microstates = dir([settings.path.backfitting,'**\*',level,'*',num2str(h),'MS.mat']);
+            fp_microstates = dir([settings.path.backfitting,'**',filesep,'*',level,'*',num2str(h),'MS.mat']);
             
             pl_microstates_states(fp_microstates,level,h,settings); % all files in this directory on the same table
             

@@ -10,7 +10,7 @@ if settings.todo.microstates_reordering==1
         %% reorder the last-level microstate prototypes
         disp(['p04: (nMS = ',num2str(h),') - reordering ',lastLevel,'-level prototypes']);
         %% Path
-        microstates_path = dir([level_path,'**\*microstate*.mat']); % Path containing all prototypes .mat files
+        microstates_path = dir([level_path,'**',filesep,'*microstate*.mat']); % Path containing all prototypes .mat files
         microstates_path = microstates_path(contains({microstates_path.name},['prototypes_',num2str(h),'MS'])& ...
             ~contains({microstates_path.name},'reordered')); % exclude already reordered files, will be overriden if required
         
@@ -116,12 +116,12 @@ if settings.todo.microstates_reordering==1
     
     %% REORDER SUB LEVELS
     for h = settings.microstate.backfitting.Nmicrostates
-        ordered_microstates_path = dir([level_path,'**\*',num2str(h),'MS_reordered.mat']); 
+        ordered_microstates_path = dir([level_path,'**',filesep,'*',num2str(h),'MS_reordered.mat']); 
         load([ordered_microstates_path.folder,filesep,ordered_microstates_path.name],'microstate_ordered');% load ordered microstates prototypes for this number of MS
         for lev = 1:length(settings.levels)-1
             level = char(settings.levels(lev)); % current level
             folder = dir(eval(['settings.path.',level]));
-            folder = dir([folder(1).folder,'\**\*microstate_prototypes_',num2str(h),'MS.mat']); %all prototypes to reorder
+            folder = dir([folder(1).folder,filesep,'**',filesep,'*microstate_prototypes_',num2str(h),'MS.mat']); %all prototypes to reorder
             for i= 1:numel(folder) % for each sub file in this level
                 disp("OKOKOK")
                 disp(['p04 (nMS = ',num2str(h),') : reordering ',level,' level prototypes: ', num2str(i), '/ ', num2str(numel(folder))]);

@@ -14,7 +14,7 @@ if settings.todo.microstates_gfppeaks
             for j = 1:length(sFolders)%settings.nSessions
                 outputsessionfolder = [outputparticipantfolder, filesep, sFolders(j).name];
                 sFile = sFolders(j);
-                disp(['p02 GFP Peaks: ', 'participant: ',num2str(i), '/ ', num2str(length(folders)),' session: ',num2str(j),'/ ',num2str(length(sFolders))]);
+                disp(['p02 GFP Peaks: ', 'participant: ',num2str(i), filesep, num2str(length(folders)),' session: ',num2str(j),filesep,num2str(length(sFolders))]);
                 pl_microstates_gfppeaks(sFile, outputsessionfolder, settings); %input & output folder = gfp-folder with subfolder for each session of each participant
             end
         end
