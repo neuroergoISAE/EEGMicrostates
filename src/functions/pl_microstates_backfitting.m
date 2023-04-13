@@ -17,8 +17,8 @@ end
 
 %% Backfitting on the lastlevel prototypes (recommanded: group level)
 
-for l = 1:length(s.levels)
-    level = char(s.levels(l));
+for l = s.levels%1:length(s.levels)
+    level = char(l);
     switch level
         case 'session'
             fp_prototypes =  dir([s.path.session,fn_ID]);

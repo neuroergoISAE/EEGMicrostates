@@ -13,12 +13,12 @@ end
 
 %% All results folders
 %tables path
-settings.path.tables=[settings.path.results,'tables',filesep]; %mat tables with final features
+settings.path.tables=[settings.path.results,'stats',filesep,'tables',filesep]; %mat tables with final features
 if ~isfolder(settings.path.tables)
     mkdir(settings.path.tables);
 end
 %csv results path
-settings.path.csv=[settings.path.results,'csv',filesep]; %csv files with final features
+settings.path.csv=[settings.path.results,'stats',filesep,'csv',filesep]; %csv files with final features
 if ~isfolder(settings.path.csv)
     mkdir(settings.path.csv);
 end

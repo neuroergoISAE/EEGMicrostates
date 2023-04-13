@@ -1,4 +1,4 @@
-function main(s)
+function main()
 %vCH
 %% Description
 % Main file for the Microstates extraction process
@@ -24,7 +24,7 @@ s.todo.microstates_gfppeaks             = true;
 s.todo.microstates_segmentation         = true; 
 s.todo.microstates_reordering           = true;
 s.todo.microstates_backfitting          = true;
-s.todo.features_to_csv                  = true;
+s.todo.microstates_stats                = true;
 
 %% Anlaysis
 
@@ -38,6 +38,8 @@ p03_microstates_segmentation(s);
 p04_microstates_reordering(s); % ask reordering to user for the last level and reorder sub levels. OR : reorder based on template
 
 p05_microstates_backfitting(s);
+
+p06_microstates_stats(s);
 
 
 end
