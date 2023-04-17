@@ -6,7 +6,7 @@ if settings.todo.microstates_reordering==1
     lastLevel = char(settings.levels(end)); % last segmentation (clustering) level
     level_path = eval(['settings.path.',lastLevel]);
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; % for the cluster new names
-    for h = settings.microstate.backfitting.Nmicrostates
+    for h = settings.microstate.Nmicrostates
         %% reorder the last-level microstate prototypes
         disp(['p04: (nMS = ',num2str(h),') - reordering ',lastLevel,'-level prototypes']);
         %% Path
@@ -31,8 +31,7 @@ if settings.todo.microstates_reordering==1
                 disp(['..loading ',fn_microstates])
                 load(fn_microstates,'microstate');
                 samplePrototypes = microstate.prototypes;
-                
-                
+                                
             end
             
         end
@@ -115,16 +114,15 @@ if settings.todo.microstates_reordering==1
     
     
     %% REORDER SUB LEVELS
-    for h = settings.microstate.backfitting.Nmicrostates
+    for h = settings.microstate.Nmicrostates
         ordered_microstates_path = dir([level_path,'**',filesep,'*',num2str(h),'MS_reordered.mat']); 
         load([ordered_microstates_path.folder,filesep,ordered_microstates_path.name],'microstate_ordered');% load ordered microstates prototypes for this number of MS
         for lev = 1:length(settings.levels)-1
             level = char(settings.levels(lev)); % current level
             folder = dir(eval(['settings.path.',level]));
             folder = dir([folder(1).folder,filesep,'**',filesep,'*microstate_prototypes_',num2str(h),'MS.mat']); %all prototypes to reorder
-            for i= 1:numel(folder) % for each sub file in this level
-                disp("OKOKOK")
-                disp(['p04 (nMS = ',num2str(h),') : reordering ',level,' level prototypes: ', num2str(i), '/ ', num2str(numel(folder))]);
+            for i= 1:numel(folder) % for each file in this level
+                disp(['p04 (nMS = ',num2str(h),') : reordering ',level,' level prototypes: ', num2str(i),filesep, num2str(numel(folder))]);
                 pl_microstates_reordering(folder(i),settings,microstate_ordered,h,chanlocs)
             end
         end

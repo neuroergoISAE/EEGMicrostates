@@ -5,7 +5,7 @@ if settings.todo.microstates_gfppeaks
     outputfolder = [settings.path.gfp]; % gfp peaks folder 
     folders = dir(settings.path.gfp); 
     folders = folders(~contains({folders.name},'.')); % ignore parent folders
-    if settings.multipleSessions == true
+    if settings.multipleSessions %settings.multipleSessions == true
         for i=1:length(folders)
             outputparticipantfolder = [outputfolder,folders(i).name];
             fp_folder = dir([folders(i).folder, filesep, folders(i).name]);

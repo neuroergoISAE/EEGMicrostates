@@ -1,5 +1,4 @@
 function pl_microstates_gfppeaks(inputfolder,outputfolder,settings)
-%vCH
 %% Description
 % input: inputfolderpath for the current subject, outputfolderp., settings
 % using this path, the following input files are loaded:
@@ -24,6 +23,7 @@ if ~isfolder(fp_output_plots)
     mkdir(fp_output_plots);
 end
 fn_gfppeaks= 'gfppeaks.mat';
+fn__plot_gfppeaks =  'gfppeaks';
 output_files_exist = exist([fp_output,fn_gfppeaks],'file') == 2;
 %%
 % if all input exists & output does not exist yet (or should be
@@ -37,7 +37,6 @@ if input_files_exist && (~output_files_exist || settings.todo.override)
     %% load info file, add some defaults & load segmented data
     disp(['..loading ',fp_input,fn_info]);
     load([fp_input,fn_info],'info')
-    disp(info);
     info.numgfppeaks= 0;
     
         %load segmented eegdata
@@ -66,8 +65,8 @@ if input_files_exist && (~output_files_exist || settings.todo.override)
                 'GFPthresh',   settings.microstate.gfppeaks.GFPthresh);
             
             %plot the taken peaks & save it
-            plot(std(EEG.microstate.data,1));
-            saveas(gcf,[fp_output_plots, fn_gfppeaks], 'png')
+            plot(std(EEG.microstate.data,1))
+            saveas(gcf,[fp_output_plots, fn__plot_gfppeaks], 'png')
             close;
             
             %create structure with gfp peak data only

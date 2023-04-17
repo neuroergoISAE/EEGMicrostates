@@ -1,11 +1,12 @@
 function pl_load_data(inputfolder,outputfolder,s)
+inputfolder
 % vCH
 %% Description
 % Create epochs and check quality rating if required
 %if not: create info file
 %% If eyes epoching not done
 if s.todo.eyes_epoching
-    p_EyesEpoching(inputfolder,outputfolder,s);
+    %p_EyesEpoching(inputfolder,outputfolder,s);
 else
     %% load file
     fp_output = [outputfolder,inputfolder.name,filesep]; % fp ~ file path
@@ -30,6 +31,7 @@ else
         end
         
         %% Info file creation for current subject
+        inputfolder
         info = [];
         info.subjectID = inputfolder.name;
         info.inputpath = [inputfolder.folder,filesep, inputfolder.name,filesep, 'eeg', filesep];
@@ -39,7 +41,7 @@ else
         info.numsamples = 0;
         info.nofile = false;
         info.zerodata = false;
-        
+        info
         %% check if file of interest in the input folder 
         eeg_files = dir(info.inputpath);
         eeg_files = eeg_files(...

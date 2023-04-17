@@ -1,4 +1,4 @@
-function pl_microstates_states(fp_microstates,level,h,s)
+function pl_microstates_stats(fp_microstates,level,h,s)
 
 
     output_table = table; %empty table

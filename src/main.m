@@ -1,5 +1,4 @@
 function main()
-%vCH
 %% Description
 % Main file for the Microstates extraction process
 % input: settings folder 
@@ -12,13 +11,12 @@ function main()
 addpath('settings');
 addpath('functions');
 load('s.mat','s');
-s = p00_settings(s);
-
+s=p00_settings(s);
 %% Required Steps
 % Override old outputs?
 s.todo.override = true;
 %analysis steps 
-s.todo.eyes_epoching = false;
+s.todo.eyes_epoching                    = false;
 s.todo.load_data                        = true; % Two options : already epoched on closed eyes or epoching needs to be done
 s.todo.microstates_gfppeaks             = true; 
 s.todo.microstates_segmentation         = true; 

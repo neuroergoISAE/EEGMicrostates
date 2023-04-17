@@ -5,7 +5,7 @@ if settings.todo.load_data
     folders = dir(settings.path.data); % get folder content of (input) data folder
     folders = folders(~contains({folders.name},'.')); % ignore parent folders
     
-    if length(settings.levels) == 3 % First Level : Sessions
+    if settings.multipleSessions % First Level : Sessions
         for i=1:length(folders) %each participant
             fp_folder = dir([folders(i).folder, filesep, folders(i).name]);
             fp_folder = fp_folder(~contains({fp_folder.name},'.')); % ignore parent folders
@@ -19,6 +19,7 @@ if settings.todo.load_data
       else % First level : Participants
         for i=1:length(folders)
             disp(['p01 Load Data: ', num2str(i), '/ ', num2str(length(folders))])
+            folders(1)
             pl_load_data(folders(i), settings.path.gfp, settings);
         end
     end   
