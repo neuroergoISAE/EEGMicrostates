@@ -1,6 +1,4 @@
 function pl_load_data(inputfolder,outputfolder,s)
-inputfolder
-% vCH
 %% Description
 % Create epochs and check quality rating if required
 %if not: create info file

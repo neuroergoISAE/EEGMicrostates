@@ -2,7 +2,11 @@ function settings = p00_settings(settings)
 %% All the required settings for the microstates analysis
 %% Preparation: set paths etc.
 settings.multipleSessions = false;
-settings.levels = {'session','participant','group'}; % please follow this order
+if settings.multipleSessions
+    settings.levels = {'session','participant','group'}; % please follow this order
+else
+    settings.levels = {'participant','group'};
+end
 % carrefull: don't modify levels spelling
 
 %%Source folder
@@ -84,7 +88,6 @@ settings.sr = 500; % sampling rate
 %% Microstates Analysis
 
 settings.microstate = [];
-
 % gfp peak selection settings (within subjects, individual-level)
 settings.microstate.gfppeaks.datatype = 'spontaneous';
 settings.microstate.gfppeaks.avgref = 1; %re-reference sur la moyenne

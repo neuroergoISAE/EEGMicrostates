@@ -1,5 +1,4 @@
-function pl_microstates_stats(fp_microstates,level,h,s)
-
+function pl_microstates_stats(inputfolder,level,h,s)
 
     output_table = table; %empty table
     fn_output_mat = [s.path.tables,'stats_',level,'_backfit_',num2str(h),'MS.mat']; % output table with all files stats
@@ -12,9 +11,9 @@ function pl_microstates_stats(fp_microstates,level,h,s)
             delete(fn_output_csv);
         end
         %% For each file
-        for i=1:length(fp_microstates)
+        for i=1:length(inputfolder)
 
-            fn_microstate = [fp_microstates(i).folder,filesep,fp_microstates(i).name];
+            fn_microstate = [inputfolder(i).folder,filesep,inputfolder(i).name];
 
             %if input file exist and output not (or override possible)
 
@@ -24,7 +23,7 @@ function pl_microstates_stats(fp_microstates,level,h,s)
                 file_table = table; %empty table for this file
                 
                 %% Participant Id and Session (if existing)
-                file_IDs = extractBetween(fn_microstate,s.path.backfitting,fp_microstates(i).name);
+                file_IDs = extractBetween(fn_microstate,s.path.backfitting,inputfolder(i).name);
                 file_IDs =split(file_IDs,'\'); %if multiple sessions : will show ses number and sub id
                 file_IDs = file_IDs(~cellfun('isempty',file_IDs)); 
                 file_table.subjectID = char(file_IDs(1));% participant id

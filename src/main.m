@@ -12,6 +12,7 @@ addpath('settings');
 addpath('functions');
 load('s.mat','s');
 s=p00_settings(s);
+s.levels = {'participant','group'};
 %% Required Steps
 % Override old outputs?
 s.todo.override = true;
@@ -38,7 +39,6 @@ p04_microstates_reordering(s); % ask reordering to user for the last level and r
 p05_microstates_backfitting(s);
 
 p06_microstates_stats(s);
-
 
 end
 

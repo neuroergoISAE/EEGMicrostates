@@ -123,7 +123,7 @@ if settings.todo.microstates_reordering==1
             folder = dir([folder(1).folder,filesep,'**',filesep,'*microstate_prototypes_',num2str(h),'MS.mat']); %all prototypes to reorder
             for i= 1:numel(folder) % for each file in this level
                 disp(['p04 (nMS = ',num2str(h),') : reordering ',level,' level prototypes: ', num2str(i),filesep, num2str(numel(folder))]);
-                pl_microstates_reordering(folder(i),settings,microstate_ordered,h,chanlocs)
+                pl_microstates_reordering(folder(i),microstate_ordered,h,chanlocs,settings)
             end
         end
     end

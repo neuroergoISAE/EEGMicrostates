@@ -1,6 +1,6 @@
-function pl_microstates_gfppeaks(inputfolder,outputfolder,settings)
+function pl_microstates_gfppeaks(inputfolder,outputfolder,s)
 %% Description
-% input: inputfolderpath for the current subject, outputfolderp., settings
+% input: inputfolderpath for the current subject, outputfolderp., s
 % using this path, the following input files are loaded:
 % - info-file
 % - eeg data
@@ -28,9 +28,9 @@ output_files_exist = exist([fp_output,fn_gfppeaks],'file') == 2;
 %%
 % if all input exists & output does not exist yet (or should be
 % overriden), continue
-if input_files_exist && (~output_files_exist || settings.todo.override)
+if input_files_exist && (~output_files_exist || s.todo.override)
     % if override & output files exist, delete them
-    if settings.todo.override && output_files_exist
+    if s.todo.override && output_files_exist
         delete([fp_output,fn_gfppeaks]);
     end
     
@@ -47,22 +47,22 @@ if input_files_exist && (~output_files_exist || settings.todo.override)
         try
             
             %how many peaks should be taken
-            if settings.microstate.gfppeaks.takeAllPeaks % if all available peaks should be taken
+            if s.microstate.gfppeaks.takeAllPeaks % if all available peaks should be taken
                 Npeaks = eval('info.numsamples'); % Npeaks = maximum peaks possible (= total amount of data points)
             else % if only a subset of the peaks should be taken
-                Npeaks = settings.microstate.gfppeaks.Npeaks; % Npeaks = predetermined number
+                Npeaks = s.microstate.gfppeaks.Npeaks; % Npeaks = predetermined number
             end
             
             %get GFP peaks
             EEG = pop_micro_selectdata( ...
                 EEG, ...
                 [], ... % no ALLEEG, because data gets only taken from current subject (one eeg structure)
-                'datatype',    settings.microstate.gfppeaks.datatype, ...
-                'avgref',      settings.microstate.gfppeaks.avgref, ...
-                'normalise',   settings.microstate.gfppeaks.normalise, ...
-                'MinPeakDist', settings.microstate.gfppeaks.MinPeakDist, ...
+                'datatype',    s.microstate.gfppeaks.datatype, ...
+                'avgref',      s.microstate.gfppeaks.avgref, ...
+                'normalise',   s.microstate.gfppeaks.normalise, ...
+                'MinPeakDist', s.microstate.gfppeaks.MinPeakDist, ...
                 'Npeaks',      Npeaks, ... % if Npeaks >= available GFP peaks, all the peaks get taken
-                'GFPthresh',   settings.microstate.gfppeaks.GFPthresh);
+                'GFPthresh',   s.microstate.gfppeaks.GFPthresh);
             
             %plot the taken peaks & save it
             plot(std(EEG.microstate.data,1))

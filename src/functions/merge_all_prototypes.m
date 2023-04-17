@@ -1,7 +1,7 @@
-function peeg = merge_all_prototypes(peeg,y,folder,settings,levelnum)
+function peeg = merge_all_prototypes(peeg,y,folder,s,levelnum)
 % vCH
 %% Merge all microstates prototypes from previous level for the next level clustering
-  previouslevel =  settings.levels{levelnum-1};
+  previouslevel =  s.levels{levelnum-1};
   %input path and names
   fn_prototypes = [previouslevel ,'_microstate_prototypes_', num2str(y), 'MS.mat'];
 

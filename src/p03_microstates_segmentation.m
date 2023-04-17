@@ -20,7 +20,7 @@ if settings.multipleSessions %Multiple Sessions
         for j=1:length(fp_gfp_session) %for each session of each participant
             %outputfile: session folder
             outputSession = [settings.path.session,fp_gfp(i).name,filesep,fp_gfp_session(j).name,filesep];
-            pl_microstates_segmentation(fp_gfp_session(j), outputSession,settings,1);
+            pl_microstates_segmentation(fp_gfp_session(j), outputSession,1,settings);
         end
     end
     %% PARTICIPANT LEVEL CLUSTERING (Multiple Sessions)
@@ -29,7 +29,7 @@ if settings.multipleSessions %Multiple Sessions
     for k=1:length(fp_session)
         %outputfile: participant folder
         outputParticipant = [settings.path.participant,fp_session(k).name,filesep];
-        pl_microstates_segmentation(fp_session(k), outputParticipant, settings,2);
+        pl_microstates_segmentation(fp_session(k), outputParticipant,2, settings);
     end
     grouplevelnum = 3;
 else % Single Session
@@ -37,7 +37,7 @@ else % Single Session
      for k=1:length(fp_gfp) %for each participant
         %outputfile: participant folder
         outputParticipant = [settings.path.participant,fp_gfp(k).name,filesep];
-        pl_microstates_segmentation(fp_gfp(k), outputParticipant, settings,1);
+        pl_microstates_segmentation(fp_gfp(k), outputParticipant,1, settings);
      end
     grouplevelnum = 2;
 end
@@ -46,6 +46,6 @@ end
     p_char =  char(extractBetween(settings.path.participant,settings.path.results,filesep)); %how the participant folder is called
     fp_participant = fp_participant(contains({fp_participant.name},p_char));
     outputGroup = settings.path.group; %outputfile: gorup folder
-    pl_microstates_segmentation(fp_participant, outputGroup, settings,grouplevelnum);
+    pl_microstates_segmentation(fp_participant, outputGroup,grouplevelnum, settings);
     
 end
