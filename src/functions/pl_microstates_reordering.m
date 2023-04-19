@@ -22,7 +22,7 @@ function pl_microstates_reordering(toreorder_folder,lastlevel_orderedmicrostates
       
       %compare the individual prototypes with the sample-level prototypes
       %to get the appropriate sort order using a function of thomas koenig
-      [~,SortOrder, Communality, polarity] = ArrangeMapsBasedOnMean(maps2sort,lastlevel_orderedmicrostates',s.microstate.ordering.polarity);
+      [~,SortOrder, Communality, polarity] = ArrangeMapsBasedOnMean(maps2sort,lastlevel_orderedmicrostates',s.microstate.orderingPolarity);
       
       %order the individual microstates
       microstate_ordered(:,:) =  squeeze(maps2sort(1,:,:))'; %back to 2D & transpose back
@@ -30,11 +30,11 @@ function pl_microstates_reordering(toreorder_folder,lastlevel_orderedmicrostates
       
       %plot the ordered prototypes
       %t = tiledlayout(1,nMS);
-      mycolormap = customcolormap_preset(s.figure.customColorMap.colors);
+      mycolormap = customcolormap_preset(s.customColorMap.colors);
       for q = 1:nMS
           %nexttile
           subplot(1,nMS,q);
-          topoplot(microstate_ordered(:,q),chanlocs, 'maplimits', s.figure.customColorMap.range);
+          topoplot(microstate_ordered(:,q),chanlocs, 'maplimits', s.customColorMap.range);
           set(gcf,'color','w'); % set backround color to white
           colormap(mycolormap); % use customized color map
       end 

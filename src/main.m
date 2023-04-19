@@ -1,11 +1,8 @@
 function main()
-%% Description
+%% Description 
 % Main file for the Microstates extraction process
 % input: settings folder 
-
-
-%Analysed data must have been pre-processed and epoched on the trigger of
-%interest (eyes opened or eyes closed for example)
+% Analysed data must have been pre-processed and epoched on the trigger of interest (eyes opened or eyes closed for example)
 
 %% Settings
 addpath('settings');

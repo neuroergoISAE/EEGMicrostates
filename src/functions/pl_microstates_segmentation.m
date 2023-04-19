@@ -117,10 +117,10 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
 
             %make and save the prototype figure for the current microstate model
             %using a customized color map
-            mycolormap = customcolormap_preset(s.figure.customColorMap.colors);
+            mycolormap = customcolormap_preset(s.customColorMap.colors);
             for i = 1:u
                 subplot(1,u,i);
-                topoplot(EEG_u.microstate.prototypes(:,i),chanlocs, 'maplimits', s.figure.customColorMap.range);
+                topoplot(EEG_u.microstate.prototypes(:,i),chanlocs, 'maplimits', s.customColorMap.range);
                 set(gcf,'color','w'); % set backround color to white
                 colormap(mycolormap); % use customized color map
             end

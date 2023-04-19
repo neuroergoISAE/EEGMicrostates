@@ -179,7 +179,7 @@ function p_EyesEpoching(inputfolder,outputfolder,s)
               eval(['info.numsamples_',eyes{1},'= EEG.pnts;']); % 'info.numsamples_eyesclosed= EEG.pnts;' wird ausgeführt
               
               % only continue (i.e. save it) if there are enough samples
-              if eval(['info.numsamples_',eyes{1}, '<=', num2str(settings.data.nGoodSamples)]) % if not enough samples
+              if eval(['info.numsamples_',eyes{1}, '<=', num2str(settings.nGoodSamples)]) % if not enough samples
                   disp(['..skipping',eyes{1},'-file because not enough (good) samples: ',inputfolder.name]) % skip subject
                   eval(['info_dataQuality.insufficient',eyes{1},' = '...
                       ,'info_dataQuality.insufficient',eyes{1} ,' + 1;']); %update info file of the data quality

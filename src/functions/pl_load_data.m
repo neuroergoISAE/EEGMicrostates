@@ -57,7 +57,7 @@ else
             info.inputname = [eeg_files.name];
             info.inputpathname = [eeg_files.folder,filesep,eeg_files.name];
             % only save this file if  enough samples
-            if info.numsamples <= s.data.nGoodSamples % if not enough samples
+            if info.numsamples <= s.nGoodSamples % if not enough samples
                 disp(['..skipping this file because not enough (good) samples: ',inputfolder.name]) % skip subject
             end
         else
