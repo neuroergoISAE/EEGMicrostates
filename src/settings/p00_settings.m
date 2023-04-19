@@ -1,7 +1,19 @@
-function settings = p00_settings(settings)
+function settings = p00_settings(paramgui)
 %% All the required settings for the microstates analysis
+
+
+%% ParamGUI if required
+if paramgui
+    [param ,~] = paramGUI;
+    settings  = param; 
+else
+    settings.todo.eyes_epoching = false;
+    settings.multipleSessions = false;
+    settings.name = ['Project_',date()];
+    settings.path.global_path = fileparts(pwd);
+    settings.path.eeglab = ['D:\eeglab\eeglab2023.0'];%% EEGLAB LOCATION 
+end
 %% Preparation: set paths etc.
-settings.multipleSessions = false;
 if settings.multipleSessions
     settings.levels = {'session','participant','group'}; % please follow this order
 else
@@ -10,6 +22,7 @@ end
 % carrefull: don't modify levels spelling
 
 %% Source folder
+settings.path.results = [settings.path.global_path,filesep,settings.name,filesep,'Microstates_Results',filesep]; %Microstates Results
 settings.path.src = [settings.path.global_path,filesep,'src',filesep]; % main code% Project path containig main code
 cd(settings.path.src);
 if ~isfolder(settings.path.results)
@@ -55,24 +68,18 @@ settings.path.backfitting=[settings.path.results,'backfitting',filesep]; %backfi
 if ~isfolder(settings.path.backfitting)
     mkdir(settings.path.backfitting);
 end
-
-
-% paths to scripts, code
-%settings.path.src=[settings.path.project,filesep]; % main code
-settings.path.functions=[settings.path.src,'functions',filesep]; % subfunctions
-%settings.path.ext=[settings.path.global_path,filesep,'external_files',filesep]; % external code (toolboxes, plugins)
+%%  Toolbox
 settings.path.microstates=[settings.path.eeglab,filesep,'plugins',filesep,'MST1.0', filesep]; %toolbox poulsen
 settings.path.microstatesKoenig = [settings.path.eeglab,filesep,'plugins',filesep,'Microstates1.2', filesep]; %toolbox koenig
 settings.path.colormap = [settings.path.global_path,filesep,'external_files',filesep,'customcolormap',filesep]; % for plotting the microstates
 
-% add paths
+%% add paths
 addpath(settings.path.src);
-addpath(settings.path.functions);
 addpath(settings.path.eeglab);
 addpath(settings.path.microstates);
 addpath(settings.path.microstatesKoenig);
 addpath(settings.path.colormap);
-eeglab; close; clear ALLCOM ALLEEG CURRENTSET CURRENTSTUDY EEG globalvars LASTCOM PLUGINLIST STUDY tmpEEG
+eeglab;close;
 
 %% Plotting settings
 % custom color map (for customized topoplots)
@@ -101,7 +108,8 @@ settings.microstate.sorting = 'Global explained variance'; % first MS is the one
 settings.microstate.normalise = 0;
 settings.microstate.Nmicrostates = [3:4]; % range of numbers of microstates, clusters intended (~ range of microstate models)
 settings.microstate.verbose = 1;
-settings.microstate.Nrepetitions = 10 ;%1000; %differs from the first level clustering
+settings.microstate.Nrepetitions_GFP = 1000 ;%1000; %differs from the first level clustering
+settings.microstate.Nrepetitions_Cluster = 100 ;%differs from the first level clustering (on GFP)
 settings.microstate.fitmeas = 'CV';
 settings.microstate.max_iterations = 1000;
 settings.microstate.threshold = 1e-06;
@@ -119,6 +127,5 @@ settings.microstate.backfitting.polarity = 0;
 
 % which stats to extract
 settings.microstate.stats = {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'}; %GLOBAL Explained Variance (btw 60 &nd 80 % is good)
-
 
 end

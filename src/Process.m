@@ -2,8 +2,8 @@
 %%%%%%%
 %% SETTINGS
 %add signal to path
-addpath('C:\Program Files\MATLAB\R2021a\toolbox\signal'); %à modifier
-addpath('C:\Program Files\MATLAB\R2021a\toolbox\stats'); % à modifier
+addpath([matlabroot,'\toolbox\signal']); 
+addpath([matlabroot,'\toolbox\stats']); 
 % PARAM RESTING STATE
 [param ,~] = paramGUI;
 settings.name = param.projectName;
