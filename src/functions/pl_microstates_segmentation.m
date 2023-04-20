@@ -75,7 +75,7 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
         if levelnum == 1 % if clustering is done directly on GFP : requires more repetitions
             nrepetitions  =  s.microstate.Nrepetitions_GFP;
         else
-            nrepetitions = s.microstate.Nrepetitions_CLUSTER;
+            nrepetitions = s.microstate.Nrepetitions_Cluster;
         end
         %segment resp. cluster the data
         EEG = pop_micro_segment( ...
@@ -102,7 +102,7 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
         figure;
         MicroPlotTopo( EEG, 'plot_range', [] );
         fn_plots_nMS = [level,'_microstate_prototypes_', num2str(u), 'MS'];
-        disp(['..saving ',outputfolder,fn_plot]);
+        disp(['..saving ',outputfolder,fn_plots_nMS]);
         %saveas(gcf,[fp_output_plots,fn_plots_nMS],'png'); % gcf: returns the current figure handle
         close;
         

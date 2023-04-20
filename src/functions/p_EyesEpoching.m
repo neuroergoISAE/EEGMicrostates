@@ -1,5 +1,4 @@
 function p_EyesEpoching(inputfolder,outputfolder,s)
-%vCH
 %% Automagic : check bad channels 
 %% Epoch EC 
 % Data Quality rating
@@ -23,7 +22,7 @@ function p_EyesEpoching(inputfolder,outputfolder,s)
     
  %% set output filepath and filename
   fp_output = [outputfolder,inputfolder.name,filesep]; % fp ~ file path
-  if ~isdir(fp_output) % if fp_output is not a directory
+  if ~isfolder(fp_output) % if fp_output is not a directory
     mkdir(fp_output); % make it a directory 
   end
   fn_info = 'info.mat'; % fn ~ file name

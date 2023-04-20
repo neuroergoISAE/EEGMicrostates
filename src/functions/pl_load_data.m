@@ -3,9 +3,7 @@ function pl_load_data(inputfolder,outputfolder,s)
 % Create epochs and check quality rating if required
 %if not: create info file
 %% If eyes epoching not done
-if s.todo.eyes_epoching
-    %p_EyesEpoching(inputfolder,outputfolder,s);
-else
+
     %% load file
     fp_output = [outputfolder,inputfolder.name,filesep]; % fp ~ file path
     if ~isfolder(fp_output) % if fp_output is not a directory
@@ -29,7 +27,7 @@ else
         end
         
         %% Info file creation for current subject
-        inputfolder
+        %inputfolder
         info = [];
         info.subjectID = inputfolder.name;
         info.inputpath = [inputfolder.folder,filesep, inputfolder.name,filesep, 'eeg', filesep];
@@ -42,11 +40,9 @@ else
         info
         %% check if file of interest in the input folder 
         eeg_files = dir(info.inputpath);
-        eeg_files = eeg_files(...
-            contains({eeg_files.name},'p') ...
-            & contains({eeg_files.name},'.mat') ...
-            & ~contains({eeg_files.name},'reduced') ... % string should not contain 'reduced'
-            );
+        eeg_files = eeg_files(contains({eeg_files.name},'eeg') & contains({eeg_files.name},'.mat') ...
+            & ~contains({eeg_files.name},'reduced'));% string should not contain 'reduced'
+           
         %% Load EEG file
         disp('.. load eeg file'); 
         info.nofile = isempty(eeg_files); % true if no file
@@ -70,5 +66,4 @@ else
         save([fp_output, fn_eegdata],'EEG');
         %save info file
         save([fp_output,fn_info],'info');
-    end
 end

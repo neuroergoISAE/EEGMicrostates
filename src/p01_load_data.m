@@ -1,4 +1,14 @@
 function p01_load_data(settings)
+
+if settings.todo.eyes_epoching
+    epochfolders = dir(settings.path.datatoepoch);
+    epochfolders  = epochfolders(~contains({epochfolders.name},'.')); % ignore parent folders
+    for i=1:length(epochfolders)
+        disp(['Data Epoching: ', num2str(i), '/ ', num2str(length(epochfolders))])
+        pl_epoching(epochfolders(i),settings);
+    end
+end
+
 if settings.todo.load_data
     
     % find input data folders

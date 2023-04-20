@@ -1,17 +1,34 @@
-function settings = p00_settings(paramgui)
+function settings = p00_settings()
 %% All the required settings for the microstates analysis
 
-
+%% if already existing settings in settings folder : load and  prefill the gui
 %% ParamGUI if required
-if paramgui
-    [param ,~] = paramGUI;
-    settings  = param; 
-else
-    settings.todo.eyes_epoching = false;
+% if paramgui
+%     [param ,~] = paramGUI;
+%     settings  = param; 
+% else
+    settings.todo.eyes_epoching = true;
     settings.multipleSessions = false;
-    settings.name = ['Project_',date()];
-    settings.path.global_path = fileparts(pwd);
-    settings.path.eeglab = ['D:\eeglab\eeglab2023.0'];%% EEGLAB LOCATION 
+    settings.name = 'Quentin';%['Project_',date()];
+    settings.path.global_path = 'E:\ACERI\Microstates';
+    
+    settings.path.eeglab = ['D:\eeglab\eeglab2023.0']; %% EEGLAB LOCATION 
+    settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];    
+% % end
+
+if  settings.todo.eyes_epoching
+    settings.path.datatoepoch = ['E:\ACERI\Microstates\Quentin\Data_Epoch'];% insert data to epoch location
+    % settings for the filtering
+    settings.epoching.averageref = true; 
+    settings.epoching.notch.lpf = 48; 
+    settings.epoching.notch.hpf = 52; 
+    settings.epoching.bandpass.lpf = 2;
+    settings.epoching.bandpass.hpf = 20; 
+    settings.epoching.triggerlabel = 'EC';
+    settings.epoching.winlength = 1000; %2 seconds
+    settings.epoching.timelimits = [0 30];
+    settings.epoching.mvmax = 90; % maximum millivoltage to clean data
+
 end
 %% Preparation: set paths etc.
 if settings.multipleSessions
@@ -87,7 +104,7 @@ settings.customColorMap.colors = 'red-white-blue';
 settings.customColorMap.range = [-0.25 0.25];
 
 %% Data Settings
-settings.nGoodSamples = 10000; % minimum number of good samples after excluding bad epochs (10'000 time points = 20 seconds)
+settings.nGoodSamples = 1000; % minimum number of good samples after excluding bad epochs (10'000 time points = 20 seconds)
 settings.sr = 500; % sampling rate
 
 %% Microstates Settings

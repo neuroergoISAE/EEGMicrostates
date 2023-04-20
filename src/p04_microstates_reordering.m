@@ -46,12 +46,12 @@ if settings.todo.microstates_reordering==1
             end
             
             %plot not-ordered prototypes
-            mycolormap = customcolormap_preset(settings.figure.customColorMap.colors);
+            mycolormap = customcolormap_preset(settings.customColorMap.colors);
            % t = tiledlayout(1,h);
             for i = 1:h
                 %nexttile
                 subplot(1,h,i);
-                topoplot(samplePrototypes(:,i),chanlocs, 'maplimits', settings.figure.customColorMap.range);
+                topoplot(samplePrototypes(:,i),chanlocs, 'maplimits', settings.customColorMap.range);
                 title(i); % add title
                 set(gcf,'color','w'); % set backround color to white
                 colormap(mycolormap); % use customized color map
@@ -80,12 +80,12 @@ if settings.todo.microstates_reordering==1
             end
             close;
             %plot the ordered prototypes...
-            mycolormap = customcolormap_preset(settings.figure.customColorMap.colors);
+            mycolormap = customcolormap_preset(settings.customColorMap.colors);
             %t = tiledlayout(1,h);
             for q = 1:h
                 %nexttile
                 subplot(1,h,q);
-                topoplot(samplePrototypes_ordered(:,q),chanlocs, 'maplimits', settings.figure.customColorMap.range);
+                topoplot(samplePrototypes_ordered(:,q),chanlocs, 'maplimits', settings.customColorMap.range);
                 title(q); % add title
                 set(gcf,'color','w'); %set backround color to white
                 colormap(mycolormap); %use customized color map

@@ -5,17 +5,15 @@ function main()
 % Analysed data must have been pre-processed and epoched on the trigger of interest (eyes opened or eyes closed for example)
 
 %% Settings
-
+cd('E:\ACERI\Microstates\src');
 addpath([matlabroot,'\toolbox\signal']); 
 addpath([matlabroot,'\toolbox\stats']); 
 
 addpath('settings');
 addpath('functions');
-%load('s_multi.mat','s');
-paramgui = true;
-s=p00_settings(paramgui);
-s.levels = {'participant','group'};
 
+s=p00_settings();
+s.levels = {'participant','group'};
 
 %% Required Steps
 % Override old outputs?
@@ -30,18 +28,21 @@ s.todo.microstates_stats                = true;
 
 %% Anlaysis
 % 
-% p01_load_data(s); % load data, move and rename eeg_data file in the gfp directory for easier use. If required: extract eye closed epochs
-% p02_gfp_peaks(s);
-% p03_microstates_segmentation(s);
+p01_load_data(s); % load data, move and rename eeg_data file in the gfp directory for easier use. If required: extract eye closed epochs
+p02_gfp_peaks(s);
+p03_microstates_segmentation(s);
 % 
 % % if list of N microstate > 1 : select nMicrostates (backfitting will be
 % % done on only one choice of nMicrostates
 % 
-% p04_microstates_reordering(s); % ask reordering to user for the last level and reorder sub levels. OR : reorder based on template
-% 
-% p05_microstates_backfitting(s);
-% 
-% p06_microstates_stats(s);
+p04_microstates_reordering(s); % ask reordering to user for the last level and reorder sub levels. OR : reorder based on template
 
+p05_microstates_backfitting(s);
+
+p06_microstates_stats(s);
+
+
+%% save settings for next time
+save('settings/s','s');
 end
 
