@@ -23,5 +23,5 @@ You can change the required steps and skip unwanted one by changing the correspo
 
 The Microstates Analysis will launch. Wait until the process ask you to reoder the microstates prototypes. When finished, the message ```Microstates Analysis Finished``` will appear in the Command Window.
 
-## Help
+## :U+1F4AC: Help
 For help, you can contact us at : caroline.hamery@isae-supaero.fr or post a new issue.
