@@ -4,7 +4,7 @@ function main()
 % input: settings folder 
 % Analysed data must have been pre-processed and epoched on the trigger of interest (eyes opened or eyes closed for example)
 
-%% Settings
+%% Path
 %cd('E:\ACERI\Microstates\src');
 addpath([matlabroot,'\toolbox\signal']); 
 addpath([matlabroot,'\toolbox\stats']); 
@@ -12,9 +12,12 @@ addpath([matlabroot,'\toolbox\stats']);
 addpath('settings');
 addpath('functions');
 
-s=p00_settings();
-s.levels = {'participant','group'};
+%% GUI
+paramgui = true; % can be changed (if false, check the path parameters in p00_setting.m)
 
+%% Settings
+s=p00_settings(paramgui);
+s.levels = {'participant','group'};
 %% Required Steps
 % Override old outputs?
 s.todo.override = true;

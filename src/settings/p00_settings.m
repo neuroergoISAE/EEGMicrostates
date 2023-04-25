@@ -1,4 +1,4 @@
-function settings = p00_settings()
+function settings = p00_settings(paramgui)
 %% All the required settings for the microstates analysis
 
 %% if already existing settings in settings folder : load and  prefill the gui
