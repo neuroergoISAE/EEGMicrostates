@@ -14,4 +14,9 @@
 
 ## Process
 Open ```main.m``` file.
+
 The ```paramGUI``` variable (default : *true*) permits the opening of a small GUI asking for required path and parameters. If you wish, you can put this variable to *false* and change the parameters by hand in the ```p00_settings.m``` file.
+
+You can change the required steps and skip unwanted one by changing the corresponding variable ```settings.todo.var``` with ```false```
+
+**Run** ```main.m```, if the GUI parameter is true, please 
