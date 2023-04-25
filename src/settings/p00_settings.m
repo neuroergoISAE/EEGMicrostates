@@ -3,32 +3,42 @@ function settings = p00_settings()
 
 %% if already existing settings in settings folder : load and  prefill the gui
 %% ParamGUI if required
-% if paramgui
-%     [param ,~] = paramGUI;
-%     settings  = param; 
-% else
-    settings.todo.eyes_epoching = true;
-    settings.multipleSessions = false;
-    settings.name = 'Quentin';%['Project_',date()];
-    settings.path.global_path = 'E:\ACERI\Microstates';
-    
-    settings.path.eeglab = ['D:\eeglab\eeglab2023.0']; %% EEGLAB LOCATION 
-    settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];    
-% % end
+if paramgui
+    [param ,~] = paramGUI;
+    settings  = param; 
+    disp(settings);
+
+%     if param settings not complete !
+%     disp('Reopen Parameters GUI?') %yes :open param, no : stop anaylsis
+%     here
+else
+    settings.todo.eyes_epoching = false; % default : eyes epoching already done
+    settings.multipleSessions = 0; % default: no sessions 
+    settings.name = ['Project_',date()]; % default name
+    settings.path.src = pwd;%'E:\ACERI\Microstates\src'; % source code folder, default : pwd
+    if settings.multipleSessions
+        settings.path.backfittingLevels  = {'session','participant','group'}; %default : backfit on all levels
+    else
+        settings.path.backfittingLevels  = {'participant','group'}; %default : backfit on all levels
+    end
+    settings.path.eeglab = 'D:\eeglab\eeglab2023.0'; %% EEGLAB LOCATION         
+    if  settings.todo.eyes_epoching
+        settings.path.datatoepoch = 'F:\RR_microstates\preprocessed_RS';% insert data to epoch location
+        settings.epoching.triggerlabel = 'EC';
+        settings.epoching.timelimits = [0 30];
+    end
+end
+
 
 if  settings.todo.eyes_epoching
-    settings.path.datatoepoch = ['E:\ACERI\Microstates\Quentin\Data_Epoch'];% insert data to epoch location
     % settings for the filtering
     settings.epoching.averageref = true; 
     settings.epoching.notch.lpf = 48; 
     settings.epoching.notch.hpf = 52; 
     settings.epoching.bandpass.lpf = 2;
     settings.epoching.bandpass.hpf = 20; 
-    settings.epoching.triggerlabel = 'EC';
     settings.epoching.winlength = 1000; %2 seconds
-    settings.epoching.timelimits = [0 30];
     settings.epoching.mvmax = 90; % maximum millivoltage to clean data
-
 end
 %% Preparation: set paths etc.
 if settings.multipleSessions
@@ -39,8 +49,9 @@ end
 % carrefull: don't modify levels spelling
 
 %% Source folder
+settings.path.global_path = fileparts(settings.path.src);
+settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
 settings.path.results = [settings.path.global_path,filesep,settings.name,filesep,'Microstates_Results',filesep]; %Microstates Results
-settings.path.src = [settings.path.global_path,filesep,'src',filesep]; % main code% Project path containig main code
 cd(settings.path.src);
 if ~isfolder(settings.path.results)
     mkdir(settings.path.results);
@@ -87,7 +98,7 @@ if ~isfolder(settings.path.backfitting)
 end
 %%  Toolbox
 settings.path.microstates=[settings.path.eeglab,filesep,'plugins',filesep,'MST1.0', filesep]; %toolbox poulsen
-settings.path.microstatesKoenig = [settings.path.eeglab,filesep,'plugins',filesep,'Microstates1.2', filesep]; %toolbox koenig
+settings.path.microstatesKoenig = [settings.path.eeglab,filesep,'plugins',filesep,'MicrostateAnalysis1.2',filesep,'Microstates1.2', filesep]; %toolbox koenig
 settings.path.colormap = [settings.path.global_path,filesep,'external_files',filesep,'customcolormap',filesep]; % for plotting the microstates
 
 %% add paths
@@ -123,7 +134,7 @@ settings.microstate.gfppeaks.Npeaks = []; % number of peaks taken (not needed if
 settings.microstate.algorithm = 'modkmeans';
 settings.microstate.sorting = 'Global explained variance'; % first MS is the one explaining the most variance
 settings.microstate.normalise = 0;
-settings.microstate.Nmicrostates = [3:4]; % range of numbers of microstates, clusters intended (~ range of microstate models)
+settings.microstate.Nmicrostates = 4; % range of numbers of microstates, clusters intended (~ range of microstate models)
 settings.microstate.verbose = 1;
 settings.microstate.Nrepetitions_GFP = 1000 ;%1000; %differs from the first level clustering
 settings.microstate.Nrepetitions_Cluster = 100 ;%differs from the first level clustering (on GFP)

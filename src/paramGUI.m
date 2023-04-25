@@ -4,169 +4,133 @@ backgroundColor = '#121212';
 foregroundColor = '#FFFFFF';
 fontsize = 16;
 cancel = 0;
-gui_fig = uifigure('position',[745 420 800 500], 'Color', backgroundColor); %
-param = struct("RSSelection","First","levelSelection","1st & 2nd Level","participantSelection","Participants (INTER)","sessionSelection","");
-[param.projectName, param.path.global_path, param.path.raw_Data, param.path.eeglab] = deal("");
+gui_fig = uifigure('position',[745 200 800 700], 'Color', backgroundColor); %
+param = struct();[param.path.src, param.path.datatoepoch, param.path.eeglab] = deal("");
 guidata(gui_fig,param);
-uilabel(gui_fig,'Text',"Microstates Analysis Parameters",'Position',[0 460 800 30], 'HorizontalAlignment','center','FontSize',fontsize+2,'FontColor', foregroundColor, 'FontSize', 20);
+uilabel(gui_fig,'Text',"Microstates Analysis Parameters",'Position',[0 660 800 30], 'HorizontalAlignment','center','FontSize',fontsize+4,'FontWeight','Bold','FontColor', foregroundColor, 'FontSize', 20);
 
 %% panels
-eyes_panel = uipanel(gui_fig, 'Position', [50 180 700 150], 'BackgroundColor', backgroundColor);
+path_panel = uipanel(gui_fig, 'Position', [50 470 700 120], 'BackgroundColor', backgroundColor,'Title','Directories Selection ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+eyes_panel = uipanel(gui_fig, 'Position', [50 330 700 120], 'BackgroundColor', backgroundColor,'Title','Eyes Epoching ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+session_panel = uipanel(gui_fig,'Position', [50 210 700 100], 'BackgroundColor' , backgroundColor,'Title','Sessions ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+backfit_panel = uipanel(gui_fig,'Position', [50 80 700 100], 'BackgroundColor' , backgroundColor,'Title','Backfitting','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 %Project Name
-uilabel(gui_fig,'Text',"Project Name : ",'Position',[50 430 800 30],'FontSize',fontsize,'FontColor', foregroundColor);
-project_name = uieditfield(gui_fig,'Position',[50 400 400 30],"ValueChangedFcn",@projectnameField,'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+uilabel(gui_fig,'Text',"Project Name : ",'Position',[55 620 150 30],'FontSize',fontsize+2,'FontColor', foregroundColor);
+efname = uieditfield(gui_fig,'Position',[200 620 550 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
 %% labels
-l_global=uilabel(gui_fig,'Text','' ,'Position',[60 320 325 30],'FontSize',fontsize,'FontColor', foregroundColor);
-l_eeglab = uilabel(gui_fig,'Text','','Position',[435 320 325 30],'FontSize',fontsize,'FontColor', foregroundColor);
-l_raw= uilabel(eyes_panel,'Text','','Position',[40 10 420 30],'FontSize',fontsize,'FontColor', foregroundColor);
+l_global=uilabel(path_panel,'Text',fileparts(pwd) ,'Position',[40 15 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+l_eeglab = uilabel(path_panel,'Text','','Position',[380 15 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 %Global Path
-btnGlobalPath = uibutton(gui_fig,'push', 'Text', 'Select Global Project Directory',...
-    'Position', [50 350 325 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-btnGlobalPath.ButtonPushedFcn = @selectGlobalDirectory;
+btnSrcPath = uibutton(path_panel,'push', 'Text', 'Select Source Folder Directory',...
+    'Position', [30 50 300 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+btnSrcPath.ButtonPushedFcn = @selectSrcDirectory;
 %Eeglab Path
-btnEEGLabPath = uibutton(gui_fig,'push', 'Text', 'Select EEGLab Directory',...
-    'Position', [425 350 325 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-btnEEGLabPath.ButtonPushedFcn = @selecteeglabectory;
+btnEEGLabPath = uibutton(path_panel,'push', 'Text', 'Select EEGLab Directory',...
+    'Position', [370 50 300 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+btnEEGLabPath.ButtonPushedFcn = @selecteeglabDirectory;
 
-% 
-% % Raw Data Path
-% btnRawDataPath= uibutton(eyes_panel,'push', 'Text', 'Select Raw Data Directory','Enable','off',...
-%     'Position', [30 40 250 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-% btnRawDataPath.ButtonPushedFcn = @selectRawPathDirectory;
-% Closed Eyes extraction
-efTrigger = uieditfield(eyes_panel,'Position',[50 70 50 30],'Enable','off',...
-    "ValueChangedFcn",@projectnameField,'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-l_trigger = uilabel(eyes_panel,'Text','Trigger Label','Position',[120 70 120 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off')
-efTriggerVal = uieditfield(eyes_panel,"numeric",'Position',[260 70 50 30],'Enable','off',...
-    "ValueChangedFcn",@projectnameField,'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-l_triggerVal = uilabel(eyes_panel,'Text','Trigger Duration','Position',[330 70 100 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off')
+%% Closed Eyes extraction
+efTrigger = uieditfield(eyes_panel,'Position',[330 55 50 30],'Value','EC','Enable','off',...
+    'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+l_trigger = uilabel(eyes_panel,'Text','Trigger Label','Position',[385 55 120 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
+efTriggerVal = uieditfield(eyes_panel,'numeric','Limits',[0 Inf],'RoundFractionalValues','on','Position',[510 55 50 30],'Enable','off',...
+   'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+l_triggerVal = uilabel(eyes_panel,'Text','Trigger Duration','Position',[565 55 120 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
+btnEpochingPath = uibutton(eyes_panel,'push', 'Text', 'Select Data to Epoch Directory','Enable','off',...
+    'Position', [40 10 300 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+l_epoch = uilabel(eyes_panel,'Text','','Position',[350 10 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+btnEpochingPath.ButtonPushedFcn = @selectepochDirectory;
 cbxEyes = uicheckbox(eyes_panel,'Text','Add Epoch (Closed Eyes) Extraction','Value', 0,...
-                  'Position',[50 100 600 30],'Fontcolor',foregroundColor,'FontSize',fontsize,'ValueChangedFcn',...
-                   @(cbxEyes,event) cBoxChanged(cbxEyes,efTrigger,l_trigger));
+                  'Position',[30 55 300 30],'Fontcolor',foregroundColor,'FontSize',fontsize,'ValueChangedFcn',...
+                   @(cbxEyes,event) cBoxChanged(cbxEyes,efTrigger,l_trigger,efTriggerVal,l_triggerVal,btnEpochingPath));
+%% Multiple or Single Sessions
+l_bg_session = uilabel(session_panel,'Position',[30 15 250 50],'WordWrap','on', 'Text','Multiple or Single Session for each participant: ','FontSize',fontsize,'FontColor', foregroundColor);
+bg_session = uibuttongroup('Parent',session_panel,'Position',[300 10 350 50],'BackgroundColor',backgroundColor);
+rb_single = uiradiobutton(bg_session,'Position',[30 10 150 30],'Text','Single Session','FontSize',fontsize,'FontColor', foregroundColor);
+rb_mutliple = uiradiobutton(bg_session,'Position',[190 10 150 30],'Text','Multiple Sessions','FontSize',fontsize,'FontColor', foregroundColor);
 
+%% Backfitting Param
+l_backfit = uilabel(backfit_panel,'Position', [30 25 300 25], 'Text','Select Required Backfitting levels: ','FontSize',fontsize,'FontColor',foregroundColor);
+cbx_session = uicheckbox(backfit_panel,'Position',[300 25 200 25],'Text','Session','FontSize',fontsize,'FontColor',foregroundColor);
+cbx_participant = uicheckbox(backfit_panel,'Position',[450 25 200 25],'Text','Participant','FontSize',fontsize,'FontColor',foregroundColor);
+cbx_group = uicheckbox(backfit_panel,'Position',[600 25 200 25],'Value',1,'Text','Group','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cbx,event) groubCbx(cbx));
+
+%% Ok Button
+ok_btn = uibutton(gui_fig, 'Position', [300 20 200 40],'Text','Save Parameters',...
+    'FontWeight','Bold','BackgroundColor',backgroundColor,'FontSize',fontsize+2,...
+    'FontColor',foregroundColor, 'ButtonPushedFcn',@(src,event) okButtonPushed());
 
 %% FUNCTIONS
 waitfor(gui_fig);
-    function projectnameField(src,~)
-        param = guidata(src);
-        param.projectName = src.Value;
-        guidata(src,param);
-    end
-    function selectGlobalDirectory(src,~)
+    function selectSrcDirectory(src,~)
         directory = uigetdir();
         param = guidata(src);
-        param.path.global_path = directory;%[directory,filesep];
-        l_global.Text = param.path.global_path;
+        param.path.src = directory;%[directory,filesep];
+        l_global.Text = param.path.src;
         guidata(src,param)
     end
-    function selectRawPathDirectory(src,~)
-        directory = uigetdir();
-        param = guidata(src);
-        param.path.raw_Data = directory;%[directory,filesep];
-        guidata(src,param)
-        l_raw.Text = param.path.raw_Data;
-    end
-    function selecteeglabectory(src,~)
+    function selecteeglabDirectory(src,~)
         directory = uigetdir();
         param = guidata(src);
         param.path.eeglab = directory;%[directory,filesep];
         l_eeglab.Text = param.path.eeglab;
         guidata(src,param)
     end
-function cBoxChanged(cbx,btn,lab)
+    function selectepochDirectory(src,~)
+        directory = uigetdir();
+        param = guidata(src);
+        param.path.datatoepoch = directory;
+        l_epoch.Text = param.path.datatoepoch;
+        guidata(src,param)
+    end
+function cBoxChanged(cbx,btn1,lab1,btn2,lab2,btn3)
     val = cbx.Value;
     if val
-        btn.Enable = 'on';
-        lab.Enable = 'on';
+        btn1.Enable = 'on';
+        lab1.Enable = 'on';
+        btn2.Enable = 'on';
+        lab2.Enable = 'on';
+        btn3.Enable = 'on';
     else
-        btn.Enable = 'off';
-        lab.Enable = 'off';
+        btn1.Enable = 'off';
+        lab1.Enable = 'off';
+        btn2.Enable = 'off';
+        lab2.Enable = 'off';
+        btn3.Enable = 'off';
     end
 end
-             
-% 
-% 
-% % Participant or Patients
-% bgParticipants = uibuttongroup('Parent',set_panel,'Position',[225, 95 ,160 75],'Title',"Analysis type", 'BackgroundColor', backgroundColor,'ForegroundColor',foregroundColor, "SelectionChangedFcn",@participantSelection);
-% rbparticipant1 = uiradiobutton(bgParticipants,'Text',"Patients (INTRA)",'Position',[10 30 150 15],  'FontColor',foregroundColor);
-% rbparticipant2 = uiradiobutton(bgParticipants,'Text',"Participants (INTER)",'Position',[10 10 150 15],  'FontColor',foregroundColor);
-% set(bgParticipants,'SelectedObject',rbparticipant2);
-% %if participants: single or multiple sessions
-% bgSessions = uibuttongroup('Visible','on','Parent',set_panel,'Position',[225 10 160 75],'Title',"Sessions", 'BackgroundColor', backgroundColor,'ForegroundColor',foregroundColor, "SelectionChangedFcn",@sessionSelection);
-% rbsession1 = uiradiobutton(bgSessions,'Text',"Single",'Position',[10 30 150 15],  'FontColor',foregroundColor);
-% rbsession2 = uiradiobutton(bgSessions,'Text',"Multiple",'Position',[10 10 150 15],  'FontColor',foregroundColor);
-% 
-% uibutton(gui_fig,'push','Position',[200 32 100 30],'Text','Ok','ButtonPushedFcn',@ok_fun, 'BackgroundColor', backgroundColor,'FontColor',foregroundColor);
-% 
-% waitfor(gui_fig);
-%     function projectnameField(src,~)
-%         param = guidata(src);
-%         param.projectName = src.Value;
-%         guidata(src,param);
-%     end
-%     function selectGlobalDirectory(src,~)
-%         directory = uigetdir();
-%         param = guidata(src);
-%         param.path.global_path = directory;%[directory,filesep];
-%         uilabel(gui_fig,'Text', param.path.global_path,'Position',[260 360 240 30],'FontColor', foregroundColor);
-%         guidata(src,param)
-%     end
-%     function selectRawPathDirectory(src,~)
-%         directory = uigetdir();
-%         param = guidata(src);
-%         param.path.raw_Data = directory;%[directory,filesep];
-%         guidata(src,param)
-%         uilabel(gui_fig,'Text', param.path.raw_Data,'Position',[260 320 240 30],'FontColor', foregroundColor);
-%         
-%     end
-%     function selecteeglabectory(src,~)
-%         directory = uigetdir();
-%         param = guidata(src);
-%         param.path.eeglab = directory;%[directory,filesep];
-%         uilabel(gui_fig,'Text',param.path.eeglab,'Position',[260 280 240 30],'FontColor', foregroundColor);
-%         guidata(src,param)
-%     end
-% 
-%     function RSSelection(src,event)
-%         param = guidata(src);
-%         param.RSSelection =event.NewValue.Text;
-%         guidata(src,param);
-%     end
-%     function levelSelection(src,event)
-%         param = guidata(src);
-%         param.levelSelection =event.NewValue.Text;
-%         guidata(src,param);
-%     end
-%     function participantSelection(src,event)
-%         if rbparticipant2.Value == true
-%             bgSessions.Visible = "on";
-%         else
-%             bgSessions.Visible = "off";
-%             param.sessionSelection = "";
-%             
-%         end
-%         param = guidata(src);
-%         param.participantSelection =event.NewValue.Text;
-%         guidata(src,param);
-%     end
-%     function sessionSelection(src,event)
-%         param = guidata(src);
-%         param.path.sessionSelection =event.NewValue.Text;
-%         guidata(src,param);
-%     end
-% 
-%     function ok_fun(src,~)
-%         param = guidata(src);
-%         param.projectName = project_name.Value;
-%         guidata(src,param)
-%         disp(param);
-%         if ~strcmp({param.projectName, param.path.global_path, param.path.raw_Data,param.path.eeglab},"")
-%             cancel = 1;
-%             delete(gui_fig);
-%             %% uj,
-%         else
-%             uilabel(gui_fig,'Text', 'Entrez tous les paramètres','Position',[0 5 500 30],'FontColor', '#B00020', 'HorizontalAlignment','center');
-%         end
-%         
-%     end
+function groubCbx(cbx)
+        cbx.Value = 1; % group checkbox is mandatory
+    end
+function okButtonPushed()
+    param.name = efname.Value;
+    if param.path.src == ""
+            param.path.src = l_global.Text ;
+
+    end
+    %Epoching
+    param.todo.eyes_epoching = cbxEyes.Value;
+    if cbxEyes.Value
+        param.epoching.triggerlabel = efTrigger.Value;
+        param.epoching.timelimits = [0 efTriggerVal.Value];
+    end
+    %param multipleSessions
+    param.multipleSessions = rb_mutliple.Value ;
+    %param.backfittingLevels
+    if cbx_session.Value && cbx_participant.Value
+            param.backfittingLevels ={'session','participant','group'};
+    else
+        if cbx_session.Value && ~ cbx_participant.Value
+        param.backfittingLevels = {'session','group'};
+        else
+            if ~cbx_session.Value && cbx_participant.Value
+                param.backfittingLevels = {'participant','group'};
+            else
+                param.backfittingLevels = {'group'};
+            end
+        end
+
+    end
+    disp(bg_session.SelectedObject)
+end
 end

@@ -2,7 +2,7 @@ function p04_microstates_reordering(settings)
 %% If required: Ask for reordering on last level
 
 %if this step is required
-if settings.todo.microstates_reordering==1
+if settings.todo.microstates_reordering
     lastLevel = char(settings.levels(end)); % last segmentation (clustering) level
     level_path = eval(['settings.path.',lastLevel]);
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; % for the cluster new names
