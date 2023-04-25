@@ -13,5 +13,5 @@
     - [ ] custom colormap (should be located in the external files folder, or change path in p00_settings.m)
 
 ## Process
-Open main.m file.
-The paramGUI variable permit the opening of a small GUI asking for required path and parameters. If you wish, you can put this variable to *false* and change the parameters by hand in the p00_settings.m file.
+Open ```main.m``` file.
+The ```paramGUI``` variable (default : *true*) permits the opening of a small GUI asking for required path and parameters. If you wish, you can put this variable to *false* and change the parameters by hand in the ```p00_settings.m``` file.
