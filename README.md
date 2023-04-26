@@ -55,9 +55,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | s.levels | array of string each segmentation possibility (session, participant, group)	| {’participant’,’group’} if multiple Sessions : {’session’,’participant’,’group’} |
 | s.sr |	double |	sample rate (Hz)	| 500 | 
 | s.nGoodSamples	| double	| minimum number of good samples after excluding bad epochs |	1000 | 
-
-| **Parameter** | **Type**    | **Description**    | **Default** |		
-| :----- | :-- | :--- | :---|
+| **s.path** |    |   | |		
 | s.path.datatoepoch | 	string	| data to epoched folder (if required) | ""	 |
 | s.path.data | 	string	| preprocessed and epoched data folder	| “” |
 | s.path.globalpath	| string	| global project path 	| .\pwd |
@@ -75,14 +73,10 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | s.path.microstatesKoenig	| string	| T. Koenig’s microstates toolbox : Microstates1.2 location	| “” |
 | s.path.eeglab	| string	| eeglab location	|  “” | 
 | s.path.colormap	| string	| customcolormap | location	| “” | 
-
-| **Parameter** | **Type**    | **Description**    | **Default** |		
-| :----- | :-- | :--- | :---|
-| s.customColorMap	| 	| | | 	
+| **s.customColorMap**	| 	| | | 	
 | s.customColorMap.colors	| char	| colors used for the microstates plots	| 'red-white-blue’ | 
 | s.customColorMap.range	| double	| range used for the microstates plots	| [-0.25 0.25] | 
-
-| s.microstate	| | | |  		
+| **s.microstate**	| | | |  		
 | s.microstate.algorithm	| char	| algorithm used for the microstates segmentation process
 Options :
 - ‘modkmeans’ Mofidied K-means
