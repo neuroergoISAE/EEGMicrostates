@@ -100,7 +100,7 @@ For each of the n Microstates :
 - Duration : mean duration of the microstate at each occurence
 - Coverage : total duration of the microstate over the epoch
 - GEV : Global Explained Variance of the microstate
-- MspatCorr : Correlation of the microstates
+- MspatCorr : Microstate Spatial Correlation 
 
 **Segmentation methods** :
 - ‘modkmeans’ Mofidied K-means 
