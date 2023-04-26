@@ -98,7 +98,7 @@ For each of the n Microstates :
 - Gfp : Global field potential
 - Occurence : number of time each microstate appears over the epoch
 - Duration : mean duration of the microstate at each occurence
-- Coverage : total coverage of the microstate
+- Coverage : total duration of the microstate over the epoch
 - GEV : Global Explained Variance of the microstate
 - MspatCorr : Correlation of the microstates
 
