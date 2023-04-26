@@ -93,14 +93,12 @@ Parameters settings :
 | s.microstate.stats	| array of char	| parameters to include in the final microstates statistical analysis | |
 
 **Default Stats output** : 
-- GEVtotal : Global explained variance of the n Microstates
-
-For each of the n Microstates :  
+- GEVtotal : Global explained variance of the n Microstates  
 - Gfp : Global field potential
 - Occurence : number of time each microstate appears over the epoch
-- Duration : mean duration of the microstate at each occurence
-- Coverage : total duration of the microstate over the epoch
-- GEV : Global Explained Variance of the microstate
+- Duration : mean duration of each microstate at each occurence
+- Coverage : total duration of each microstate over the epoch
+- GEV : Global Explained Variance of each microstate
 - MspatCorr : Microstate Spatial Correlation 
 
 **Segmentation methods** :
