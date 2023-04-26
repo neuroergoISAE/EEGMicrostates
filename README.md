@@ -77,13 +77,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | s.customColorMap.colors	| char	| colors used for the microstates plots	| 'red-white-blue’ | 
 | s.customColorMap.range	| double	| range used for the microstates plots	| [-0.25 0.25] | 
 | **s.microstate**	| | | |  		
-| s.microstate.algorithm	| char	| algorithm used for the microstates segmentation process
-Options :
-- ‘modkmeans’ Mofidied K-means
-- ‘kmeans‘ Ordinary K-means
-- ‘varmicro’ Variational microstates
-- ‘taahc’ Topograhpical Atomize and Agglormerate Hierarchical Clustering
-- ‘aahc’ Atomize and Agglomerate Hierarchical Clustering	| ‘modkmeans’ |  
+| s.microstate.algorithm	| char	| algorithm used for the microstates segmentation process Options : - ‘modkmeans’ Mofidied K-means - ‘kmeans‘ Ordinary K-means - ‘varmicro’ Variational microstates - ‘taahc’ Topograhpical Atomize and Agglormerate Hierarchical Clustering - ‘aahc’ Atomize and Agglomerate Hierarchical Clustering | ‘modkmeans’ |  
 | s.microstate.sorting	| char	| Order based on GEV (first MS is the one explaining the most variance)	| 'Global explained variance’ |
 | s.microstate.normalise	| double	| | 0 |
 | s.microstate.Nmicrostates	| double	| Range of numbers of clusters	| 4 (for multiple ms clusters analysis : [n:m] |
