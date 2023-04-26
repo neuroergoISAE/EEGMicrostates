@@ -55,7 +55,9 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | s.levels | array of string each segmentation possibility (session, participant, group)	| {’participant’,’group’} if multiple Sessions : {’session’,’participant’,’group’} |
 | s.sr |	double |	sample rate (Hz)	| 500 | 
 | s.nGoodSamples	| double	| minimum number of good samples after excluding bad epochs |	1000 | 
-| s.path | | | |			
+
+| **Parameter** | **Type**    | **Description**    | **Default** |		
+| :----- | :-- | :--- | :---|
 | s.path.datatoepoch | 	string	| data to epoched folder (if required) | ""	 |
 | s.path.data | 	string	| preprocessed and epoched data folder	| “” |
 | s.path.globalpath	| string	| global project path 	| .\pwd |
@@ -73,6 +75,35 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | s.path.microstatesKoenig	| string	| T. Koenig’s microstates toolbox : Microstates1.2 location	| “” |
 | s.path.eeglab	| string	| eeglab location	|  “” | 
 | s.path.colormap	| string	| customcolormap | location	| “” | 
+
+| **Parameter** | **Type**    | **Description**    | **Default** |		
+| :----- | :-- | :--- | :---|
+| s.customColorMap	| 	| | | 	
+| s.customColorMap.colors	| char	| colors used for the microstates plots	| 'red-white-blue’ | 
+| s.customColorMap.range	| double	| range used for the microstates plots	| [-0.25 0.25] | 
+
+| s.microstate	| | | |  		
+| s.microstate.algorithm	| char	| algorithm used for the microstates segmentation process
+Options :
+- ‘modkmeans’ Mofidied K-means
+- ‘kmeans‘ Ordinary K-means
+- ‘varmicro’ Variational microstates
+- ‘taahc’ Topograhpical Atomize and Agglormerate Hierarchical Clustering
+- ‘aahc’ Atomize and Agglomerate Hierarchical Clustering	| ‘modkmeans’ |  
+| s.microstate.sorting	| char	| Order based on GEV (first MS is the one explaining the most variance)	| 'Global explained variance’ |
+| s.microstate.normalise	| double	| | 0 |
+| s.microstate.Nmicrostates	| double	| Range of numbers of clusters	| 4 (for multiple ms clusters analysis : [n:m] |
+| s.microstate.verbose	| double	| Print status messages to command window	| 1 |
+| s.microstate.Nrepetitions_Cluster	| double	| Number of random initialization of algorithm when applied on already clustered data	| 100 |
+| s.microstate.Nrepetitions_GFP	| double	| Number of random initialization of algorithm when applied on gfp data (first level segmentation)	| 1000 |
+| s.microstate.fitmeans	| char	| Reading measure of fit for selecting best segmentation	‘CV’ |
+| s.microstate.max_iterations	| double	| Maximal number of iteration for the segmentation process	| 1000 |
+| s.microstate.threshold	| double	| Threshold of convergence based on relative change in noise variance	| 0.000001 |
+| s.microstate.optimised	| double	| Use the new and optimized segmentation introduced	| 1 |
+| s.microstate.orderingPolarity	| double	| in ArrangMapsBasedOnMean: respect polarity or not	| 0 |
+| s.microstate.stats	| array of char	| parameters to include in the final microstates statistical analysis | 	 {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'} |
+
+
 
 
 ##  :crystal_ball: Help
