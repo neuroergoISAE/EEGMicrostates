@@ -17,7 +17,6 @@ paramgui = true; % can be changed (if false, check the path parameters in p00_se
 
 %% Settings
 s=p00_settings(paramgui);
-s.levels = {'participant','group'};
 
 %% Required Steps
 % Override old outputs?

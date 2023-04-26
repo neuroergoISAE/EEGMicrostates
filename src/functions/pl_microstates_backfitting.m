@@ -15,9 +15,9 @@ if ~isfolder(fp_output)
     mkdir(fp_output);
 end
 
-%% Backfitting on the lastlevel prototypes (recommanded: group level)
-
-for l = s.levels%1:length(s.levels)
+%% Backfitting on the lastlevel prototypes (mandatory: group level)
+% Backfitting on the requested levels only
+for l = s.backfittingLevels %s.levels
     level = char(l);
     switch level
         case 'session'

@@ -3,7 +3,7 @@ function p06_microstates_stats(settings)
 if settings.todo.microstates_stats
     for h = settings.microstate.Nmicrostates
         
-        for l=settings.levels
+        for l=settings.backfittingLevels % stats on the backfitted levels only
             level = char(l);
             disp(['p06 Save Stats : ',level, ' ',num2str(h),' MS']);
             fp_microstates = dir([settings.path.backfitting,'**',filesep,'*',level,'*',num2str(h),'MS.mat']);
