@@ -36,7 +36,8 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 
 ## :floppy_disk: Output 
 
-!
+!(/external_files/DocMicrostates.JPG)
+
 ## :compass: Short glossary
 
 - microstates: Topographical results of n cluster segmentation on the gfp peaks. Commonly, 4 clusters are extracted
