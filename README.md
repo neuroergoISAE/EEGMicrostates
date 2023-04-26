@@ -94,6 +94,7 @@ Parameters settings :
 
 **Default Stats output** : 
 - GEVtotal : Global explained variance of the n Microstates
+
 For each of the n Microstates :  
 - Gfp : Global field potential
 - Occurence : number of time each microstate appears over the epoch
