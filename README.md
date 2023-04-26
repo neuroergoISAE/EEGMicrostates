@@ -51,7 +51,10 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | **Parameter** | **Type**    | **Description**    | **Default** |
 | :-----: | :---: | :---: | :---:|
 | s.name | string   | global project folder name   | "" | 
-|s.multipleSessions	|boolean	|Do the data include multiple sessions per participant|	false|
+| s.multipleSessions	| boolean	| Do the data include multiple sessions per participant |	false |
+| s.levels | array of string	each segmentation possibility (session, participant, group)	| {’participant’,’group’} if multiple Sessions : {’session’,’participant’,’group’} |
+| s.sr |	double |	sample rate (Hz)	| 500 | 
+| s.nGoodSamples	| double	| minimum number of good samples after excluding bad epochs |	1000 | 
 
 
 ##  :crystal_ball: Help
