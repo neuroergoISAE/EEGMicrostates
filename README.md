@@ -21,7 +21,8 @@ The multiple levels microstates analysis will extract microstates on available l
 - ```p002_gfp_peaks.m``` : extracts gfp peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
 - ```p003_microstates_segmentation.m``` : performs the segmentation (in our case, the **modified k-means clustering**) on each existing level and save the prototypes in the corresponding folders (```session``` if existing, ```participant``` and ```group```).
 - ```p004_microstates_reordering.m``` : asks the user to input the right order of the last level (group) prototypes. Reording of all the other levels prototypes according to the group prototypes order.
-- ```
+- ```p005_microstates_backfitting.m``` : performs the backfitting on the requested levels. The default backfitting level is on the group prototypes. Other can be added as an option. Results are saved in the ```backfitting``` folder. 
+- ```p006_microstates_stats.m``` : extracts the statistics of the backfitted microstates for each level and save them in .csv and .mat files in the ```stats``` folder.
 
 ## :airplane: Launch
 Open ```main.m``` file.
