@@ -47,6 +47,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 - segmentation : clustering process, in our case : modified k-means cluster. The number of clusters is 4 by default but can be changed. A list of cluster number can also be included (will increase the number of output and time of procedure).
 
 ## :microscope: Details 
+Parameters settings : 
 
 | **Parameter** | **Type**    | **Description**    | **Default** |
 | ---- | --- | ------ | --- |
