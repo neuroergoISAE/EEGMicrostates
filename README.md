@@ -1,7 +1,7 @@
 # EEGMicrostates :brain:
 **Multiple levels Microstates Analysis for EEG data** 
 
-## :pushpin: Requirements
+## :toolbox: Requirements
 
 - [ ] **Matlab** (>= 2019a)
     - [ ] Signal Processing Toolbox (signal)
@@ -10,11 +10,11 @@
 - [ ] **eeglab** (2023 is better) 
     - [ ] Microstates Analysis Toolbox : Microstates1.2 (Thomas Koenig) [download](https://www.thomaskoenig.ch/Download/EEGLAB_Microstates/Microstates1.2.zip)
     - [ ] Microstates EEGlab Toolbox : MST1.0 (Poulsen et al., 2018) [github](https://github.com/atpoulsen/Microstate-EEGlab-toolbox)
-## Description
+## :jigsaw: Description
 
 The multiple levels microstates analysis will extract microstates on available levels (session if existing, participant and group) and then backfit the original data on the microstates prototypes of the requested levels. The backfitting is by default done on the group level. Other levels backfitting can be added by selecting them in the backfit section of the GUI or by changing the parameters in the ```p00_setting.m``` file.
 
-### Process description
+### :hourglass_flowing_sand: Process
 - ```p00_settings.m``` : parameters selection with or without GUI, a previous setting file can be loaded.
 - ```p01_load_data.m``` : loads the data to analyis. If required, can epoch the data to analyse (closed or opened eyes for example).
 - ```p002_gfp_peaks.m``` : extracts gfp peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
@@ -36,7 +36,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 
 ## :floppy_disk: Output 
 
-## Short glossary
+## :compass: Short glossary
 
 - microstates: Topographical results of n cluster segmentation on the gfp peaks. Commonly, 4 clusters are extracted
 - prototypes : microstate clusters defined for a group, a participant or a session. Used as the reference for the backfitting procedure
@@ -46,7 +46,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 - group level : all the existing participants and sessions, always single group for the global population.
 - segmentation : clustering process, in our case : modified k-means cluster. The number of clusters is 4 by default but can be changed. A list of cluster number can also be included (will increase the number of output and time of procedure).
 
-
+## :microscope: Details 
 
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
