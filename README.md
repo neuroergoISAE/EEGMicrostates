@@ -90,10 +90,19 @@ Parameters settings :
 | s.microstate.threshold	| double	| Threshold of convergence based on relative change in noise variance	| 0.000001 |
 | s.microstate.optimised	| double	| Use the new and optimized segmentation introduced	| 1 |
 | s.microstate.orderingPolarity	| double	| in ArrangMapsBasedOnMean: respect polarity or not	| 0 |
-| s.microstate.stats	| array of char	| parameters to include in the final microstates statistical analysis | 	 'GEVtotal','Gfp','Occ','Duration','Cov','GEV','MspatCorr' |
+| s.microstate.stats	| array of char	| parameters to include in the final microstates statistical analysis | |
 
+**Default Stats output** : 
+- GEVtotal : Global explained variance of the n Microstates
+For each of the n Microstates :  
+- Gfp : Global field potential
+- Occurence : number of time each microstate appears over the epoch
+- Duration : mean duration of the microstate at each occurence
+- Coverage : total coverage of the microstate
+- GEV : Global Explained Variance of the microstate
+- MspatCorr : Correlation of the microstates
 
-**Segentation methods** :
+**Segmentation methods** :
 - ‘modkmeans’ Mofidied K-means 
 - ‘kmeans‘ Ordinary K-means - ‘varmicro’ Variational microstates 
 - ‘taahc’ Topograhpical Atomize and Agglormerate Hierarchical Clustering 
