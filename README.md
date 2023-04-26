@@ -51,6 +51,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | **Parameter** | **Type**    | **Description**    | **Default** |
 | :-----: | :---: | :---: | :---:|
 | s.name | string   | global project folder name   | "" | 
+|s.multipleSessions	|boolean	|Do the data include multiple sessions per participant|	false|
 
 
 ##  :crystal_ball: Help
