@@ -52,9 +52,27 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | :----- | :-- | :--- | :---|
 | s.name | string   | global project folder name   | "" | 
 | s.multipleSessions	| boolean	| Do the data include multiple sessions per participant |	false |
-| s.levels | array of string each segmentation possibility (session, participant, group)	| {’participant’,’group’} \n if multiple Sessions : {’session’,’participant’,’group’} |
+| s.levels | array of string each segmentation possibility (session, participant, group)	| {’participant’,’group’} if multiple Sessions : {’session’,’participant’,’group’} |
 | s.sr |	double |	sample rate (Hz)	| 500 | 
 | s.nGoodSamples	| double	| minimum number of good samples after excluding bad epochs |	1000 | 
+| s.path | | | |			
+| s.path.datatoepoch | 	string	| data to epoched folder (if required) | ""	 |
+| s.path.data | 	string	| preprocessed and epoched data folder	| “” |
+| s.path.globalpath	| string	| global project path 	| .\pwd |
+| s.path.src	| string	| source folder, including functions and settings	| “” |
+| s.path.results	| string	| results folder, will include sub folders for each step of the processing	| “” |
+| s.path.tables	| string	| tables folder, microstates statistics of all data results in .mat files	| “” |
+| s.path.csv	| string	| csv folder, microstates statistics results of all data in .csv files	| “” |
+| s.path.session	| string	| session folder, segmentation results and plots for the session level	| “” |
+| s.path.participant	| string	| participant folder, segmentation results and plots for the participant level	| “” |
+| s.path.group	| string	| group folder, segmentation results and plots for the group level	| “” |
+| s.path.gfp	| string	| gfp folder, gfp results and plots for each data	| “” |
+| s.path.backfitting	| string	| backfitting folder, backfitting results for each level	| “” |
+| s.path.functions	| string	| functions folder, all function required for the analysis	| “” |
+| s.path.microstates	| string	| microstates toolbox : MST1.0 location	| “” |
+| s.path.microstatesKoenig	| string	| T. Koenig’s microstates toolbox : Microstates1.2 location	| “” |
+| s.path.eeglab	| string	| eeglab location	|  “” | 
+| s.path.colormap	| string	| customcolormap | location	| “” | 
 
 
 ##  :crystal_ball: Help
