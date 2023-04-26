@@ -18,7 +18,7 @@ backfit_panel = uipanel(gui_fig,'Position', [50 80 700 100], 'BackgroundColor' ,
 uilabel(gui_fig,'Text',"Project Name : ",'Position',[55 620 150 30],'FontSize',fontsize+2,'FontColor', foregroundColor);
 efname = uieditfield(gui_fig,'Position',[200 620 550 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
 %% labels
-l_global=uilabel(path_panel,'Text',fileparts(pwd) ,'Position',[40 15 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+l_global=uilabel(path_panel,'Text',pwd,'Position',[40 15 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 l_eeglab = uilabel(path_panel,'Text','','Position',[380 15 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 %Global Path
 btnSrcPath = uibutton(path_panel,'push', 'Text', 'Select Source Folder Directory',...
@@ -132,5 +132,6 @@ function okButtonPushed()
 
     end
     disp(bg_session.SelectedObject)
+    close(gui_fig);
 end
 end
