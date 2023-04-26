@@ -36,7 +36,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 
 ## :floppy_disk: Output 
 
-!(/external_files/DocMicrostates.JPG)
+![Documentation Igmae](/external_files/DocMicrostates.jpg)
 
 ## :compass: Short glossary
 
