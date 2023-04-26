@@ -89,7 +89,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 | s.microstate.threshold	| double	| Threshold of convergence based on relative change in noise variance	| 0.000001 |
 | s.microstate.optimised	| double	| Use the new and optimized segmentation introduced	| 1 |
 | s.microstate.orderingPolarity	| double	| in ArrangMapsBasedOnMean: respect polarity or not	| 0 |
-| s.microstate.stats	| array of char	| parameters to include in the final microstates statistical analysis | 	 {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'} |
+| s.microstate.stats	| array of char	| parameters to include in the final microstates statistical analysis | 	 'GEVtotal','Gfp','Occ','Duration','Cov','GEV','MspatCorr' |
 
 
 **Segentation methods** :
