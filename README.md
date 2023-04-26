@@ -48,5 +48,10 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 
 ## :microscope: Details 
 
+| **Parameter** | **Type**    | **Description**    | **Default** |
+| :-----: | :---: | :---: | :---:|
+| s.name | string   | global project folder name   | "" | 
+
+
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
