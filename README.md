@@ -109,5 +109,7 @@ Parameters settings :
 - ‘taahc’ Topograhpical Atomize and Agglormerate Hierarchical Clustering 
 - ‘aahc’ Atomize and Agglomerate Hierarchical Clustering 
 
+![Microstates pipeline](external_files/MSPipeline.png)
+
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
