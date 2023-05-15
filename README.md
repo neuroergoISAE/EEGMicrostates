@@ -28,6 +28,7 @@ The multiple levels microstates analysis will extract microstates on available l
 Open ```main.m``` file.
 
 The ```paramGUI``` variable (default : *true*) permits the opening of a small GUI asking for required path and parameters. If you wish, you can put this variable to *false* and change the parameters by hand in the ```p00_settings.m``` file.
+If the data folder is placed in the global project folder and you want all the results to save in the same folder as your data folder, just write your data folder's name in the "Project Name" input field of the GUI.
 
 You can change the required steps and skip unwanted one by changing the corresponding variable ```settings.todo.var``` with ```false```
 
