@@ -3,10 +3,24 @@ function p01_load_data(settings)
 if settings.todo.eyes_epoching
     epochfolders = dir(settings.path.datatoepoch);
     epochfolders  = epochfolders(~contains({epochfolders.name},'.')); % ignore parent folders
-    for i=1:length(epochfolders)
-        disp(['Data Epoching: ', num2str(i), '/ ', num2str(length(epochfolders))])
-        pl_epoching(epochfolders(i),settings);
+    if settings.multipleSessions
+        for i=1:length(epochfolders)
+            fp_epoch = dir([epochfolders(i).folder, filesep, epochfolders(i).name]);
+            fp_epoch = fp_epoch(~contains({fp_epoch.name},'.'));
+            for j = 1:length(fp_epoch)
+                disp(['Data Epoching: ', num2str(j), '/ ', num2str(length(fp_epoch)*length(fp_epoch))])
+                fn_output = [epochfolders(i).name,filesep,fp_epoch(j).name];
+                pl_epoching(fp_epoch(j),fn_output,settings);
+            end
+            
+        end
+    else
+        for k=1:length(epochfolders)
+            disp(['Data Epoching: ', num2str(k), '/ ', num2str(length(epochfolders))])
+            pl_epoching(epochfolders(k),epochfolders(k).name,settings);
+        end
     end
+
 end
 
 if settings.todo.load_data

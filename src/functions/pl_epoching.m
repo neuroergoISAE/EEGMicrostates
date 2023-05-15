@@ -1,15 +1,15 @@
-function pl_epoching(inputfolder, s)
+function pl_epoching(inputfolder,fn_output, s)
 
     fp_eeg = [inputfolder.folder,filesep,inputfolder.name,filesep,'eeg',filesep];
     fn_eeg = dir(fp_eeg);
     fn_eeg = fn_eeg(contains({fn_eeg.name},'.mat')& ~contains({fn_eeg.name},'reduced')); 
     
     
-    fp_output = [s.path.data,filesep,inputfolder.name,filesep,'eeg'];
+    fp_output = [s.path.data,fn_output,filesep,'eeg'];
     if ~isfolder(fp_output)
         mkdir(fp_output)
     end
-    fn_output = [fp_output,filesep,'eegdata_EC.mat'];
+    fn_output = [fp_output,filesep,'eegdata_',s.epoching.triggerlabel'.mat'];
     %% Load the EEG file
       disp(['..loading ',fn_eeg.folder,filesep,fn_eeg.name])
       load([fn_eeg.folder,filesep,fn_eeg.name],'EEG');

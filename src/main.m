@@ -1,3 +1,5 @@
+%% Adapted from Christian Pfeiffer & Moritz Truninger
+%% 2023
 function main()
 %% Description 
 % Main file for the Microstates extraction process
@@ -6,6 +8,8 @@ function main()
 
 %% Path
 %cd('E:\ACERI\Microstates\src');
+clc
+clear all
 addpath([matlabroot,'\toolbox\signal']); 
 addpath([matlabroot,'\toolbox\stats']); 
 

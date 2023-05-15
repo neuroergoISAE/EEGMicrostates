@@ -1,6 +1,6 @@
 function [param, cancel] = paramGUI
 
-backgroundColor = '#121212';
+backgroundColor = '#141414';
 foregroundColor = '#FFFFFF';
 fontsize = 16;
 cancel = 0;
@@ -43,17 +43,19 @@ btnEpochingPath.ButtonPushedFcn = @selectepochDirectory;
 cbxEyes = uicheckbox(eyes_panel,'Text','Add Epoch (Closed Eyes) Extraction','Value', 0,...
                   'Position',[30 55 300 30],'Fontcolor',foregroundColor,'FontSize',fontsize,'ValueChangedFcn',...
                    @(cbxEyes,event) cBoxChanged(cbxEyes,efTrigger,l_trigger,efTriggerVal,l_triggerVal,btnEpochingPath));
-%% Multiple or Single Sessions
-l_bg_session = uilabel(session_panel,'Position',[30 15 250 50],'WordWrap','on', 'Text','Multiple or Single Session for each participant: ','FontSize',fontsize,'FontColor', foregroundColor);
-bg_session = uibuttongroup('Parent',session_panel,'Position',[300 10 350 50],'BackgroundColor',backgroundColor);
-rb_single = uiradiobutton(bg_session,'Position',[30 10 150 30],'Text','Single Session','FontSize',fontsize,'FontColor', foregroundColor);
-rb_mutliple = uiradiobutton(bg_session,'Position',[190 10 150 30],'Text','Multiple Sessions','FontSize',fontsize,'FontColor', foregroundColor);
 
-%% Backfitting Param
+               %% Backfitting Param
 l_backfit = uilabel(backfit_panel,'Position', [30 25 300 25], 'Text','Select Required Backfitting levels: ','FontSize',fontsize,'FontColor',foregroundColor);
-cbx_session = uicheckbox(backfit_panel,'Position',[300 25 200 25],'Text','Session','FontSize',fontsize,'FontColor',foregroundColor);
+cbx_session = uicheckbox(backfit_panel,'Position',[320 25 200 25],'Enable','off','Text','Session','FontSize',fontsize,'FontColor',foregroundColor);
 cbx_participant = uicheckbox(backfit_panel,'Position',[450 25 200 25],'Text','Participant','FontSize',fontsize,'FontColor',foregroundColor);
 cbx_group = uicheckbox(backfit_panel,'Position',[600 25 200 25],'Value',1,'Text','Group','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cbx,event) groubCbx(cbx));
+
+               %% Multiple or Single Sessions
+l_bg_session = uilabel(session_panel,'Position',[30 15 250 50],'WordWrap','on', 'Text','Multiple or Single Session for each participant: ','FontSize',fontsize,'FontColor', foregroundColor);
+bg_session = uibuttongroup('Parent',session_panel,'Position',[300 10 350 50],'BackgroundColor',backgroundColor,'SelectionChangedFcn',@(bg_session,event) cBoxChanged_Session(bg_session,cbx_session));
+rb_single = uiradiobutton(bg_session,'Position',[30 10 150 30],'Text','Single Session','FontSize',fontsize,'FontColor', foregroundColor);
+rb_multiple = uiradiobutton(bg_session,'Position',[190 10 150 30],'Text','Multiple Sessions','FontSize',fontsize,'FontColor', foregroundColor);
+
 
 %% Ok Button
 ok_btn = uibutton(gui_fig, 'Position', [300 20 200 40],'Text','Save Parameters',...
@@ -99,6 +101,18 @@ function cBoxChanged(cbx,btn1,lab1,btn2,lab2,btn3)
         btn3.Enable = 'off';
     end
 end
+
+function cBoxChanged_Session(cbx,cbx2) 
+    val = cbx.SelectedObject.Text;
+    
+    if strcmp(val,rb_single.Text)
+        cbx2.Enable = 'off';
+        cbx2.Value = 0;
+    else
+        cbx2.Enable = 'on';
+
+    end
+end
 function groubCbx(cbx)
         cbx.Value = 1; % group checkbox is mandatory
     end
@@ -115,7 +129,7 @@ function okButtonPushed()
         param.epoching.timelimits = [0 efTriggerVal.Value];
     end
     %param multipleSessions
-    param.multipleSessions = rb_mutliple.Value ;
+    param.multipleSessions = rb_multiple.Value ;
     %param.backfittingLevels
     if cbx_session.Value && cbx_participant.Value
             param.backfittingLevels ={'session','participant','group'};

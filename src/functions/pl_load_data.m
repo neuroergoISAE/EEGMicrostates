@@ -66,4 +66,5 @@ function pl_load_data(inputfolder,outputfolder,s)
         save([fp_output, fn_eegdata],'EEG');
         %save info file
         save([fp_output,fn_info],'info');
+    end
 end
