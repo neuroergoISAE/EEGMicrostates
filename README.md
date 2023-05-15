@@ -48,7 +48,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 - participant level : each individual (subject, patient or participant) included in the experiment.
 - group level : all the existing participants and sessions, always single group for the global population.
 - segmentation : clustering process, in our case : modified k-means cluster. The number of clusters is 4 by default but can be changed. A list of cluster number can also be included (will increase the number of output and time of procedure).
-- In case of signle sessions but mulitple conditions analysis: conditions can be considered as sessions
+- In case of single sessions but mulitple conditions analysis: conditions can be considered as sessions
 
 ## :microscope: Details 
 Parameters settings : 
