@@ -9,7 +9,7 @@ function pl_epoching(inputfolder,fn_output, s)
     if ~isfolder(fp_output)
         mkdir(fp_output)
     end
-    fn_output = [fp_output,filesep,'eegdata_',s.epoching.triggerlabel'.mat'];
+    fn_output = [fp_output,filesep,'eegdata_',s.epoching.triggerlabel,'.mat'];
     %% Load the EEG file
       disp(['..loading ',fn_eeg.folder,filesep,fn_eeg.name])
       load([fn_eeg.folder,filesep,fn_eeg.name],'EEG');

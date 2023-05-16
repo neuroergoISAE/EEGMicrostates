@@ -7,7 +7,7 @@ function main()
 % Analysed data must have been pre-processed and epoched on the trigger of interest (eyes opened or eyes closed for example)
 
 %% Path
-%cd('E:\ACERI\Microstates\src');
+cd('E:\ACERI\Microstates\src');
 clc
 clear all
 addpath([matlabroot,'\toolbox\signal']); 

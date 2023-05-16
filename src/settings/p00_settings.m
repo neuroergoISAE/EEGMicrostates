@@ -1,4 +1,4 @@
-function settings = p00_settings(paramgui)
+ function settings = p00_settings(paramgui)
 %% All the required settings for the microstates analysis
 
 %% if already existing settings in settings folder : load and  prefill the gui
@@ -29,7 +29,6 @@ else
     end
 end
 
-
 if  settings.todo.eyes_epoching
     % settings for the filtering
     settings.epoching.averageref = true; 
@@ -50,7 +49,7 @@ end
 
 %% Source folder
 settings.path.global_path = fileparts(settings.path.src);
-settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
+%settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
 settings.path.results = [settings.path.global_path,filesep,settings.name,filesep,'Microstates_Results',filesep]; %Microstates Results
 cd(settings.path.src);
 if ~isfolder(settings.path.results)
