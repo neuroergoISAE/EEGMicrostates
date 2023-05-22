@@ -44,7 +44,7 @@ l_triggerVal = uilabel(eyes_panel,'Text','Trigger Duration','Position',[565 5 12
 
 cbxEyes = uicheckbox(eyes_panel,'Text','Add Epoch (Closed Eyes) Extraction','Value', 0,...
                   'Position',[30 5 300 30],'Fontcolor',foregroundColor,'FontSize',fontsize,'ValueChangedFcn',...
-                   @(cbxEyes,event) cBoxChanged(cbxEyes,efTrigger,l_trigger,efTriggerVal,l_triggerVal,btnInputPath));
+                   @(cbxEyes,event) cBoxChanged(cbxEyes,efTrigger,l_trigger,efTriggerVal,l_triggerVal));
 
                %% Backfitting Param
 l_backfit = uilabel(backfit_panel,'Position', [30 25 300 25], 'Text','Select Required Backfitting levels: ','FontSize',fontsize,'FontColor',foregroundColor);
@@ -60,7 +60,7 @@ rb_multiple = uiradiobutton(bg_session,'Position',[190 10 150 30],'Text','Multip
 
 
 %% Ok Button
-ok_btn = uibutton(gui_fig, 'Position', [300 20 200 40],'Text','Save Parameters',...
+ok_btn = uibutton(gui_fig, 'Position', [250 20 300 40],'Text','Save Parameters and Run',...
     'FontWeight','Bold','BackgroundColor',backgroundColor,'FontSize',fontsize+2,...
     'FontColor',foregroundColor, 'ButtonPushedFcn',@(src,event) okButtonPushed());
 
@@ -87,20 +87,18 @@ waitfor(gui_fig);
         l_inputData.Text = param.path.data;
         guidata(src,param)
     end
-function cBoxChanged(cbx,btn1,lab1,btn2,lab2,btn3)
+function cBoxChanged(cbx,btn1,lab1,btn2,lab2)
     val = cbx.Value;
     if val
         btn1.Enable = 'on';
         lab1.Enable = 'on';
         btn2.Enable = 'on';
         lab2.Enable = 'on';
-        btn3.Enable = 'on';
     else
         btn1.Enable = 'off';
         lab1.Enable = 'off';
         btn2.Enable = 'off';
         lab2.Enable = 'off';
-        btn3.Enable = 'off';
     end
 end
 

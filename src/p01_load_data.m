@@ -43,7 +43,6 @@ if settings.todo.load_data
       else % First level : Participants
         for i=1:length(folders)
             disp(['p01 Load Data: ', num2str(i), '/ ', num2str(length(folders))])
-            folders(1)
             pl_load_data(folders(i), settings.path.gfp, settings);
         end
     end   

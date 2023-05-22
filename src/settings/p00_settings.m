@@ -12,34 +12,30 @@ if paramgui
 %     disp('Reopen Parameters GUI?') %yes :open param, no : stop anaylsis
 %     here
 else
-    settings.todo.eyes_epoching = false; % default : eyes epoching already done
+    settings.todo.eyes_epoching = true; % default : eyes epoching already done
     settings.multipleSessions = 0; % default: no sessions 
     settings.name = ['Project_',date()]; % default name
     settings.path.src = pwd;%'E:\ACERI\Microstates\src'; % source code folder, default : pwd
+    settings.path.global_path = fileparts(settings.path.src);
+
     if settings.multipleSessions
-        settings.path.backfittingLevels  = {'session','participant','group'}; %default : backfit on all levels
+        settings.backfittingLevels  = {'session','participant','group'}; %default : backfit on all levels
     else
-        settings.path.backfittingLevels  = {'participant','group'}; %default : backfit on all levels
+        settings.backfittingLevels  = {'participant','group'}; %default : backfit on all levels
     end
     settings.path.eeglab = 'D:\eeglab\eeglab2023.0'; %% EEGLAB LOCATION         
     if  settings.todo.eyes_epoching
-        settings.path.datatoepoch = 'F:\RR_microstates\preprocessed_RS';% insert data to epoch location
-        settings.epoching.triggerlabel = 'EC';
+        settings.path.datatoepoch =  'E:\ACERI\Microstates\Quentin\Data_Epoch';% insert data to epoch location
+        settings.epoching.triggerlabel = 'RS_EC';
         settings.epoching.timelimits = [0 30];
+    else
+        settings.path.data = 'E:\ACERI\Microstates\Quentin\Data_Epoch'; %[settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
     end
+
 end
 
-if  settings.todo.eyes_epoching
-    % settings for the filtering
-    settings.epoching.averageref = true; 
-    settings.epoching.notch.lpf = 48; 
-    settings.epoching.notch.hpf = 52; 
-    settings.epoching.bandpass.lpf = 2;
-    settings.epoching.bandpass.hpf = 20; 
-    settings.epoching.winlength = 1000; %2 seconds
-    settings.epoching.mvmax = 90; % maximum millivoltage to clean data
-end
 %% Preparation: set paths etc.
+% levels ~= backfittingLevels (can be different: all levels will always be computed for the segmentation while the backfitting can be done on only a few of them if required)
 if settings.multipleSessions
     settings.levels = {'session','participant','group'}; % please follow this order
 else
@@ -49,11 +45,27 @@ end
 
 %% Source folder
 settings.path.global_path = fileparts(settings.path.src);
-%settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
 settings.path.results = [settings.path.global_path,filesep,settings.name,filesep,'Microstates_Results',filesep]; %Microstates Results
 cd(settings.path.src);
 if ~isfolder(settings.path.results)
     mkdir(settings.path.results);
+end
+
+if  settings.todo.eyes_epoching
+    % settings for the filtering
+    settings.epoching.averageref = false; 
+    settings.epoching.notch.lpf = 48; 
+    settings.epoching.notch.hpf = 52; 
+    settings.epoching.bandpass.lpf = 2;
+    settings.epoching.bandpass.hpf = 20; 
+    settings.epoching.winlength = 1000; %2 seconds
+    settings.epoching.mvmax = 90; % maximum millivoltage to clean data
+    settings.epoching.spectro.timelimits = [0 1000];
+    %create epoched input data folder
+    settings.path.data = [settings.path.results,'EpochedData',filesep]; %Epoched Data Location
+        if ~isfolder(settings.path.data)
+            mkdir(settings.path.data);
+        end
 end
 
 %% All results folders
@@ -78,7 +90,7 @@ if ~isfolder(settings.path.participant)
     mkdir(settings.path.participant);
 end
 %session path (if required)
-if any(strcmp(settings.levels,'session')) %if session level
+if any(strcmp(settings.backfittingLevels,'session')) %if session level
     settings.path.session=[settings.path.results,'session',filesep]; %intermediate session output (session-level prototypes)
     if ~isfolder(settings.path.session)
         mkdir(settings.path.session);

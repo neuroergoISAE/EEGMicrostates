@@ -1,5 +1,5 @@
 %% Adapted from Christian Pfeiffer & Moritz Truninger
-%% 2023
+%% 2023 - Isae Supaero
 function main()
 %% Description 
 % Main file for the Microstates extraction process
@@ -17,7 +17,7 @@ addpath('settings');
 addpath('functions');
 
 %% GUI
-paramgui = true; % can be changed (if false, check the path parameters in p00_setting.m)
+paramgui = false; % can be changed (if false, check the path parameters in p00_setting.m)
 
 %% Settings
 s=p00_settings(paramgui);

@@ -5,7 +5,7 @@ function pl_epoching(inputfolder,fn_output, s)
     fn_eeg = fn_eeg(contains({fn_eeg.name},'.mat')& ~contains({fn_eeg.name},'reduced')); 
     
     
-    fp_output = [s.path.data,fn_output,filesep,'eeg'];
+    fp_output = [s.path.data,filesep,fn_output,filesep,'eeg'];
     if ~isfolder(fp_output)
         mkdir(fp_output)
     end
@@ -43,7 +43,7 @@ function pl_epoching(inputfolder,fn_output, s)
       %% exclude bad data segements (i.e. amplitude too high)
       % extract snippets of X seconds out of EEG.data
       EEG.data = epoch(EEG.data,1:s.epoching.winlength:size(EEG.data,2),...
-          s.epoching.timelimits); %segments the data in non-overlapping epochs of 2sec/1000sp length
+          s.epoching.spectro.timelimits); %segments the data in non-overlapping epochs of 2sec/1000sp length
       EEG.pnts = size(EEG.data,2);
       EEG.times = 1: 1000/EEG.srate: size(EEG.data,2)*1000/EEG.srate;
       EEG.trials = size(EEG.data,3);
@@ -68,6 +68,4 @@ function pl_epoching(inputfolder,fn_output, s)
       %% Save output file
       disp(['save : ', fn_output]);
       save(fn_output,'EEG'); 
-end
-
-      
+end      
