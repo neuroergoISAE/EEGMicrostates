@@ -88,8 +88,8 @@ Parameters settings :
 | s.microstate.normalise	| double	| | 0 |
 | s.microstate.Nmicrostates	| double	| Range of numbers of clusters	| 4 (for multiple ms clusters analysis : [n:m] |
 | s.microstate.verbose	| double	| Print status messages to command window	| 1 |
-| s.microstate.Nrepetitions_Cluster	| double	| Number of random initialization of algorithm when applied on already clustered data	| 100 |
-| s.microstate.Nrepetitions_GFP	| double	| Number of random initialization of algorithm when applied on gfp data (first level segmentation)	| 1000 |
+| s.microstate.Nrepetitions_FistLevel | double	| Number of random initialization of algorithm when applied on already clustered data	| 100 |
+| s.microstate.Nrepetitions_OtherLevels	| double	| Number of random initialization of algorithm when applied on gfp data (first level segmentation)	| 1000 |
 | s.microstate.fitmeans	| char	| Reading measure of fit for selecting best segmentation	‘CV’ |
 | s.microstate.max_iterations	| double	| Maximal number of iteration for the segmentation process	| 1000 |
 | s.microstate.threshold	| double	| Threshold of convergence based on relative change in noise variance	| 0.000001 |
