@@ -73,9 +73,9 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
         EEG.microstate.data = EEG.data; % = CEEG
         
         if levelnum == 1 % if clustering is done directly on GFP : requires more repetitions
-            nrepetitions  =  s.microstate.Nrepetitions_GFP;
+            nrepetitions  =  s.microstate.Nrepetitions_FirstLevel;
         else
-            nrepetitions = s.microstate.Nrepetitions_Cluster;
+            nrepetitions = s.microstate.Nrepetitions_OtherLevels;
         end
         %segment resp. cluster the data
         EEG = pop_micro_segment( ...
