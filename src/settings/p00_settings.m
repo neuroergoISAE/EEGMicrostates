@@ -1,7 +1,6 @@
  function settings = p00_settings(s)
 %% All the required settings for the microstates analysis
 settings = s;
-disp(settings.todo);
 %% if already existing settings in settings folder : load and  prefill the gui
 %% ParamGUI if required
 if settings.todo.paramgui
@@ -9,7 +8,6 @@ if settings.todo.paramgui
     settings  = param; 
     settings.todo = s.todo; 
     settings.todo.eyes_epoching  = param.todo.eyes_epoching;
-    disp(settings.todo);
     settings.path.src = pwd;
 
 %     if param settings not complete !
@@ -20,7 +18,7 @@ else
     settings.todo.eyes_epoching = true; % default : eyes epoching already done
     settings.multipleSessions = 0; % default: no sessions 
     settings.name =['Project_',date()]; % default name
-    settings.path.src = pwd;%'E:\ACERI\Microstates\src'; % source code folder, default : pwd
+    settings.path.src = pwd;  % source code folder, default : pwd
     settings.path.global_path = fileparts(settings.path.src);
 
     if settings.multipleSessions
