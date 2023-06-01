@@ -4,12 +4,16 @@ function pl_epoching(inputfolder,fn_output, s)
     fn_eeg = dir(fp_eeg);
     fn_eeg = fn_eeg(contains({fn_eeg.name},'.mat')& ~contains({fn_eeg.name},'reduced')); 
     
-    
     fp_output = [s.path.data,filesep,fn_output,filesep,'eeg'];
+    fp_output_gfp = [s.path.gfp,fn_output]; %save output eegdata directly in gfp folder will then skip pl_load_data.m)
     if ~isfolder(fp_output)
         mkdir(fp_output)
     end
+    if ~isfolder(fp_output_gfp)
+        mkdir(fp_output_gfp)
+    end
     fn_output = [fp_output,filesep,'eegdata_',s.epoching.triggerlabel,'.mat'];
+    fp_output_gfp = [fp_output_gfp,filesep,'eegdata.mat'];
     %% Load the EEG file
       disp(['..loading ',fn_eeg.folder,filesep,fn_eeg.name])
       load([fn_eeg.folder,filesep,fn_eeg.name],'EEG');
@@ -66,6 +70,7 @@ function pl_epoching(inputfolder,fn_output, s)
       EEG.times = 1: 1000/EEG.srate: size(EEG.data,2)*1000/EEG.srate;
 
       %% Save output file
-      disp(['save : ', fn_output]);
+      disp(['save : ', fn_output, ' and : ', fp_output_gfp ]);
       save(fn_output,'EEG'); 
+      save(fp_output_gfp,'EEG'); 
 end      

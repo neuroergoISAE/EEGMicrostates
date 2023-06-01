@@ -1,20 +1,25 @@
- function settings = p00_settings(paramgui)
+ function settings = p00_settings(s)
 %% All the required settings for the microstates analysis
-
+settings = s;
+disp(settings.todo);
 %% if already existing settings in settings folder : load and  prefill the gui
 %% ParamGUI if required
-if paramgui
+if settings.todo.paramgui
     [param ,~] = paramGUI;
     settings  = param; 
-    disp(settings);
+    settings.todo = s.todo; 
+    settings.todo.eyes_epoching  = param.todo.eyes_epoching;
+    disp(settings.todo);
+    settings.path.src = pwd;
 
 %     if param settings not complete !
 %     disp('Reopen Parameters GUI?') %yes :open param, no : stop anaylsis
 %     here
 else
+    settings.path.src = pwd;
     settings.todo.eyes_epoching = true; % default : eyes epoching already done
     settings.multipleSessions = 0; % default: no sessions 
-    settings.name = ['Project_',date()]; % default name
+    settings.name =['Project_',date()]; % default name
     settings.path.src = pwd;%'E:\ACERI\Microstates\src'; % source code folder, default : pwd
     settings.path.global_path = fileparts(settings.path.src);
 
@@ -29,7 +34,7 @@ else
         settings.epoching.triggerlabel = 'RS_EC';
         settings.epoching.timelimits = [0 30];
     else
-        settings.path.data = 'E:\ACERI\Microstates\Quentin\Data_Epoch'; %[settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
+        settings.path.data = 'E:\ACERI\Microstates\Quentin\EpochedData'; %[settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
     end
 
 end
@@ -61,8 +66,7 @@ if  settings.todo.eyes_epoching
     settings.epoching.winlength = 1000; %2 seconds
     settings.epoching.mvmax = 90; % maximum millivoltage to clean data
     settings.epoching.spectro.timelimits = [0 1000];
-    %create epoched input data folder
-    settings.path.data = [settings.path.results,'EpochedData',filesep]; %Epoched Data Location
+    settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'EpochedData']; %Epoched Data Location
         if ~isfolder(settings.path.data)
             mkdir(settings.path.data);
         end

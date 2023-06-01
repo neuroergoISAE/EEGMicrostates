@@ -11,10 +11,10 @@ function pl_microstates_gfppeaks(inputfolder,outputfolder,s)
 %% INPUT
 %input path and names
 fp_input = [inputfolder.folder,filesep,inputfolder.name,filesep];
-fn_info = 'info.mat';
+%fn_info = 'info.mat';
 fn_eegdata = 'eegdata.mat';
 % do both input files exist?
-input_files_exist = exist([fp_input,fn_eegdata],'file') == 2 && exist([fp_input,fn_info],'file') == 2;
+input_files_exist = exist([fp_input,fn_eegdata],'file') == 2 ;%&& exist([fp_input,fn_info],'file') == 2;
 %% OUTPUT
 %output path and names
 fp_output = [outputfolder,filesep];
@@ -35,20 +35,20 @@ if input_files_exist && (~output_files_exist || s.todo.override)
     end
     
     %% load info file, add some defaults & load segmented data
-    disp(['..loading ',fp_input,fn_info]);
-    load([fp_input,fn_info],'info')
-    info.numgfppeaks= 0;
+    %disp(['..loading ',fp_input,fn_info]);
+    %load([fp_input,fn_info],'info')
+    %info.numgfppeaks= 0;
     
         %load segmented eegdata
         disp(['..loading ',fp_input,fn_eegdata]);
         load([fp_input,fn_eegdata],'EEG')
         
         %% try gfp peak detection & get peaks
-        try
+        %try
             
             %how many peaks should be taken
             if s.microstate.gfppeaks.takeAllPeaks % if all available peaks should be taken
-                Npeaks = eval('info.numsamples'); % Npeaks = maximum peaks possible (= total amount of data points)
+                Npeaks = EEG.pnts; %eval('info.numsamples'); % Npeaks = maximum peaks possible (= total amount of data points)
             else % if only a subset of the peaks should be taken
                 Npeaks = s.microstate.gfppeaks.Npeaks; % Npeaks = predetermined number
             end
@@ -73,7 +73,7 @@ if input_files_exist && (~output_files_exist || s.todo.override)
             CEEG = EEG.microstate.data;
             
             %update info file
-            eval(['info.numgfppeaks_','=size(CEEG,2);']); % number of peaks of current subject
+            %eval(['info.numgfppeaks_','=size(CEEG,2);']); % number of peaks of current subject
             
             %save gfp peaks
             save([fp_output,fn_gfppeaks],'CEEG');
@@ -83,11 +83,11 @@ if input_files_exist && (~output_files_exist || s.todo.override)
             fn_chanlocs = 'chanlocs.mat';
             save([fp_output,fn_chanlocs],'chanlocs');
             
-        catch
-            disp('!! Error in gfp peak extraction!!')
-        end
+%         catch
+%             disp('!! Error in gfp peak extraction!!')
+%         end
         
         %save info file
-        save([fp_output,fn_info],'info');
+        %save([fp_output,fn_info],'info');
         
 end
