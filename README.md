@@ -113,6 +113,7 @@ Parameters settings :
 - ‘aahc’ Atomize and Agglomerate Hierarchical Clustering 
 
 ![Microstates pipeline](external_files/MSPipeline.png)
+![Processes Pipelines](external_files/Pipelines.png)
 
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
