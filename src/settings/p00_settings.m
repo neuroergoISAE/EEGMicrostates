@@ -1,5 +1,12 @@
- function settings = p00_settings(s)
-%% All the required settings for the microstates analysis
+%% p00_settings.m
+% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Date : April 2023
+% Description : this script contains the parameters for the microstates analysis. Parameters can be modified
+% Dependencies : EEGlab with MST1.0 and MicrostateAnalysis1.2 Toolboxes
+% Inputs : s, structure containing the todo parameters
+% Outputs: settings, structure containing all settings for the analysis
+
+function settings = p00_settings(s)
 settings = s;
 %% if already existing settings in settings folder : load and  prefill the gui
 %% ParamGUI if required
@@ -37,7 +44,7 @@ else
 
 end
 
-%% Preparation: set paths etc.
+%% Levels
 % levels ~= backfittingLevels (can be different: all levels will always be computed for the segmentation while the backfitting can be done on only a few of them if required)
 if settings.multipleSessions
     settings.levels = {'session','participant','group'}; % please follow this order
@@ -70,7 +77,7 @@ if  settings.todo.eyes_epoching
         end
 end
 
-%% All results folders
+%% Results folders
 %tables path
 settings.path.tables=[settings.path.results,'stats',filesep,'tables',filesep]; %mat tables with final features
 if ~isfolder(settings.path.tables)
@@ -81,6 +88,7 @@ settings.path.csv=[settings.path.results,'stats',filesep,'csv',filesep]; %csv fi
 if ~isfolder(settings.path.csv)
     mkdir(settings.path.csv);
 end
+
 %group path
 settings.path.group=[settings.path.results,'group',filesep]; %intermediate group output (sample-level prototypes)
 if ~isfolder(settings.path.group)
@@ -92,7 +100,7 @@ if ~isfolder(settings.path.participant)
     mkdir(settings.path.participant);
 end
 %session path (if required)
-if any(strcmp(settings.backfittingLevels,'session')) %if session level
+if any(strcmp(settings.backfittingLevels,'session')) %if session level required
     settings.path.session=[settings.path.results,'session',filesep]; %intermediate session output (session-level prototypes)
     if ~isfolder(settings.path.session)
         mkdir(settings.path.session);
@@ -109,10 +117,11 @@ settings.path.backfitting=[settings.path.results,'backfitting',filesep]; %backfi
 if ~isfolder(settings.path.backfitting)
     mkdir(settings.path.backfitting);
 end
+
 %%  Toolbox
 settings.path.microstates=[settings.path.eeglab,filesep,'plugins',filesep,'MST1.0', filesep]; %toolbox poulsen
 settings.path.microstatesKoenig = [settings.path.eeglab,filesep,'plugins',filesep,'MicrostateAnalysis1.2',filesep,'Microstates1.2', filesep]; %toolbox koenig
-settings.path.colormap = [settings.path.global_path,filesep,'external_files',filesep,'customcolormap',filesep]; % for plotting the microstates
+settings.path.colormap = [settings.path.global_path,filesep,'external_files',filesep,'customcolormap',filesep]; %for the microstates plots
 
 %% add paths
 addpath(settings.path.src);
@@ -131,12 +140,11 @@ settings.customColorMap.range = [-0.25 0.25];
 settings.nGoodSamples = 1000; % minimum number of good samples after excluding bad epochs (10'000 time points = 20 seconds)
 settings.sr = 500; % sampling rate
 
-%% Microstates Settings
-
+%% Microstates Analysis Settings
 settings.microstate = [];
 % gfp peak selection settings
 settings.microstate.gfppeaks.datatype = 'spontaneous';
-settings.microstate.gfppeaks.avgref = 1; %re-reference sur la moyenne
+settings.microstate.gfppeaks.avgref = 1; %re-reference average
 settings.microstate.gfppeaks.normalise = 1; %normalise the channels into z-scores for amplitude and variance uniformity
 settings.microstate.gfppeaks.MinPeakDist = 10; %minimum distance between 2 peaks
 settings.microstate.gfppeaks.GFPthresh = 1; %peaks above this threshold are considered as noise
@@ -149,10 +157,10 @@ settings.microstate.sorting = 'Global explained variance'; % first MS is the one
 settings.microstate.normalise = 0;
 settings.microstate.Nmicrostates = 4; % range of numbers of microstates, clusters intended (~ range of microstate models)
 settings.microstate.verbose = 1;
-settings.microstate.Nrepetitions_FirstLevel = 1000 ;%1000; %differs from the first level clustering
-settings.microstate.Nrepetitions_OtherLevels = 100 ;%differs from the first level clustering (on GFP)
+settings.microstate.Nrepetitions_FirstLevel = 1000 ; %differs from the first level clustering
+settings.microstate.Nrepetitions_OtherLevels = 100 ; %differs from the first level clustering (on GFP)
 settings.microstate.fitmeas = 'CV';
-settings.microstate.max_iterations = 1000;
+settings.microstate.max_iterations = 1000; 
 settings.microstate.threshold = 1e-06;
 settings.microstate.optimised = 1;
 

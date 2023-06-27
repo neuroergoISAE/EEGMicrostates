@@ -1,13 +1,22 @@
+%% pl_microstates_segmentation.m
+% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Date : April 2023
+% Description : this script process the clustering on each requested level (session, participant, group)
+% and for each requested number of cluster (settings.microstate.Nmicrostates)
+% for the first level clustering: cluster on the GFP peaks, for the next level clustering: cluster on the previous level
+% Dependencies : EEGlab
+% Inputs :
+% - inputfolder :  location of the gfp peaks data of each participant/session
+% - outputfolder : location for the microstates_prototypes files for each level and each number of cluster (in level>sub> or level>sub>ses> folder)
+% - levelnum : the level on which the cluster will be computed (number from 1 to how many levels are available)
+% - s : structure containing all settings
+% Outputs: 'level'_microstate_prototype_'n'MS.mat and 'level'_microstate_prototype_'n'MS.png files for each participant/session
+
 function pl_microstates_segmentation(inputfolder,outputfolder,levelnum,s)
 
-%% try gfp peak detection & get peaks
-level = s.levels{levelnum};
+level = s.levels{levelnum};% Current level (session, participant or group)
 
-%% microstate segmentation/ clustering
-%% load data for this segmentation
-
-%output
-fp_output_plots = [outputfolder, 'plots', filesep];
+fp_output_plots = [outputfolder, 'plots', filesep]; %plot folder output
 if ~isfolder(fp_output_plots)
     mkdir(fp_output_plots);
 end
@@ -16,11 +25,11 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
     try
         %% Load Input Data
         disp('.. load data');
-        if strcmp(level,s.levels{1}) %first level : GFP as input
+        if strcmp(level,s.levels{1}) %first level : GFP as input (no previous level to cluster on)
             disp([inputfolder.folder,filesep,inputfolder.name,filesep,'gfppeaks.mat']);
-            load([inputfolder.folder,filesep,inputfolder.name,filesep,'gfppeaks.mat'],'CEEG'); %leao gfppeaks as CEEG variable
+            load([inputfolder.folder,filesep,inputfolder.name,filesep,'gfppeaks.mat'],'CEEG'); %load gfppeaks as CEEG variable
             load([inputfolder.folder,filesep,inputfolder.name,filesep,'chanlocs.mat'],'chanlocs'); %load chanlocs
-        else
+        else % other level : previous level as input
             previouslevel =  s.levels{levelnum-1};
             %% Append all files of the inferior level (input) for the clustering
             CEEG = [];
