@@ -1,6 +1,6 @@
 %% pl_epoching.m
 % Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
-% Date : April 2023
+% Date : 2023
 % Description : this script loads each of the eeg data, selects the epochs of interest (as requested)
 % and saves the new eeg data in the EpochedData folder (which is then considered as the Data folder)
 % Dependencies : EEGlab

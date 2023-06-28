@@ -1,6 +1,6 @@
 %% p01_load_data.m
 % Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
-% Date : April 2023
+% Date : 2023
 % Description : this script loads the eeg data and select the epochs of interest if requested
 % Dependencies : same as main
 % Inputs : settings, structure containing all settings for the analysis

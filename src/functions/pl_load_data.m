@@ -1,6 +1,6 @@
 %% pl_load_data.m
 % Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
-% Date : April 2023
+% Date : 2023
 % Description : this script loads the eeg data, check for the Number of sample and copy them in the gfp level folder for the next step of the analysis
 % the purpose if this step is to simplify the later backfitting procedure and to ensure the data safety
 % Dependencies : none

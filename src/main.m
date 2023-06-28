@@ -1,6 +1,6 @@
 %% main.m 
 % Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
-% Date : April 2023
+% Date : 2023
 % Description : this script in the main file for the microstates analysis
 % Dependencies : EEGlab, Signal Processin Toolbox, Statistics and Machine Learning Toolbox, customcolormap
 % Inputs : raw data folder must contain subjects eeg data in BIDS format

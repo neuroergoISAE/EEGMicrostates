@@ -1,6 +1,6 @@
 %% pl_microstates_gfppeaks.m
 % Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
-% Date : April 2023
+% Date : 2023
 % Description : this script loads each of the eeg data, extracts the gfp peaks maps and save them in the gfp folder for each participant/session
 % Dependencies : EEGlab
 % Inputs :
