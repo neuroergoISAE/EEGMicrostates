@@ -6,15 +6,17 @@ addpath([matlabroot,'\toolbox\signal']);
 addpath([matlabroot,'\toolbox\stats']); 
 % PARAM RESTING STATE
 [param ,~] = paramGUI;
-settings.name = param.projectName;
+settings.name = param.name;
 settings.path = param.path;
 RS_position = 'FirstRS';
 
 %No modification required, check if your folder are well organized. If not
 %you can change directories name (or better: your folder organization)
 settings.path.MS_Data = [settings.path.global_path,filesep,settings.name,filesep]; %Global results folder, folder created in the global path with the project name 
-settings.path.chanloc_path =[settings.path.global_path,filesep,'external_files\Loc_10-20_64Elec.elp']; %Channel loc file should be located is the "external_files" folder. if not you can still change the path name
+settings.path.chanloc_path =['E:\ACERI\Microstates\external_files\Loc_10-20_64Elec.elp']; %Channel loc file should be located is the "external_files" folder. if not you can still change the path name
 settings.path.Automagic_Data = [settings.path.MS_Data,RS_position,filesep,'Automagic_Results',filesep]; %Path where the automagic results will be saved
+%settings.path.Automagic_Data = [settings.path.MS_Data,RS_position,filesep,'DataPreprocessing',settings.name,'_results',filesep]; %Path where the automagic results will be saved
+
 settings.path.Preprocessing  = [settings.path.MS_Data,RS_position,filesep,'Data_Preprocessing',filesep]; %Preprocessed Data
 
 %moritzette path
@@ -33,7 +35,8 @@ if ~exist(strcat(settings.path.MS_Data,'Data_Raw_Renamed'), 'dir')
 end
 
 % Copy the files over with a new name.
-inputFiles =  dir(strcat(settings.path.raw_Data,'\**\*.xdf'));
+%inputFiles =  dir(strcat(settings.path.raw_Data,'\**\*.xdf'));
+inputFiles =  dir(strcat(settings.path.datatoepoch,'\**\*.xdf'));
 fileNames = { inputFiles.name };
 fileFolders = { inputFiles.folder };
 for k = 1 : length(inputFiles)
@@ -49,6 +52,7 @@ if ~exist(strcat(settings.path.Preprocessing), 'dir')
 end
 
 cd(fullfile(settings.path.MS_Data,'Data_Raw_Renamed'));
+
 %list of .xdf files
 liste_XDF=dir('*.xdf');
 
@@ -73,9 +77,9 @@ for f=1:length(liste_XDF)  %f for files
     EEG = pop_select( EEG,'channel',{'A1' 'A2' 'A3' 'A4' 'A5' 'A6' 'A7' 'A8' 'A9' 'A10' 'A11' 'A12' 'A13' 'A14' 'A15' 'A16' 'A17' 'A18' 'A19' 'A20' 'A21' 'A22' 'A23' 'A24' 'A25' 'A26' 'A27' 'A28' 'A29' 'A30' 'A31' 'A32' 'B1' 'B2' 'B3' 'B4' 'B5' 'B6' 'B7' 'B8' 'B9' 'B10' 'B11' 'B12' 'B13' 'B14' 'B15' 'B16' 'B17' 'B18' 'B19' 'B20' 'B21' 'B22' 'B23' 'B24' 'B25' 'B26' 'B27' 'B28' 'B29' 'B30' 'B31' 'B32'});
     EEG = pop_chanedit(EEG, 'lookup', settings.path.chanloc_path); % Channel location
     EEG = pop_editset(EEG, 'chanlocs', settings.path.chanloc_path);
-
+    
     %Resample
-    EEG = pop_resample(EEG, 500);
+    EEG = pop_resample(EEG, 512);
 
     %REREFERENCAGE average
     %EEG = pop_reref( EEG, []);
@@ -100,10 +104,12 @@ for f=1:length(liste_XDF)  %f for files
         %    IdxEO(j)=i;
         %end
    % end
-
+    firstRS = true
    if(firstRS)
-    idxEnd = find(ismember(EventsType,'EndRestingState'), 1 ); %first RestingState End
-    idxStart = find(ismember(EventsType,'StartRestingState'), 1 ); %first RestingState End
+    %idxEnd = find(ismember(EventsType,'EndRestingState'), 1 ); %first RestingState End
+    %idxStart = find(ismember(EventsType,'StartRestingState'), 1 ); %first RestingState End
+    idxEnd = find(ismember(EventsType,'End'), 1 ); %first RestingState End
+    idxStart = find(ismember(EventsType,'Start'), 1 ); %first RestingState End
    else
        idxEnd = find(ismember(EventsType,'EndRestingState'), 1,'last' ); %first RestingState End
        idxStart = find(ismember(EventsType,'StartRestingState'), 1,'last'); %first RestingState End
@@ -140,9 +146,11 @@ end
 %% 3.Automagic
 
 rmpath(genpath(settings.path.eeglab));
-addpath(strcat(settings.path.eeglab,'plugins\automagic2.6'));
+%addpath(strcat(settings.path.eeglab,'plugins\automagic2.6'));
 cd(fullfile(settings.path.global_path,'src'));
 %(settings); ??
+cd('E:\ACERI\Microstates\src')
+
 
 %% 4.Move automagic files
 if ~exist(settings.path.data, 'dir')
@@ -153,7 +161,7 @@ fileNames = { inputFiles.name };
 fileFolders = { inputFiles.folder };
 for k = 1 : length(inputFiles)
     sub_n = string(extractBetween(fileNames{k},'p_sub-','_ses'));
-    outputFullFileName = [settings.path.data,'sub',sub_n,filesep,'eeg'];%char(strcat(settings.path.data,'sub',sub_n,'\eeg'));
+    outputFullFileName = char(strcat(settings.path.data,'sub',sub_n,'\eeg'));%[settings.path.data,'sub',sub_n,filesep,'eeg'];
     mkdir(outputFullFileName);
     copyfile(fullfile(fileFolders{k}, fileNames{k}), fullfile(outputFullFileName,string(fileNames{k})));
 end

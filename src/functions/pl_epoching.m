@@ -2,13 +2,14 @@
 % Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
 % Date : 2023
 % Description : this script loads each of the eeg data, selects the epochs of interest (as requested)
-% and saves the new eeg data in the EpochedData folder (which is then considered as the Data folder)
+% and saves the new eeg data in the EpochedData folder (which is then considered as the Data folder). This script also checks for the Number of sample and copies them in the gfp level folder for the next step of the analysis
+% the purpose if this step is to simplify the later backfitting procedure and to ensure the data safety 
 % Dependencies : EEGlab
 % Inputs :
 % - inputfolder :  location of the eeg data of each participant/session
-% - outputfolder : location for the output eegdata_TriggeName.mat file (in EpochedData>sub>eeg or EpochedData>sub>ses>eeg folder)
+% - outputfolder : location for the output eegdata_TriggerName.mat file (in EpochedData>sub>eeg or EpochedData>sub>ses>eeg folder) &nd location for the output eegdata.mat file (in gfp>sub or gfp>sub>ses folder)
 % - s : structure containing all settings
-% Outputs: eegdata_TriggeName.mat file for each participant/session in the EpochedData folder
+% Outputs: eegdata_TriggerName.mat file for each participant/session in the EpochedData folder
 function pl_epoching(inputfolder,outputfolder, s)
 %% Check existing files
 fp_eeg = [inputfolder.folder,filesep,inputfolder.name,filesep,'eeg',filesep]; % eeg data folder

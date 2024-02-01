@@ -43,8 +43,8 @@ if settings.todo.microstates_segmentation
         grouplevelnum = 2;
     end
     %% GROUP LEVEL CLUSTERING
-    fp_participant = dir(settings.path.results);
-    p_char =  char(extractBetween(settings.path.participant,settings.path.results,filesep)); %how the participant folder is called
+    fp_participant = dir(settings.path.MS_results);
+    p_char =  char(extractBetween(settings.path.participant,[settings.path.MS_results,filesep],filesep)); %how the participant folder is called
     fp_participant = fp_participant(contains({fp_participant.name},p_char));
     outputGroup = settings.path.group; %outputfile: group folder
     pl_microstates_segmentation(fp_participant, outputGroup,grouplevelnum, settings);% level 2 or 3 : group (level 3 if multiple sessions, 2 if single sessions)

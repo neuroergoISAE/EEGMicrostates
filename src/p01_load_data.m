@@ -10,7 +10,8 @@ function p01_load_data(settings)
 
 if settings.todo.load_data
     if settings.todo.eyes_epoching
-        epochfolders = dir(settings.path.datatoepoch);
+        %epochfolders = dir(settings.path.datatoepoch);
+        epochfolders = dir(settings.path.preprocessed_data);
         epochfolders  = epochfolders(~contains({epochfolders.name},'.')); % ignore parent folders
         if settings.multipleSessions %First level : Session
             for i=1:length(epochfolders) %each participant
@@ -32,7 +33,7 @@ if settings.todo.load_data
     else %else: load the data
         
         % find input data folders
-        folders = dir(settings.path.data); % get folder content of (input) data folder
+        folders = dir(settings.path.preprocessed_data); % get folder content of (input) data folder
         folders = folders(~contains({folders.name},'.')); % ignore parent folders
         
         if settings.multipleSessions % First Level : Sessions

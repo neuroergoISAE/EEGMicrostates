@@ -13,6 +13,7 @@ if isfile(['settings',filesep,'param.mat'])
     end
 else
     param = struct();
+    param.path.project = '';
     param.path.eeglab = 'D:\eeglab\eeglab2023.0';
     param.path.data = '';
     param.name = ['Project_',date()];
@@ -33,21 +34,23 @@ efname = uieditfield(gui_fig,'Position',[200 620 550 30],'Value',param.name,'Fon
 %% labels
 %l_global=uilabel(path_panel,'Text',param.path.src,'Position',[40 60 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 %Global Path
-%btnSrcPath = uibutton(path_panel,'push', 'Text', 'Select Source Folder Directory',...
-   % 'Position', [30 95 300 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-%btnSrcPath.ButtonPushedFcn = @selectSrcDirectory;
-%Eeglab Path
-btnEEGLabPath = uibutton(path_panel,'push', 'Text', 'Select EEGLab Directory',...
-    'Position', [370 35 300 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-btnEEGLabPath.ButtonPushedFcn = @selecteeglabDirectory;
-l_eeglab = uilabel(path_panel,'Text',param.path.eeglab,...
-    'Position',[380 5 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+btnProjectPath = uibutton(path_panel,'push', 'Text', 'Project Folder Directory',...
+    'Position', [25 35 200 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+btnProjectPath.ButtonPushedFcn = @selectProjectDirectory;
+l_project = uilabel(path_panel,'Text',param.path.project,...
+    'Position',[35 5 225 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 % Input Path
-btnInputPath = uibutton(path_panel,'push', 'Text', 'Select Input Data Directory','Enable','on',...
-    'Position', [30 35 300 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+btnInputPath = uibutton(path_panel,'push', 'Text', 'Input Data Directory','Enable','on',...
+    'Position', [250 35 200 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
 btnInputPath.ButtonPushedFcn = @selectInputDirectory;
 l_inputData = uilabel(path_panel,'Text',param.path.data,...
-    'Position',[40 5 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+    'Position',[260 5 225 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+%Eeglab Path
+btnEEGLabPath = uibutton(path_panel,'push', 'Text', 'EEGLab Directory',...
+    'Position', [475 35 200 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+btnEEGLabPath.ButtonPushedFcn = @selecteeglabDirectory;
+l_eeglab = uilabel(path_panel,'Text',param.path.eeglab,...
+    'Position',[485 5 225 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 
 %% Epoch of interest extraction
 efTrigger = uieditfield(epoching,'Position',[470 40 100 30],'Value','RS_EC','Enable','off',...
@@ -96,6 +99,13 @@ waitfor(gui_fig);
         param = guidata(src);
         param.path.eeglab = directory;%[directory,filesep];
         l_eeglab.Text = param.path.eeglab;
+        guidata(src,param)
+    end
+ function selectProjectDirectory(src,~)
+        directory = uigetdir();
+        param = guidata(src);
+        param.path.project = directory;%[directory,filesep];
+        l_project.Text = param.path.project;
         guidata(src,param)
     end
     function selectInputDirectory(src,~)
@@ -147,7 +157,7 @@ function saveButtonPushed()
     %Epoching
     param.todo.eyes_epoching = cbxEpoch.Value;
     if cbxEpoch.Value
-        param.path.datatoepoch = param.path.data;
+        %param.path.datatoepoch = param.path.data;
         param.epoching.triggerlabel = efTrigger.Value;
         param.epoching.timelimits = [beginTriggerVal.Value endTriggerVal.Value];
     end
@@ -168,7 +178,7 @@ function saveButtonPushed()
         end
 
     end
-    save(['settings',filesep,'param'], 'param') ;
+    save(['settings',filesep,'param.mat'], 'param') ;
     run_btn.Enable = 'on';
 end
 function runButtonPushed()

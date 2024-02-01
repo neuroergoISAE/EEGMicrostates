@@ -9,41 +9,59 @@
 function settings = p00_settings(s)
 settings = s;
 %% if already existing settings in settings folder : load and  prefill the gui
-%% ParamGUI if required
+
 if settings.todo.paramgui
     [param ,~] = paramGUI;
     settings  = param; 
     settings.todo = s.todo; 
     settings.todo.eyes_epoching  = param.todo.eyes_epoching;
-    settings.path.src = pwd;
-
-%     if param settings not complete !
-%     disp('Reopen Parameters GUI?') %yes :open param, no : stop anaylsis
-%     here
+    settings.path.project = 'E:\ACERI\Microstates';
 else
-    settings.path.src = pwd;
-    settings.todo.eyes_epoching = true; % default : eyes epoching already done
+    settings.path.project = 'E:\ACERI\Microstates';
+    settings.name = 'ExampleProject'; %['Project_',date()]; % default name
     settings.multipleSessions = 0; % default: no sessions 
-    settings.name =['Project_',date()]; % default name
-    settings.path.src = pwd;  % source code folder, default : pwd
-    settings.path.global_path = fileparts(settings.path.src);
-
-    if settings.multipleSessions
-        settings.backfittingLevels  = {'session','participant','group'}; %default : backfit on all levels
-    else
-        settings.backfittingLevels  = {'participant','group'}; %default : backfit on all levels
-    end
-    settings.path.eeglab = 'D:\eeglab\eeglab2023.0'; %% EEGLAB LOCATION         
-    if  settings.todo.eyes_epoching
-        settings.path.datatoepoch =  'E:\ACERI\Microstates\Quentin\Data_Epoch';% insert data to epoch location
-        settings.epoching.triggerlabel = 'RS_EC';
-        settings.epoching.timelimits = [0 30];
-    else
-        settings.path.data = 'E:\ACERI\Microstates\Quentin\EpochedData'; %[settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
-    end
-
+    settings.path.data = 'E:\ACERI\Microstates\RawDataForTest'; 
+    settings.path.eeglab = 'D:\eeglab\eeglab2023.0';%% EEGLAB LOCATION  
 end
+%%
+settings.firstRS = true;
+%%
+settings.path.src =fileparts(matlab.desktop.editor.getActiveFilename); %/src folder
+%mkdir([s.path.project,filesep,filesep,s.name]);
+%fileparts(settings.path.src); %global project path
+settings.path.RS_data = [settings.path.project,filesep,settings.name,filesep,'RS_Data'];
+settings.path.automagic_data = [settings.path.project,filesep,settings.name,filesep,'Automagic_Data'];
+settings.path.preprocessed_data = [settings.path.project,filesep,settings.name,filesep,'Preprocessed_Data'];
+settings.path.MS_results= [settings.path.project,filesep,settings.name,filesep,'Microstates_Results'];
 
+settings.path.chanloc = [settings.path.project,filesep,'external_files',filesep,'Loc_10-20_64Elec.elp'];
+%%
+if settings.multipleSessions
+    settings.backfittingLevels  = {'session','participant','group'}; %default : backfit on all levels
+else
+    settings.backfittingLevels  = {'participant','group'}; %default : backfit on all levels
+end
+if  settings.todo.eyes_epoching
+    %settings.path.data =  'E:\ACERI\Microstates\Quentin\Data_Epoch';% insert data to epoch location
+    settings.epoching.triggerlabel = 'RS_EC';
+    settings.epoching.timelimits = [0 30];
+else
+    %settings.path.data = %RAW DATA FOLDER%'E:\ACERI\Microstates\Quentin\EpochedData'; %[settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
+end
+%% Folders
+if ~isfolder(settings.path.RS_data)
+    mkdir(settings.path.RS_data);
+end
+if ~isfolder(settings.path.preprocessed_data)
+    mkdir(settings.path.preprocessed_data);
+end
+if ~isfolder(settings.path.automagic_data)
+    mkdir(settings.path.automagic_data);
+end
+if ~isfolder(settings.path.MS_results)
+    mkdir(settings.path.MS_results);
+end
+cd(settings.path.src);
 %% Levels
 % levels ~= backfittingLevels (can be different: all levels will always be computed for the segmentation while the backfitting can be done on only a few of them if required)
 if settings.multipleSessions
@@ -52,14 +70,6 @@ else
     settings.levels = {'participant','group'};
 end
 % carrefull: don't modify levels spelling
-
-%% Source folder
-settings.path.global_path = fileparts(settings.path.src);
-settings.path.results = [settings.path.global_path,filesep,settings.name,filesep,'Microstates_Results',filesep]; %Microstates Results
-cd(settings.path.src);
-if ~isfolder(settings.path.results)
-    mkdir(settings.path.results);
-end
 
 if  settings.todo.eyes_epoching
     % settings for the filtering
@@ -71,49 +81,49 @@ if  settings.todo.eyes_epoching
     settings.epoching.winlength = 1000; %2 seconds
     settings.epoching.mvmax = 90; % maximum millivoltage to clean data
     settings.epoching.spectro.timelimits = [0 1000];
-    settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'EpochedData']; %Epoched Data Location
-        if ~isfolder(settings.path.data)
-            mkdir(settings.path.data);
-        end
+    %settings.path.data = [settings.path.global_path,filesep,settings.name,filesep,'EpochedData']; %Epoched Data Location
+        %if ~isfolder(settings.path.data)
+         %   mkdir(settings.path.data);
+        %end
 end
 
 %% Results folders
 %tables path
-settings.path.tables=[settings.path.results,'stats',filesep,'tables',filesep]; %mat tables with final features
+settings.path.tables=[settings.path.MS_results,filesep,'stats',filesep,'tables',filesep]; %mat tables with final features
 if ~isfolder(settings.path.tables)
     mkdir(settings.path.tables);
 end
-%csv results path
-settings.path.csv=[settings.path.results,'stats',filesep,'csv',filesep]; %csv files with final features
+%csv MS_results path
+settings.path.csv=[settings.path.MS_results,filesep,'stats',filesep,'csv',filesep]; %csv files with final features
 if ~isfolder(settings.path.csv)
     mkdir(settings.path.csv);
 end
 
 %group path
-settings.path.group=[settings.path.results,'group',filesep]; %intermediate group output (sample-level prototypes)
+settings.path.group=[settings.path.MS_results,filesep,'group',filesep]; %intermediate group output (sample-level prototypes)
 if ~isfolder(settings.path.group)
     mkdir(settings.path.group);
 end
 %participant path
-settings.path.participant=[settings.path.results,'participant',filesep]; %intermediate participant output (participant-level prototypes)
+settings.path.participant=[settings.path.MS_results,filesep,'participant',filesep]; %intermediate participant output (participant-level prototypes)
 if ~isfolder(settings.path.participant)
     mkdir(settings.path.participant);
 end
 %session path (if required)
 if any(strcmp(settings.backfittingLevels,'session')) %if session level required
-    settings.path.session=[settings.path.results,'session',filesep]; %intermediate session output (session-level prototypes)
+    settings.path.session=[settings.path.MS_results,filesep,'session',filesep]; %intermediate session output (session-level prototypes)
     if ~isfolder(settings.path.session)
         mkdir(settings.path.session);
     end
 end
 
 %gfp path
-settings.path.gfp=[settings.path.results,'gfp',filesep]; %intermediate gfp output (participant or session)
+settings.path.gfp=[settings.path.MS_results,filesep,'gfp',filesep]; %intermediate gfp output (participant or session)
 if ~isfolder(settings.path.gfp)
     mkdir(settings.path.gfp);
 end
-%backfitting results path
-settings.path.backfitting=[settings.path.results,'backfitting',filesep]; %backfitting output (participant or session levels)
+%backfitting MS_results path
+settings.path.backfitting=[settings.path.MS_results,filesep,'backfitting',filesep]; %backfitting output (participant or session levels)
 if ~isfolder(settings.path.backfitting)
     mkdir(settings.path.backfitting);
 end
@@ -121,7 +131,7 @@ end
 %%  Toolbox
 settings.path.microstates=[settings.path.eeglab,filesep,'plugins',filesep,'MST1.0', filesep]; %toolbox poulsen
 settings.path.microstatesKoenig = [settings.path.eeglab,filesep,'plugins',filesep,'MicrostateAnalysis1.2',filesep,'Microstates1.2', filesep]; %toolbox koenig
-settings.path.colormap = [settings.path.global_path,filesep,'external_files',filesep,'customcolormap',filesep]; %for the microstates plots
+settings.path.colormap = [settings.path.project,filesep,'external_files',filesep,'customcolormap',filesep]; %for the microstates plots
 
 %% add paths
 addpath(settings.path.src);

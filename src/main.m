@@ -42,7 +42,6 @@ s.todo.microstates_stats = true; % Flag indicating whether to perform microstate
 
 %% Settings
 s = p00_settings(s);
-disp(s.todo);
 
 %% Anlaysis
 p01_load_data(s); % load data, move and rename eeg_data file in the gfp directory for easier use. If required: extract eye closed epochs
