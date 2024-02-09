@@ -53,9 +53,13 @@ l_eeglab = uilabel(path_panel,'Text',param.path.eeglab,...
     'Position',[485 5 225 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 
 %% Epoch of interest extraction
-efTrigger = uieditfield(epoching,'Position',[470 40 100 30],'Value','RS_EC','Enable','off',...
+efECTrigger = uieditfield(epoching,'Position',[390 40 100 30],'Value','RS_EC','Enable','off',...
     'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-l_trigger = uilabel(epoching,'Text','Trigger Label : ','Position',[300 40 120 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
+l_ECtrigger = uilabel(epoching,'Text','EC : ','Position',[350 40 50 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
+
+efEOTrigger = uieditfield(epoching,'Position',[550 40 100 30],'Value','RS_EO','Enable','off',...
+    'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+l_EOtrigger = uilabel(epoching,'Text','EO : ','Position',[510 40 50 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
 
 beginTriggerVal = uieditfield(epoching,'numeric','Limits',[0 Inf],'RoundFractionalValues','on','Position',[240 5 40 30],'Enable','off',...
    'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
@@ -65,9 +69,9 @@ endTriggerVal = uieditfield(epoching,'numeric','Limits',[0 Inf],'RoundFractional
    'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
 labelendtriggerVal = uilabel(epoching,'Text','Triger End Time (s) : ','HorizontalAlignment','left','Position',[320 5 200 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
 
-cbxEpoch = uicheckbox(epoching,'Text','Proceed to Epoching Extraction','Value', 0,...
+cbxEpoch = uicheckbox(epoching,'Text','Proceed to Resting State Extraction','Value', 0,...
                   'Position',[30 40 300 30],'Fontcolor',foregroundColor,'FontSize',fontsize,'ValueChangedFcn',...
-                   @(cbxEpoch,event) cBoxChanged(cbxEpoch,efTrigger,l_trigger,beginTriggerVal,labelbegintriggerVal,endTriggerVal,labelendtriggerVal));
+                   @(cbxEpoch,event) cBoxChanged(cbxEpoch,efECTrigger,l_ECtrigger,efEOTrigger,l_EOtrigger,beginTriggerVal,labelbegintriggerVal,endTriggerVal,labelendtriggerVal));
 
 %% Backfitting Param
 l_backfit = uilabel(backfit_panel,'Position', [30 25 300 25], 'Text','Select Required Backfitting levels: ','FontSize',fontsize,'FontColor',foregroundColor);
@@ -115,7 +119,7 @@ waitfor(gui_fig);
         l_inputData.Text = param.path.data;
         guidata(src,param)
     end
-function cBoxChanged(cbx,btn1,lab1,btn2,lab2,btn3,lab3)
+function cBoxChanged(cbx,btn1,lab1,btn2,lab2,btn3,lab3,btn4,lab4)
     val = cbx.Value;
     if val
         btn1.Enable = 'on';
@@ -124,6 +128,8 @@ function cBoxChanged(cbx,btn1,lab1,btn2,lab2,btn3,lab3)
         lab2.Enable = 'on';
         btn3.Enable = 'on';
         lab3.Enable = 'on';
+        btn4.Enable = 'on';
+        lab4.Enable = 'on';
     else
         btn1.Enable = 'off';
         lab1.Enable = 'off';
@@ -131,6 +137,8 @@ function cBoxChanged(cbx,btn1,lab1,btn2,lab2,btn3,lab3)
         lab2.Enable = 'off';
         btn3.Enable = 'off';
         lab3.Enable = 'off';
+        btn4.Enable = 'off';
+        lab4.Enable = 'off';
     end
 end
 
@@ -158,7 +166,9 @@ function saveButtonPushed()
     param.todo.eyes_epoching = cbxEpoch.Value;
     if cbxEpoch.Value
         %param.path.datatoepoch = param.path.data;
-        param.epoching.triggerlabel = efTrigger.Value;
+        param.epoching.ECtriggerlabel = efECTrigger.Value;
+        param.epoching.EOtriggerlabel = efEOTrigger.Value;
+
         param.epoching.timelimits = [beginTriggerVal.Value endTriggerVal.Value];
     end
     %param multipleSessions
