@@ -29,7 +29,7 @@ end
 addpath('settings');
 addpath('functions');
 %% Settings
-s.todo.paramgui = false; % Flag indicating whether to display a parameter GUI
+s.todo.paramgui = true; % Flag indicating whether to display a parameter GUI
 s.todo.override = true; % Flag indicating whether to override old outputs
 s.todo.eyes_epoching = true;
 
@@ -54,16 +54,38 @@ for f=1:length(list_XDF)  %f for files
     session=list_XDF(f).name(13:14);
     % open the currentfile
     EEG = pop_loadxdf(CurrFile , 'streamtype', 'EEG', 'exclude_markerstreams', {});
-    % Channel selection and location
+    
+    %1. SPLIT Resting State
+    idxEnd = find(ismember(EventsType,s.epoching.ECtriggerlabel), 5 ); %first RestingState End
+    idxEnd = idxEnd(5); % last RS trigger is the fifth RS_EC
+    idxStart = find(ismember(EventsType,s.epoching.EOtriggerlabel), 1 ); %first RestingState End
+    
+    latencyFirstEO=EEG.event(idxStart).latency/EEG.srate; %time of the first 'EO' event in seconds
+    latencyEnd=EEG.event(idxEnd).latency/EEG.srate; %time of the end event in seconds
+    EEG = eeg_checkset( EEG );
+    %select the data between firt Eyes open and END trigger
+    EEG = pop_select( EEG, 'time',[latencyFirstEO-1 latencyEnd+1] );%-1 and +1 to include the event'EO and 'end'
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'gui','off');
+    
+    % 2. Channel selection and location
     EEG = eeg_checkset( EEG );
     EEG = pop_select( EEG,'channel',{'A1' 'A2' 'A3' 'A4' 'A5' 'A6' 'A7' 'A8' 'A9' 'A10' 'A11' 'A12' 'A13' 'A14' 'A15' 'A16' 'A17' 'A18' 'A19' 'A20' 'A21' 'A22' 'A23' 'A24' 'A25' 'A26' 'A27' 'A28' 'A29' 'A30' 'A31' 'A32' 'B1' 'B2' 'B3' 'B4' 'B5' 'B6' 'B7' 'B8' 'B9' 'B10' 'B11' 'B12' 'B13' 'B14' 'B15' 'B16' 'B17' 'B18' 'B19' 'B20' 'B21' 'B22' 'B23' 'B24' 'B25' 'B26' 'B27' 'B28' 'B29' 'B30' 'B31' 'B32'});
     EEG = pop_chanedit(EEG, 'lookup', s.path.chanloc); % Channel location
     EEG = pop_editset(EEG, 'chanlocs', s.path.chanloc);
     
-    %Resample
+    %3. Resample
     EEG = pop_resample(EEG, 512);
 
-    %Rereference average
+    %4. Rereference 
+     % Re-reference the EEG data to channel 48 (Cz)
+    %EEG = pop_reref( EEG, 48,'keepref','on');
+    EEG = pop_reref( EEG, 'Cz','keepref','on');
+    EEG = eeg_checkset( EEG );
+
+    % Interpolate the channel data (Cz)
+    %EEG = pop_interp(EEG, 48, 'spherical');
+    EEG = pop_interp(EEG, 'Cz', 'spherical');
+    EEG = eeg_checkset( EEG );
     % FAIRE REREF SUR CZ AVANT
     %EEG = pop_reref( EEG, []);
     
@@ -73,31 +95,25 @@ for f=1:length(list_XDF)  %f for files
     % Resting State extraction
     EventsType={EEG.event.type};
 
-    if(s.firstRS)
-        idxEnd = find(ismember(EventsType,'RS_EC'), 5 ); %first RestingState End
-        idxEnd = idxEnd(5); % last RS trigger is the fifth RS_EC
-        idxStart = find(ismember(EventsType,'RS_EO'), 1 ); %first RestingState End
+    %if(s.firstRS)
+        %idxEnd = find(ismember(EventsType,s.epoching.ECtriggerlabel), 5 ); %first RestingState End
+        %idxEnd = idxEnd(5); % last RS trigger is the fifth RS_EC
+        %idxStart = find(ismember(EventsType,s.epoching.EOtriggerlabel), 1 ); %first RestingState End
         %idxEnd = find(ismember(EventsType,'End'), 1 ); %first RestingState End
         %idxStart = find(ismember(EventsType,'Start'), 1 ); %first RestingState End
-    else
-       idxEnd = find(ismember(EventsType,'EndRestingState'), 1,'last' ); %first RestingState End
-       idxStart = find(ismember(EventsType,'StartRestingState'), 1,'last'); %first RestingState End
-    end
+    %else
+    %   idxEnd = find(ismember(EventsType,'EndRestingState'), 1,'last' ); %first RestingState End
+    %   idxStart = find(ismember(EventsType,'StartRestingState'), 1,'last'); %first RestingState End
+    %end
    
-    latencyFirstEO=EEG.event(idxStart).latency/EEG.srate; %time of the first 'EO' event in seconds
-    latencyEnd=EEG.event(idxEnd).latency/EEG.srate; %time of the end event in seconds
-    EEG = eeg_checkset( EEG );
-    %select the data between firt Eyes open and END trigger
-    EEG = pop_select( EEG, 'time',[latencyFirstEO-1 latencyEnd+1] );%-1 and +1 to include the event'EO and 'end'
-    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'gui','off');
-
+    
     % SAVE FILES
     file_name=['sub-' subject '_ses-' session 'task-rest_desc-resampled_eeg'];
-    RS_folder = strcat(fullfile(s.path.RS_data), '\', 'sub-', subject);
+    RS_folder = strcat(fullfile(s.path.RS_data),filesep, 'sub-', subject);
     mkdir(RS_folder);
     
     file_name = [file_name '.mat'];
-    save (strcat(RS_folder, '\', file_name), 'EEG');
+    save (strcat(RS_folder, filesep, file_name), 'EEG');
     EEG = eeg_checkset( EEG );
     EEG = pop_saveset( EEG, 'filename',file_name,'filepath',char(RS_folder));
     %Display the plot to check visually the quality of the signal and the correct

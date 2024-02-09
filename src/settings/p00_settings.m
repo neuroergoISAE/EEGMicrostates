@@ -18,7 +18,7 @@ if settings.todo.paramgui
     settings.path.project = 'E:\ACERI\Microstates';
 else
     settings.path.project = 'E:\ACERI\Microstates';
-    settings.name = 'ExampleProject'; %['Project_',date()]; % default name
+    settings.name = ['Project_',date()]; % default name
     settings.multipleSessions = 0; % default: no sessions 
     settings.path.data = 'E:\ACERI\Microstates\RawDataForTest'; 
     settings.path.eeglab = 'D:\eeglab\eeglab2023.0';%% EEGLAB LOCATION  
@@ -43,7 +43,8 @@ else
 end
 if  settings.todo.eyes_epoching
     %settings.path.data =  'E:\ACERI\Microstates\Quentin\Data_Epoch';% insert data to epoch location
-    settings.epoching.triggerlabel = 'RS_EC';
+    settings.epoching.ECtriggerlabel = 'RS_EC';
+    settings.epoching.EOtriggerlabel = 'RS_EO';
     settings.epoching.timelimits = [0 30];
 else
     %settings.path.data = %RAW DATA FOLDER%'E:\ACERI\Microstates\Quentin\EpochedData'; %[settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
