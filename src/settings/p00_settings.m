@@ -11,10 +11,12 @@ settings = s;
 %% if already existing settings in settings folder : load and  prefill the gui
 
 if settings.todo.paramgui
-    [param ,~] = paramGUI;
+    %[param ,~] = paramGUI; %WAS MODIFIED FOR DEMO
+    [param ,~] = MicrostatesGUI;
     settings  = param; 
     settings.todo = s.todo; 
-    settings.todo.eyes_epoching  = param.todo.eyes_epoching;
+%    settings.todo.eyes_epoching  = param.todo.eyes_epoching;  %WAS MODIFIED FOR DEMO
+    settings.todo.eyes_epoching  = false; 
     settings.path.project = 'E:\ACERI\Microstates';
 else
     settings.path.project = 'E:\ACERI\Microstates';
@@ -45,6 +47,7 @@ if  settings.todo.eyes_epoching
     %settings.path.data =  'E:\ACERI\Microstates\Quentin\Data_Epoch';% insert data to epoch location
     settings.epoching.ECtriggerlabel = 'RS_EC';
     settings.epoching.EOtriggerlabel = 'RS_EO';
+    settings.epoching.latency= 30;
     settings.epoching.timelimits = [0 30];
 else
     %settings.path.data = %RAW DATA FOLDER%'E:\ACERI\Microstates\Quentin\EpochedData'; %[settings.path.global_path,filesep,settings.name,filesep,'Data_Microstates',filesep];  
@@ -74,7 +77,7 @@ end
 
 if  settings.todo.eyes_epoching
     % settings for the filtering
-    settings.epoching.averageref = false; 
+    settings.epoching.averageref = true;%false; 
     settings.epoching.notch.lpf = 48; 
     settings.epoching.notch.hpf = 52; 
     settings.epoching.bandpass.lpf = 2;
@@ -168,8 +171,12 @@ settings.microstate.sorting = 'Global explained variance'; % first MS is the one
 settings.microstate.normalise = 0;
 settings.microstate.Nmicrostates = 4; % range of numbers of microstates, clusters intended (~ range of microstate models)
 settings.microstate.verbose = 1;
-settings.microstate.Nrepetitions_FirstLevel = 1000 ; %differs from the first level clustering
-settings.microstate.Nrepetitions_OtherLevels = 100 ; %differs from the first level clustering (on GFP)
+%% MODIFICATION POUR DEMO ATTENTION
+%settings.microstate.Nrepetitions_FirstLevel = 1000 ; %differs from the first level clustering
+%settings.microstate.Nrepetitions_OtherLevels = 100 ; %differs from the first level clustering (on GFP)
+settings.microstate.Nrepetitions_FirstLevel = 100 ; %differs from the first level clustering
+settings.microstate.Nrepetitions_OtherLevels = 10 ; %differs from the first level clustering (on GFP)
+%%
 settings.microstate.fitmeas = 'CV';
 settings.microstate.max_iterations = 1000; 
 settings.microstate.threshold = 1e-06;

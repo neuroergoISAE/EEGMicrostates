@@ -1,10 +1,10 @@
-function [param, cancel] = paramGUI
+function [param, cancel] = MicrostatesGUI
 
-backgroundColor = '#141414';
+backgroundColor = '#344372';
 foregroundColor = '#FFFFFF';
 fontsize = 16;
 cancel = 0;
-gui_fig = uifigure('position',[745 200 800 700], 'Color', backgroundColor); %
+gui_fig = uifigure('Position', [745 200 800 700], 'Color', backgroundColor, 'Icon', 'cerveau.png', 'WindowStyle','alwaysontop' ); 
 if isfile(['settings',filesep,'param.mat'])
     load(['settings',filesep,'param.mat']);
     disp(param.path)
@@ -14,31 +14,33 @@ if isfile(['settings',filesep,'param.mat'])
 else
     param = struct();
     param.path.project = '';
+    param.dataFormat = '.set';
     param.path.eeglab = 'D:\eeglab\eeglab2023.0';
     param.path.data = '';
     param.name = ['Project_',date()];
 end
+
 guidata(gui_fig,param);
 uilabel(gui_fig,'Text',"Microstates Analysis Parameters",'Position',[0 660 800 30], 'HorizontalAlignment','center','FontSize',fontsize+4,'FontWeight','Bold','FontColor', foregroundColor, 'FontSize', 20);
 
 %% panels
-path_panel = uipanel(gui_fig, 'Position', [50 490 700 120], 'BackgroundColor', backgroundColor,'Title','Directories Selection ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
-epoching = uipanel(gui_fig, 'Position', [50 370 700 100], 'BackgroundColor', backgroundColor,'Title','Epoch of Interest ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
-session_panel = uipanel(gui_fig,'Position', [50 250 700 100], 'BackgroundColor' , backgroundColor,'Title','Sessions ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
-backfit_panel = uipanel(gui_fig,'Position', [50 130 700 100], 'BackgroundColor' , backgroundColor,'Title','Backfitting','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+path_panel = uipanel(gui_fig, 'Position', [50 450 700 150], 'BackgroundColor', backgroundColor,'Title','Directories Selection ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+session_panel = uipanel(gui_fig,'Position', [50 300 700 100], 'BackgroundColor' , backgroundColor,'Title','Sessions ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+backfit_panel = uipanel(gui_fig,'Position', [50 150 700 100], 'BackgroundColor' , backgroundColor,'Title','Backfitting','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 
 %Project Name
 uilabel(gui_fig,'Text',"Project Name : ",'Position',[55 620 150 30],'FontSize',fontsize+2,'FontColor', foregroundColor);
 efname = uieditfield(gui_fig,'Position',[200 620 550 30],'Value',param.name,'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-
+%% Param Button
+param_button = uibutton(gui_fig, "ButtonPushedFcn",@(src,event) openParamGUI(param));
 %% labels
 %l_global=uilabel(path_panel,'Text',param.path.src,'Position',[40 60 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 %Global Path
-btnProjectPath = uibutton(path_panel,'push', 'Text', 'Project Folder Directory',...
-    'Position', [25 35 200 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-btnProjectPath.ButtonPushedFcn = @selectProjectDirectory;
-l_project = uilabel(path_panel,'Text',param.path.project,...
-    'Position',[35 5 225 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+%btnProjectPath = uibutton(path_panel,'push', 'Text', 'Project Folder Directory',...
+%    'Position', [25 35 200 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
+%btnProjectPath.ButtonPushedFcn = @selectProjectDirectory;
+%l_project = uilabel(path_panel,'Text',param.path.project,...
+%    'Position',[35 5 225 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 % Input Path
 btnInputPath = uibutton(path_panel,'push', 'Text', 'Input Data Directory','Enable','on',...
     'Position', [250 35 200 30],'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
@@ -51,28 +53,11 @@ btnEEGLabPath = uibutton(path_panel,'push', 'Text', 'EEGLab Directory',...
 btnEEGLabPath.ButtonPushedFcn = @selecteeglabDirectory;
 l_eeglab = uilabel(path_panel,'Text',param.path.eeglab,...
     'Position',[485 5 225 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
+%% Data Format
+dataFormats = {'.set', '.mat'};
+uilabel(path_panel,'Text',"Data Format:",'Position',[25 80 150 30],'FontSize',fontsize+2,'FontColor', foregroundColor);
+formatDropdown = uidropdown(path_panel, 'Items', dataFormats, 'Position', [150 80 150 30], 'Value',param.dataFormat, 'FontSize', fontsize, 'BackgroundColor', backgroundColor, 'FontColor', foregroundColor);
 
-%% Epoch of interest extraction
-efECTrigger = uieditfield(epoching,'Position',[390 40 100 30],'Value','RS_EC','Enable','off',...
-    'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-l_ECtrigger = uilabel(epoching,'Text','EC : ','Position',[350 40 50 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
-
-efEOTrigger = uieditfield(epoching,'Position',[550 40 100 30],'Value','RS_EO','Enable','off',...
-    'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-l_EOtrigger = uilabel(epoching,'Text','EO : ','Position',[510 40 50 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
-
-beginTriggerVal = uieditfield(epoching,'numeric','Limits',[0 Inf],'RoundFractionalValues','on','Position',[240 5 40 30],'Enable','off',...
-   'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-labelbegintriggerVal = uilabel(epoching,'Text','Trigger Begin Time (s) : ','HorizontalAlignment','left','Position',[30 5 200 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
-
-endTriggerVal = uieditfield(epoching,'numeric','Limits',[0 Inf],'RoundFractionalValues','on','Position',[530 5 40 30],'Enable','off',...
-   'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
-labelendtriggerVal = uilabel(epoching,'Text','Triger End Time (s) : ','HorizontalAlignment','left','Position',[320 5 200 30],'FontSize',fontsize,'FontColor', foregroundColor,'Enable','off');
-
-cbxEpoch = uicheckbox(epoching,'Text','Proceed to Resting State Extraction','Value', 0,...
-                  'Position',[30 40 300 30],'Fontcolor',foregroundColor,'FontSize',fontsize,'ValueChangedFcn',...
-                   @(cbxEpoch,event) cBoxChanged(cbxEpoch,efECTrigger,l_ECtrigger,efEOTrigger,l_EOtrigger,beginTriggerVal,labelbegintriggerVal,endTriggerVal,labelendtriggerVal));
-% LATENCY latency = 
 %% Backfitting Param
 l_backfit = uilabel(backfit_panel,'Position', [30 25 300 25], 'Text','Select Required Backfitting levels: ','FontSize',fontsize,'FontColor',foregroundColor);
 cbx_session = uicheckbox(backfit_panel,'Position',[320 25 200 25],'Enable','off','Text','Session','FontSize',fontsize,'FontColor',foregroundColor);
@@ -95,21 +80,17 @@ save_btn = uibutton(gui_fig, 'Position', [300 70 200 40],'Text','Save Parameters
 run_btn = uibutton(gui_fig, 'Position', [300 20 200 40],'Text','Run',...
     'FontWeight','Bold','BackgroundColor',backgroundColor,'FontSize',fontsize+2,...
     'FontColor',foregroundColor,'Enable','off', 'ButtonPushedFcn',@(src,event) runButtonPushed());
-
+   % Set font to Barlow for all UI components
 %% FUNCTIONS
 waitfor(gui_fig);
+    function openParamGUI(param)
+        MicrostatesParamGUI(param);
+    end
     function selecteeglabDirectory(src,~)
         directory = uigetdir();
         param = guidata(src);
         param.path.eeglab = directory;%[directory,filesep];
         l_eeglab.Text = param.path.eeglab;
-        guidata(src,param)
-    end
- function selectProjectDirectory(src,~)
-        directory = uigetdir();
-        param = guidata(src);
-        param.path.project = directory;%[directory,filesep];
-        l_project.Text = param.path.project;
         guidata(src,param)
     end
     function selectInputDirectory(src,~)
@@ -162,15 +143,6 @@ function saveButtonPushed()
             param.path.eeglab = l_eeglab.Text ;
     end
     
-    %Epoching
-    param.todo.eyes_epoching = cbxEpoch.Value;
-    if cbxEpoch.Value
-        %param.path.datatoepoch = param.path.data;
-        param.epoching.ECtriggerlabel = efECTrigger.Value;
-        param.epoching.EOtriggerlabel = efEOTrigger.Value;
-
-        param.epoching.timelimits = [beginTriggerVal.Value endTriggerVal.Value];
-    end
     %param multipleSessions
     param.multipleSessions = rb_multiple.Value ;
     %param.backfittingLevels
@@ -193,5 +165,13 @@ function saveButtonPushed()
 end
 function runButtonPushed()
     close(gui_fig);
+end
+changeFont(gui_fig);
+function changeFont(fig)
+    % Set font to Barlow for all UI components in the figure
+    components = findall(fig, '-property', 'FontName');
+    for i = 1:numel(components)
+        set(components(i), 'FontName', 'Barlow');
+    end
 end
 end

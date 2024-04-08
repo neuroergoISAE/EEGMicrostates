@@ -54,17 +54,17 @@ for f=1:length(list_XDF)  %f for files
     session=list_XDF(f).name(13:14);
     % open the currentfile
     EEG = pop_loadxdf(CurrFile , 'streamtype', 'EEG', 'exclude_markerstreams', {});
-    
     %1. SPLIT Resting State
     idxEnd = find(ismember(EventsType,s.epoching.ECtriggerlabel), 5 ); %first RestingState End
     idxEnd = idxEnd(5); % last RS trigger is the fifth RS_EC
     idxStart = find(ismember(EventsType,s.epoching.EOtriggerlabel), 1 ); %first RestingState End
     
     latencyFirstEO=EEG.event(idxStart).latency/EEG.srate; %time of the first 'EO' event in seconds
+    %% AJOUTER + 30 secondes
     latencyEnd=EEG.event(idxEnd).latency/EEG.srate; %time of the end event in seconds
     EEG = eeg_checkset( EEG );
     %select the data between firt Eyes open and END trigger
-    EEG = pop_select( EEG, 'time',[latencyFirstEO-1 latencyEnd+1] );%-1 and +1 to include the event'EO and 'end'
+    EEG = pop_select( EEG, 'time',[latencyFirstEO-1 latencyEnd+ s.epoching.latency] );%-1 and +1 to include the event'EO and 'end'
     [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'gui','off');
     
     % 2. Channel selection and location

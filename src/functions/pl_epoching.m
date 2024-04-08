@@ -61,6 +61,7 @@ EEG.times = 1: 1000/EEG.srate: size(EEG.data,2)*1000/EEG.srate;
 EEG.data = epoch(EEG.data,1:s.epoching.winlength:size(EEG.data,2),s.epoching.spectro.timelimits);% extract snippets of X seconds out of EEG.data
 EEG.pnts = size(EEG.data,2); %segments the data in non-overlapping epochs of 2sec/1000sp length
 EEG.times = 1: 1000/EEG.srate: size(EEG.data,2)*1000/EEG.srate;
+EEG.times = 1:s.sr/EEG.srate : size(EEG.data,2)/s.sr/EEG.srate;
 EEG.trials = size(EEG.data,3);
 
 % find the good segments (amplitude below treshold)

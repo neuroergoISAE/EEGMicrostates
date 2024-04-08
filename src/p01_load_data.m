@@ -33,13 +33,18 @@ if settings.todo.load_data
     else %else: load the data
         
         % find input data folders
-        folders = dir(settings.path.preprocessed_data); % get folder content of (input) data folder
+        %folders = dir(settings.path.preprocessed_data); % get folder content of (input) data folder
+        folders = dir(settings.path.data);
         folders = folders(~contains({folders.name},'.')); % ignore parent folders
         
         if settings.multipleSessions % First Level : Sessions
             for i=1:length(folders) %each participant
                 fp_folder = dir([folders(i).folder, filesep, folders(i).name]);
                 fp_folder = fp_folder(~contains({fp_folder.name},'.')); % ignore parent folders
+                fp_folder = fp_folder(~contains({fp_folder.name},'project_state.mat')); % potentiel automagic files
+                fp_folder = fp_folder(~contains({fp_folder.name},'desktio.ini')); % drive files
+
+
                 for j = 1:length(fp_folder) %each session
                     fp_file = fp_folder(j);
                     outputfile = [settings.path.gfp,folders(i).name,filesep];
