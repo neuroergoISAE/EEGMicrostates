@@ -1,8 +1,7 @@
 %% Param Window for MicrostatesGUI
 % March 2024 - CH
 
-%%
-function [settings, cancel] = MicrostatesParamGUI()
+function [settings, cancel] = MicrostatesParamGUI(settings)
 
 default = defaultsettings();
 
@@ -10,7 +9,7 @@ backgroundColor = '#344372';
 foregroundColor = '#FFFFFF';
 fontsize = 16;
 cancel = 0;
-settings_fig = uifigure('Position', [745 200 800 700], 'Color', backgroundColor, 'Icon', 'cerveau.png','WindowStyle','modal','Resize','off');
+settings_fig = uifigure('Position', [745 200 800 700], 'Color', backgroundColor, 'Icon', 'external_files/cerveau.png','WindowStyle','modal','Resize','off');
 % if isfile(['settings',filesep,'settings.mat'])
 %     load(['settings',filesep,'settings.mat']);
 %     disp(settings.path)
@@ -25,7 +24,7 @@ settings_fig = uifigure('Position', [745 200 800 700], 'Color', backgroundColor,
 %     settings.path.data = '';
 %     settings.name = ['Project_',date()];
 % end
-settings = struct();
+%settings = struct();
 guidata(settings_fig,settings);
 %% panels
 restingState_panel = uipanel(settings_fig, 'Position', [20 520 360 170], 'BackgroundColor', backgroundColor,'Title','Resting State Extraction ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
@@ -62,29 +61,29 @@ l_addPreproc = uilabel(additionalpreproc_panel,'Position', [10 170 200 20],'Hori
 cb_addPreproc =  uicheckbox(additionalpreproc_panel,'Position',[210 170 20 20],'Value',false,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cbx,event)Enable_Preproc(cbx));
 
 l_averageRef = uilabel(additionalpreproc_panel,'Position', [10 145 200 20],'HorizontalAlignment','right', 'Text','Average Reference : ','FontSize',fontsize,'FontColor',foregroundColor);
-cb_averageRef =  uicheckbox(additionalpreproc_panel,'Position',[210 145 20 20],'Value',default.preproc.avgref,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+cb_averageRef =  uicheckbox(additionalpreproc_panel,'Position',[210 145 20 20],'Value',default.preproc.avgref,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_lowNotch = uilabel(filter_panel,'Position', [5 30 130 20],'HorizontalAlignment','right', 'Text','Low Notch : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_lowNotch = uieditfield(filter_panel,'numeric','Value',default.preproc.notch.low,'Position',[135 30 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_lowNotch = uieditfield(filter_panel,'numeric','Value',default.preproc.notch.low,'Position',[135 30 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_highNotch = uilabel(filter_panel,'Position', [175 30 130 20],'HorizontalAlignment','right', 'Text','High Notch : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_highNotch = uieditfield(filter_panel,'numeric','Value',default.preproc.notch.high,'Position',[305 30 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_highNotch = uieditfield(filter_panel,'numeric','Value',default.preproc.notch.high,'Position',[305 30 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_lowPb = uilabel(filter_panel,'Position', [5 5 130 20],'HorizontalAlignment','right', 'Text','Low Pass Band : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_lowPb = uieditfield(filter_panel,'numeric','Value',default.preproc.bandpass.low,'Position',[135 5 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_lowPb = uieditfield(filter_panel,'numeric','Value',default.preproc.bandpass.low,'Position',[135 5 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_highPb = uilabel(filter_panel,'Position',[175 5 130 20],'HorizontalAlignment','right', 'Text','High Pass Band : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_highPb = uieditfield(filter_panel,'numeric','Value',default.preproc.bandpass.high,'Position',[305 5 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_highPb = uieditfield(filter_panel,'numeric','Value',default.preproc.bandpass.high,'Position',[305 5 30 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 
 l_mvMax = uilabel(additionalpreproc_panel,'Position', [10 60 200 20],'HorizontalAlignment','right', 'Text','Maximum mV : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_mvMax = uieditfield(additionalpreproc_panel,'numeric','Value',default.preproc.mvmax,'Position',[210 60 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_mvMax = uieditfield(additionalpreproc_panel,'numeric','Value',default.preproc.mvmax,'Position',[210 60 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_nGoodSample = uilabel(additionalpreproc_panel,'Position', [10 35 200 20],'HorizontalAlignment','right', 'Text','Number of Good Sample : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_nGoodSample = uieditfield(additionalpreproc_panel,'numeric','Value',default.ngoodsamples,'Position',[210 35 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_nGoodSample = uieditfield(additionalpreproc_panel,'numeric','Value',default.ngoodsamples,'Position',[210 35 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_SampleRate = uilabel(additionalpreproc_panel,'Position', [10 10 200 20],'HorizontalAlignment','right', 'Text','Sampling Rate : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_sampleRate = uieditfield(additionalpreproc_panel,'numeric','Value',default.sr,'Position',[210 10 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_sampleRate = uieditfield(additionalpreproc_panel,'numeric','Value',default.sr,'Position',[210 10 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 
 %% GFP
@@ -163,26 +162,26 @@ l_BackfitPolarity= uilabel(backfitting_panel,'Position', [10 10 200 20],'Horizon
 cb_BackfitPolarity = uicheckbox(backfitting_panel,'Position',[210 10 20 20],'Value',default.microstate.backfitting.polarity,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
 
 %% Metrics
-l_labelGEVTot =  uilabel(metrics_panel,'Position', [0 35 100 20],'HorizontalAlignment','right','Text','Total GEV','FontSize',fontsize,'FontColor',foregroundColor);
-cb_GEVTot = uicheckbox(metrics_panel,'Position',[105 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+l_labelGEVTot =  uilabel(metrics_panel,'Position', [0 35 100 20],'HorizontalAlignment','right','Text','GEVtotal','FontSize',fontsize,'FontColor',foregroundColor);
+cb_GEVTot = uicheckbox(metrics_panel,'Position',[105 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cb_GEVTot, event) metricscbx(cb_GEVTot,l_labelGEVTot));
 
 l_labelGEV =  uilabel(metrics_panel,'Position', [115 35 50 20],'HorizontalAlignment','right','Text','GEV','FontSize',fontsize,'FontColor',foregroundColor);
-cb_GEV = uicheckbox(metrics_panel,'Position',[170 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+cb_GEV = uicheckbox(metrics_panel,'Position',[170 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cb_GEV, event) metricscbx(cb_GEV,l_labelGEV));
 
 l_labelGFP =  uilabel(metrics_panel,'Position', [180 35 50 20],'HorizontalAlignment','right','Text','GFP','FontSize',fontsize,'FontColor',foregroundColor);
-cb_GFP = uicheckbox(metrics_panel,'Position',[235 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+cb_GFP = uicheckbox(metrics_panel,'Position',[235 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cb_GFP, event) metricscbx(cb_GFP,l_labelGFP));
 
-l_labelMSParCorr =  uilabel(metrics_panel,'Position', [245 35 90 20],'HorizontalAlignment','right','Text','Correlation','FontSize',fontsize,'FontColor',foregroundColor);
-cb_MSParCorr = uicheckbox(metrics_panel,'Position',[340 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+l_labelMSParCorr =  uilabel(metrics_panel,'Position', [245 35 90 20],'HorizontalAlignment','right','Text','MspatCorr','FontSize',fontsize,'FontColor',foregroundColor);
+cb_MSParCorr = uicheckbox(metrics_panel,'Position',[340 35 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cb_MSParCorr, event) metricscbx(cb_MSParCorr,l_labelMSParCorr));
 
 l_labelOccurence =  uilabel(metrics_panel,'Position', [0 10 100 20],'HorizontalAlignment','right','Text','Occurence','FontSize',fontsize,'FontColor',foregroundColor);
-cb_Occurence = uicheckbox(metrics_panel,'Position',[105 10 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+cb_Occurence = uicheckbox(metrics_panel,'Position',[105 10 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cb_Occurence, event) metricscbx(cb_Occurence,l_labelOccurence));
 
 l_labelDuration =  uilabel(metrics_panel,'Position', [120 10 100 20],'HorizontalAlignment','right','Text','Duration','FontSize',fontsize,'FontColor',foregroundColor);
-cb_Duration = uicheckbox(metrics_panel,'Position',[225 10 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+cb_Duration = uicheckbox(metrics_panel,'Position',[225 10 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cb_Duration, event) metricscbx(cb_Duration,l_labelDuration));
 
 l_labelCoverage =  uilabel(metrics_panel,'Position', [235 10 100 20],'HorizontalAlignment','right','Text','Coverage','FontSize',fontsize,'FontColor',foregroundColor);
-cb_Coverage = uicheckbox(metrics_panel,'Position',[340 10 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
+cb_Coverage = uicheckbox(metrics_panel,'Position',[340 10 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cb_Coverage, event) metricscbx(cb_Coverage,l_labelCoverage));
 
 
 %% Reset Button
@@ -191,7 +190,15 @@ b_save = uibutton(settings_fig,'Text','Save and Quit','Position', [580 25 110 45
 
 %% FUNCTIONS
 waitfor(settings_fig);
-
+function metricscbx(cbx,label)
+    if cbx.Value && ismember(settings.microstate.metrics,label.Text)
+        settings.microstate.metrics(end+1) = label.Text;
+    end
+    if ~cbx.Value
+        settings.microstate.metrics(ismember(settings.microstate.metrics,label.Text)) = [];
+    end
+    disp(settings.microstate.metrics)
+end
 function Enable_RS(cbx)
     if cbx.Value
         ef_RSEC.Enable = true;
@@ -217,6 +224,14 @@ function Enable_Preproc(cbx)
         ef_nGoodSample.Enable = true;
         ef_sampleRate.Enable = true;
     else
+        cb_averageRef.Enable = false;
+        ef_lowNotch.Enable = false;
+        ef_highNotch.Enable = false;
+        ef_lowPb.Enable = false;
+        ef_highPb.Enable = false;
+        ef_mvMax.Enable = false;
+        ef_nGoodSample.Enable = false;
+        ef_sampleRate.Enable = false;
     end
 end
 function Enable_Npeaks(cbx)
@@ -228,7 +243,6 @@ function Enable_Npeaks(cbx)
 end
 
 function resetParam()
-    set(cb_addPreproc,'Value',default.todo.addpreproc);
     set(cb_averageRef,'Value',default.preproc.avgref);
     set(ef_lowNotch,'Value',default.preproc.notch.low);
     set(ef_highNotch,'Value',default.preproc.notch.high);
@@ -257,6 +271,7 @@ function resetParam()
     set(cb_BackfitPolarity,'Value',default.microstate.backfitting.polarity);
     
     set(cb_GEVTot,'Value',true);
+    set(cb_GEV,'Value',true);
     set(cb_Coverage,'Value',true);
     set(cb_Occurence,'Value',true);
     set(cb_Duration,'Value',true);    
@@ -302,7 +317,9 @@ function saveButtonPushed()
     settings.microstate.backfitting.smoothtype = dd_smoothType.Value;
     settings.microstate.backfitting.mintime = ef_minTime.Value;
     settings.microstate.backfitting.polarity = cb_BackfitPolarity.Value; 
-    settings.microstate.metrics = {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'};
+    %settings.microstate.metrics = {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'};
+    
+    close(settings_fig);
 end
 
 end
