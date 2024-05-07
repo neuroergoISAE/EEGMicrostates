@@ -52,6 +52,8 @@ function [default] = defaultsettings()
     default.customColorMap.range = [-0.25 0.25];
     
     %TODO
+    default.todo.RS = false;
+    default.todo.addpreproc = false;
     default.todo.override = true; % Flag indicating whether to override old outputs
     default.todo.load_data = true; % Flag indicating whether to load data
     default.todo.microstates_gfppeaks = true; % Flag indicating whether to perform GFP peaks analysis
