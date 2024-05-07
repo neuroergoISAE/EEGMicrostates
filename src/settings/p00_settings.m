@@ -16,7 +16,7 @@ if settings.todo.paramgui
     settings  = param; 
     settings.todo = s.todo; 
 %    settings.todo.eyes_epoching  = param.todo.eyes_epoching;  %WAS MODIFIED FOR DEMO
-    settings.todo.eyes_epoching  = false; 
+    settings.todo.eyes_epoching  = true; 
     settings.path.project = 'E:\ACERI\Microstates';
 else
     settings.path.project = 'E:\ACERI\Microstates';
@@ -45,8 +45,8 @@ else
 end
 if  settings.todo.eyes_epoching
     %settings.path.data =  'E:\ACERI\Microstates\Quentin\Data_Epoch';% insert data to epoch location
-    settings.epoching.ECtriggerlabel = 'RS_EC';
-    settings.epoching.EOtriggerlabel = 'RS_EO';
+    settings.epoching.ECtriggerlabel = 'EC';
+    settings.epoching.EOtriggerlabel = 'EO';
     settings.epoching.latency= 30;
     settings.epoching.timelimits = [0 30];
 else
@@ -76,6 +76,7 @@ end
 % carrefull: don't modify levels spelling
 
 if  settings.todo.eyes_epoching
+    settings.epoching.triggerlabel = 'EC'; %% AJOUT POUR TRAITEMENT SEMINAIRE
     % settings for the filtering
     settings.epoching.averageref = true;%false; 
     settings.epoching.notch.lpf = 48; 
@@ -137,6 +138,7 @@ settings.path.microstates=[settings.path.eeglab,filesep,'plugins',filesep,'MST1.
 settings.path.microstatesKoenig = [settings.path.eeglab,filesep,'plugins',filesep,'MicrostateAnalysis1.2',filesep,'Microstates1.2', filesep]; %toolbox koenig
 settings.path.colormap = [settings.path.project,filesep,'external_files',filesep,'customcolormap',filesep]; %for the microstates plots
 
+
 %% add paths
 addpath(settings.path.src);
 addpath(settings.path.eeglab);
@@ -145,8 +147,6 @@ addpath(settings.path.microstatesKoenig);
 addpath(settings.path.colormap);
 eeglab;close;
 
-%% Plotting settings
-% custom color map (for customized topoplots)
 settings.customColorMap.colors = 'red-white-blue';
 settings.customColorMap.range = [-0.25 0.25];
 
