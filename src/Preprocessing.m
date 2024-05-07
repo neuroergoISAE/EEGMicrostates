@@ -7,7 +7,7 @@
 % Inputs : Raw xdf Files
 % Outputs: statistics for the microstates and files throughout the process, settings are saved as 's.mat' file
 
-function Microstates()
+function Preprocessing()
 %% Description 
 % Main file for the Microstates extraction process
 % Analysed data must have been pre-processed 
@@ -41,8 +41,18 @@ s.todo.microstates_reordering = true; % Flag indicating whether to perform micro
 s.todo.microstates_backfitting = true; % Flag indicating whether to perform microstates backfitting
 s.todo.microstates_stats = true; % Flag indicating whether to perform microstates statistics
 
-s = p00_settings(s);
+s = p00_settings(s);%p00_settings(s);
 cd(s.path.src);
+
+%% PREPROCESSING SETTINGS
+%s.path.data = 'E:\ACERI\LE_EF_EEG\LE_EF\00DATA\LEEGEEF';
+s.path.data = 'E:\ISAE-Autre\SeminaireMai2024\EEG_Pipeline\Data\EEG';
+s.path.RS_data = 'E:\ISAE-Autre\SeminaireMai2024\EEG_Pipeline\Data\EEG\RestingState';
+s.path.chanloc = 'E:\ACERI\Microstates\external_files\Loc_10-20_64Elec.elp';
+%s.path.RS_data = 'E:\ACERI\LE_EF_EEG\LE_EF\CRMLE\Analysis\Microstates\RestingState';
+s.epoching.ECtriggerlabel = "EC";
+s.epoching.EOtriggerlabel="EO";
+ s.epoching.latency = 30;
 %% Resting State Extraction
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
 
@@ -50,13 +60,18 @@ list_XDF=dir([s.path.data,filesep,'**',filesep,'*.xdf']);
 for f=1:length(list_XDF)  %f for files
     disp(f);
     CurrFile = [list_XDF(f).folder,filesep,list_XDF(f).name] ;%fullfile(folder,file) ;
-    subject=list_XDF(f).name(6:8);
-    session=list_XDF(f).name(13:14);
+    %subject=list_XDF(f).name(4:6);
+    subject = char(extractBetween(list_XDF(f).name,"sub-","_ses"));
+    session = char(extractBetween(list_XDF(f).name,"ses-","_task"));
+    %session=list_XDF(f).name(13:13);
     % open the currentfile
     EEG = pop_loadxdf(CurrFile , 'streamtype', 'EEG', 'exclude_markerstreams', {});
     %1. SPLIT Resting State
+    
+    % Resting State extraction
+    EventsType={EEG.event.type};
     idxEnd = find(ismember(EventsType,s.epoching.ECtriggerlabel), 5 ); %first RestingState End
-    idxEnd = idxEnd(5); % last RS trigger is the fifth RS_EC
+    idxEnd = idxEnd(3); % last RS trigger is the fifth RS_EC
     idxStart = find(ismember(EventsType,s.epoching.EOtriggerlabel), 1 ); %first RestingState End
     
     latencyFirstEO=EEG.event(idxStart).latency/EEG.srate; %time of the first 'EO' event in seconds
@@ -83,8 +98,8 @@ for f=1:length(list_XDF)  %f for files
     EEG = eeg_checkset( EEG );
 
     % Interpolate the channel data (Cz)
-    %EEG = pop_interp(EEG, 48, 'spherical');
-    EEG = pop_interp(EEG, 'Cz', 'spherical');
+    EEG = pop_interp(EEG, 48, 'spherical');
+    %EEG = pop_interp(EEG, 'Cz', 'spherical');
     EEG = eeg_checkset( EEG );
     % FAIRE REREF SUR CZ AVANT
     %EEG = pop_reref( EEG, []);
@@ -92,8 +107,6 @@ for f=1:length(list_XDF)  %f for files
     EEG = eeg_checkset(EEG);
     [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET); %Store dans le dataset
 
-    % Resting State extraction
-    EventsType={EEG.event.type};
 
     %if(s.firstRS)
         %idxEnd = find(ismember(EventsType,s.epoching.ECtriggerlabel), 5 ); %first RestingState End
@@ -108,7 +121,7 @@ for f=1:length(list_XDF)  %f for files
    
     
     % SAVE FILES
-    file_name=['sub-' subject '_ses-' session 'task-rest_desc-resampled_eeg'];
+    file_name=[subject '_ses-' session 'task-rest_desc-resampled_eeg'];
     RS_folder = strcat(fullfile(s.path.RS_data),filesep, 'sub-', subject);
     mkdir(RS_folder);
     
@@ -127,17 +140,21 @@ end
 
 %% Pre-processing (Automagic)
 %cd(s.path.src);
-error('STOP HERE');
+%error('STOP HERE');
 
 %Autoautomagic(s);
 
 %% BIDS format for MS analysis
-automagicFiles =  dir([s.path.automagic_data,filesep,'**',filesep,'*p_sub-*.mat']);
+s.path.automagic_data = 'E:\ACERI\Microstates\SpeechCaping_Microstates\RS_Data_SpeedCaping_results';
+
+automagicFiles =  dir([s.path.automagic_data,filesep,'**',filesep,'*p_*.mat']);
+%automagicFiles =  dir([s.path.automagic_data,filesep,'**',filesep,'*p_sub-*.mat']);
 fileNames = {automagicFiles.name};
 fileFolders = {automagicFiles.folder};
 if ~s.multipleSessions
     for k = 1 : length(automagicFiles)
-    sub_n = char(extractBetween(fileNames{k},'p_sub-','_ses'));
+    %sub_n = char(extractBetween(fileNames{k},'p_sub-','_ses'));
+    sub_n = char(extractBetween(fileNames{k},'_','_ses'));
     outputFullFileName = [s.path.preprocessed_data,filesep,'sub',sub_n,filesep,'eeg'];%char(strcat(settings.path.data,'sub',sub_n,'\eeg'));%
     mkdir(outputFullFileName);
     copyfile(fullfile(fileFolders{k}, fileNames{k}), fullfile(outputFullFileName,string(fileNames{k})));
@@ -145,8 +162,7 @@ if ~s.multipleSessions
 else
 end
 %remove Automagic Data Folder? (is now useless)
-
-
+s.epoching.triggerlabel = 'EC';
 %% Microstates analysis
 p01_load_data(s); % load data, move and rename eeg_data file in the gfp directory for easier use. If required: extract eye closed epochs
 p02_gfp_peaks(s);% Perform GFP Peaks analysis

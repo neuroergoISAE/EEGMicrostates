@@ -9,24 +9,25 @@
 function p01_load_data(settings)
 
 if settings.todo.load_data
-    if settings.todo.eyes_epoching
+    if settings.todo.RS
         %epochfolders = dir(settings.path.datatoepoch);
-        epochfolders = dir(settings.path.preprocessed_data);
-        epochfolders  = epochfolders(~contains({epochfolders.name},'.')); % ignore parent folders
+        RSfolders = dir(settings.path.data);%dir(settings.path.preprocessed_data);
+        RSfolders  = RSfolders(~contains({RSfolders.name},'.')); % ignore parent folders
         if settings.multipleSessions %First level : Session
-            for i=1:length(epochfolders) %each participant
-                fp_epoch = dir([epochfolders(i).folder, filesep, epochfolders(i).name]);
+            for i=1:length(RSfolders) %each participant
+                fp_epoch = dir([RSfolders(i).folder, filesep, RSfolders(i).name]);
                 fp_epoch = fp_epoch(~contains({fp_epoch.name},'.'));
                 for j = 1:length(fp_epoch)%each session
                     disp(['p01 Load Data & Data Epoching: ', num2str(j), '/ ', num2str(length(fp_epoch)*length(fp_epoch))])
-                    fn_output = [epochfolders(i).name,filesep,fp_epoch(j).name];
+                    fn_output = [RSfolders(i).name,filesep,fp_epoch(j).name];
                     pl_epoching(fp_epoch(j),fn_output,settings);
                 end
             end
         else
-            for k=1:length(epochfolders) %First level : Participants
-                disp(['p01 Load Data & Data Epoching:', num2str(k), '/ ', num2str(length(epochfolders))])
-                pl_epoching(epochfolders(k),epochfolders(k).name,settings);
+            for k=1:length(RSfolders) %First level : Participants
+                disp(['p01 Load Data & Data Epoching:', num2str(k), '/ ', num2str(length(RSfolders))])
+                %pl_epoching(RSfolders(k),RSfolders(k).name,settings);
+                pl_addpreproc(RSfolders(k),settings);
             end
         end
         

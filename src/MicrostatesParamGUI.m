@@ -1,6 +1,5 @@
 %% Param Window for MicrostatesGUI
 % March 2024 - CH
-
 function [settings, cancel] = MicrostatesParamGUI(settings)
 
 default = defaultsettings();
@@ -80,7 +79,7 @@ l_mvMax = uilabel(additionalpreproc_panel,'Position', [10 60 200 20],'Horizontal
 ef_mvMax = uieditfield(additionalpreproc_panel,'numeric','Value',default.preproc.mvmax,'Position',[210 60 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_nGoodSample = uilabel(additionalpreproc_panel,'Position', [10 35 200 20],'HorizontalAlignment','right', 'Text','Number of Good Sample : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_nGoodSample = uieditfield(additionalpreproc_panel,'numeric','Value',default.ngoodsamples,'Position',[210 35 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
+ef_nGoodSample = uieditfield(additionalpreproc_panel,'numeric','Value',default.nGoodSamples,'Position',[210 35 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
 
 l_SampleRate = uilabel(additionalpreproc_panel,'Position', [10 10 200 20],'HorizontalAlignment','right', 'Text','Sampling Rate : ','FontSize',fontsize,'FontColor',foregroundColor);
 ef_sampleRate = uieditfield(additionalpreproc_panel,'numeric','Value',default.sr,'Position',[210 10 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor,'Enable',false);
@@ -97,10 +96,10 @@ l_GFPnormalise = uilabel(gfp_panel,'Position', [10 110 200 20],'HorizontalAlignm
 cb_GFPnormalise = uicheckbox(gfp_panel,'Position',[210 110 20 20],'Value',default.microstate.gfp.normalise,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
 
 l_minPeakDist = uilabel(gfp_panel,'Position', [10 85 200 20],'HorizontalAlignment','right','Text','Mean Peak Distance : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_minPeakDist = uieditfield(gfp_panel,'numeric','Value',default.microstate.gfp.minpeakdist,'Position',[210 85 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_minPeakDist = uieditfield(gfp_panel,'numeric','Value',default.microstate.gfp.MinPeakDist,'Position',[210 85 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 
 l_GFPthreshold = uilabel(gfp_panel,'Position', [10 60 200 20],'HorizontalAlignment','right','Text','Threshold : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_GFPthreshold = uieditfield(gfp_panel,'numeric','Value',default.microstate.gfp.gfpthreshold,'Position',[210 60 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_GFPthreshold = uieditfield(gfp_panel,'numeric','Value',default.microstate.gfp.GFPthresh,'Position',[210 60 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 
 l_allPeaks = uilabel(gfp_panel,'Position', [10 35 200 20],'HorizontalAlignment','right','Text','Take all Peaks : ','FontSize',fontsize,'FontColor',foregroundColor);
 cb_allPeaks = uicheckbox(gfp_panel,'Position',[210 35 20 20],'Value',default.microstate.gfp.takeallpeaks,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cbx,event)Enable_Npeaks(cbx));
@@ -120,8 +119,8 @@ dd_sorting = uidropdown(clustering_panel,'Items', {'Global explained variance', 
 %l_normalise = uilabel(clustering_panel,'Position', [10 210 200 20],'HorizontalAlignment','right','Text','Normalise : ','FontSize',fontsize,'FontColor',foregroundColor);
 %cb_normalise = uicheckbox(clustering_panel,'Position',[210 210 20 20],'Value',0,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
 
-l_nbMS = uilabel(clustering_panel,'Position', [10 190 200 20],'HorizontalAlignment','right','Text','Number of Microstates : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_nbMS = uieditfield(clustering_panel,'Value','4','Position',[210 190 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+%l_nbMS = uilabel(clustering_panel,'Position', [10 190 200 20],'HorizontalAlignment','right','Text','Number of Microstates : ','FontSize',fontsize,'FontColor',foregroundColor);
+%ef_nbMS = uieditfield(clustering_panel,'Value','4','Position',[210 190 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 
 %l_verbose = uilabel(clustering_panel,'Position', [10 160 200 20],'HorizontalAlignment','right','Text','Verbose : ','FontSize',fontsize,'FontColor',foregroundColor);
 %cb_verbose = uicheckbox(clustering_panel,'Position',[210 160 20 20],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
@@ -136,7 +135,7 @@ ef_nbRepOther = uieditfield(repetition_panel,'numeric','Value',default.microstat
 %dd_fitMeas = uidropdown(clustering_panel,'Items', {'CV', 'others'},'Value','CV','Position',[210 85 130 20],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 
 l_maxIterations = uilabel(clustering_panel,'Position', [10 60 200 20],'HorizontalAlignment','right','Text','Max iterations: ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_maxIteration = uieditfield(clustering_panel,'numeric','Value',default.microstate.maxiteration,'Position',[210 60 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_maxIteration = uieditfield(clustering_panel,'numeric','Value',default.microstate.max_iterations,'Position',[210 60 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 
 l_threshold = uilabel(clustering_panel,'Position', [10 35 200 20],'HorizontalAlignment','right','Text','Threshold: ','FontSize',fontsize,'FontColor',foregroundColor);
 ef_threshold = uieditfield(clustering_panel,'numeric','Value',default.microstate.threshold,'Position',[210 35 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
@@ -153,7 +152,7 @@ cb_polarity = uicheckbox(clustering_panel,'Position',[210 10 20 20],'Value',defa
 %dd_labelType = uidropdown(backfitting_panel,'Items', {'backfit', 'segmentation'},'Value','backfit','Position',[210 85 130 20],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 
 l_smoothType = uilabel(backfitting_panel,'Position', [10 60 200 20],'HorizontalAlignment','right','Text','Smoothing Type : ','FontSize',fontsize,'FontColor',foregroundColor);
-dd_smoothType = uidropdown(backfitting_panel,'Items', {'reject-segment', 'windowed'},'Value',default.microstate.backfitting.smoothtype,'Position',[210 60 130 20],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+dd_smoothType = uidropdown(backfitting_panel,'Items', {'reject segments', 'windowed'},'Value',default.microstate.backfitting.smoothtype,'Position',[210 60 130 20],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 
 l_minTime = uilabel(backfitting_panel,'Position', [10 35 200 20],'HorizontalAlignment','right','Text','Minimum Time : ','FontSize',fontsize,'FontColor',foregroundColor);
 ef_minTime = uieditfield(backfitting_panel,'numeric','Value',default.microstate.backfitting.mintime,'Position',[210 35 70 20],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
@@ -253,17 +252,17 @@ function resetParam()
     set(ef_RSEO,'Value',default.preproc.EOlabel);
     set(ef_RSLatencystart,'Value',default.preproc.timelimits(1)); 
     set(ef_RSLatencyend,'Value',default.preproc.timelimits(2));
-    set(ef_nGoodSample,'Value',default.ngoodsamples);
+    set(ef_nGoodSample,'Value',default.nGoodSamples);
     set(ef_sampleRate,'Value',default.sr);
     set(cb_gfpaverageRef,'Value',default.microstate.gfp.avgref);
     set(cb_GFPnormalise,'Value',default.microstate.gfp.normalise);
-    set(ef_minPeakDist,'Value',default.microstate.gfp.minpeakdist);
-    set(ef_GFPthreshold,'Value',default.microstate.gfp.gfpthreshold);
+    set(ef_minPeakDist,'Value',default.microstate.gfp.MinPeakDist);
+    set(ef_GFPthreshold,'Value',default.microstate.gfp.GFPthresh);
     set(dd_algorithm,'Value',default.microstate.algorithm);
     set(dd_sorting,'Value',default.microstate.sorting);
     set(ef_nbRepFirst,'Value',default.microstate.Nrepfirstlevel);
     set(ef_nbRepOther,'Value',default.microstate.Nrepotherlevel);
-    set(ef_maxIteration,'Value',default.microstate.maxiteration);
+    set(ef_maxIteration,'Value',default.microstate.max_iterations);
     set(ef_threshold,'Value',default.microstate.threshold);
     set(cb_polarity,'Value',default.microstate.orderingpolarity);
     set(dd_smoothType,'Value',default.microstate.backfitting.smoothtype);
@@ -295,16 +294,17 @@ function saveButtonPushed()
     settings.preproc.EClabel = ef_RSEC.Value;
     settings.preproc.EOlabel = ef_RSEO.Value;
     settings.preproc.timelimits = [ef_RSLatencystart.Value ef_RSLatencyend.Value] ;
-    settings.ngoodsamples = ef_nGoodSample.Value;
+    settings.nGoodSamples = ef_nGoodSample.Value;
     settings.sr = ef_sampleRate.Value;
     settings.microstate.gfp.avgref = cb_gfpaverageRef.Value; 
     settings.microstate.gfp.normalise = cb_GFPnormalise.Value;
-    settings.microstate.gfp.minpeakdist = ef_minPeakDist.Value;
-    settings.microstate.gfp.gfpthreshold = ef_GFPthreshold.Value;
+    settings.microstate.gfp.MinPeakDist = ef_minPeakDist.Value;
+    settings.microstate.gfp.GFPthresh = ef_GFPthreshold.Value;
+    settings.microstate.gfp.takeallpeaks = cb_allPeaks.Value;
     if cb_allPeaks.Value
-        settings.microstate.gfp.takeallpeaks = [];
+        settings.microstate.gfp.Npeaks = [];
     else
-        settings.microstate.gfp.takeallpeaks = ef_nbPeaks.Value;
+        settings.microstate.gfp.Npeaks = ef_nbPeaks.Value;
     end
     settings.microstate.gfp.Npeaks = ef_nbPeaks.Value;
     settings.microstate.algorithm = dd_algorithm.Value;
@@ -318,7 +318,6 @@ function saveButtonPushed()
     settings.microstate.backfitting.mintime = ef_minTime.Value;
     settings.microstate.backfitting.polarity = cb_BackfitPolarity.Value; 
     %settings.microstate.metrics = {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'};
-    
     close(settings_fig);
 end
 

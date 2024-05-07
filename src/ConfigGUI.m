@@ -32,7 +32,7 @@ backfit_panel = uipanel(gui_fig,'Position', [50 150 700 100], 'BackgroundColor' 
 uilabel(gui_fig,'Text',"Project Name : ",'Position',[55 620 150 30],'FontSize',fontsize+2,'FontColor', foregroundColor);
 efname = uieditfield(gui_fig,'Position',[200 620 550 30],'Value',param.name,'FontSize',fontsize, 'BackgroundColor', backgroundColor, 'FontColor',foregroundColor);
 %% Param Button
-param_button = uibutton(gui_fig, "ButtonPushedFcn",@(src,event) openParamGUI(param));
+%param_button = uibutton(gui_fig, "ButtonPushedFcn",@(src,event) openParamGUI(param));
 %% labels
 %l_global=uilabel(path_panel,'Text',param.path.src,'Position',[40 60 325 30],'FontSize',fontsize,'FontColor', foregroundColor,'FontAngle','Italic');
 %Global Path

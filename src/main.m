@@ -27,7 +27,7 @@ end
 
 addpath('settings');
 addpath('functions');
-
+addpath('E:\ACERI\Microstates\external_files\customcolormap');
 %% GUI
 s.todo.paramgui = true; % Flag indicating whether to display a parameter GUI
 s.todo.override = true; % Flag indicating whether to override old outputs
@@ -42,7 +42,6 @@ s.todo.microstates_stats = true; % Flag indicating whether to perform microstate
 
 %% Settings
 s = p00_settings(s);
-
 %% Anlaysis
 p01_load_data(s); % load data, move and rename eeg_data file in the gfp directory for easier use. If required: extract eye closed epochs
 p02_gfp_peaks(s);% Perform GFP Peaks analysis
