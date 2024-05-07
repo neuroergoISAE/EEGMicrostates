@@ -11,25 +11,30 @@ settings = defaultsettings();
 guidata(microstates_fig,settings);
 
 %% Panels
-project_panel =  uipanel(microstates_fig, 'Position', [50 400 700 250], 'BackgroundColor', backgroundColor,'Title','Project ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
-microstates_panel =  uipanel(microstates_fig, 'Position', [50 100 700 250], 'BackgroundColor', backgroundColor,'Title','Microstates ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+project_panel =  uipanel(microstates_fig, 'Position', [50 350 700 290], 'BackgroundColor', backgroundColor,'Title','Project ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
+microstates_panel =  uipanel(microstates_fig, 'Position', [50 100 700 225], 'BackgroundColor', backgroundColor,'Title','Microstates ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 %button_panel =  uipanel(microstates_fig, 'Position', [50 0 700 100], 'BackgroundColor', backgroundColor,'Title','','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 
 %%
 % Project Name
-l_projectname = uilabel(project_panel,'Position', [10 160 200 30],'HorizontalAlignment','right', 'Text','Project Name : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_projectname = uieditfield(project_panel, 'Position', [220, 160, 250, 30],'Value',['Project_' date()],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+l_projectname = uilabel(project_panel,'Position', [10 210 200 30],'HorizontalAlignment','right', 'Text','Project Name : ','FontSize',fontsize,'FontColor',foregroundColor);
+ef_projectname = uieditfield(project_panel, 'Position', [220, 210, 250, 30],'Value',['Project_' date()],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 % Input Data Folder
-l_datafolder = uilabel(project_panel,'Position', [10 110 200 30],'HorizontalAlignment','right', 'Text','Input Data Folder : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_datafolder = uieditfield(project_panel, 'Position', [220, 110, 250, 30],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
-btn_datafolder = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 110, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_datafolder));
+l_datafolder = uilabel(project_panel,'Position', [10 160 200 30],'HorizontalAlignment','right', 'Text','Input Data Folder : ','FontSize',fontsize,'FontColor',foregroundColor);
+ef_datafolder = uieditfield(project_panel, 'Position', [220, 160, 250, 30],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+btn_datafolder = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 160, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_datafolder));
 % Data Type
-l_datatype = uilabel(project_panel,'Position', [10 60 200 30],'HorizontalAlignment','right','Text','Data Type : ','FontSize',fontsize,'FontColor',foregroundColor);
-dd_datatype = uidropdown(project_panel,'Items', {'.set','.fdt','.mat'},'Value','.set','Position',[220 60 130 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+l_datatype = uilabel(project_panel,'Position', [10 100 200 30],'HorizontalAlignment','right','Text','Data Type : ','FontSize',fontsize,'FontColor',foregroundColor);
+dd_datatype = uidropdown(project_panel,'Items', {'.set','.fdt','.mat'},'Value','.set','Position',[220 100 130 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 %Output Data Folder
-l_outputfolder = uilabel(project_panel,'Position', [10 10 200 30],'HorizontalAlignment','right', 'Text','Output Folder : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_outputfolder = uieditfield(project_panel, 'Position', [220, 10, 250, 30],'Value',fileparts(pwd),'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
-btn_outputfolder = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 10, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_outputfolder));
+l_outputfolder = uilabel(project_panel,'Position', [10 60 200 30],'HorizontalAlignment','right', 'Text','Output Folder : ','FontSize',fontsize,'FontColor',foregroundColor);
+ef_outputfolder = uieditfield(project_panel, 'Position', [220, 60, 250, 30],'Value',fileparts(pwd),'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+btn_outputfolder = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 60, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_outputfolder));
+
+%EEGLAB PATH
+l_eeglabpath = uilabel(project_panel,'Position', [10 10 200 30],'HorizontalAlignment','right', 'Text','EEGLAB Path : ','FontSize',fontsize,'FontColor',foregroundColor);
+ef_eeglabpath = uieditfield(project_panel, 'Position', [220, 10, 250, 30],'Value','D:\eeglab\eeglab2023.0','HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+btn_eeglabpath = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 10, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_outputfolder));
 
 % Number of Microstates
 l_nbmicrostates = uilabel(microstates_panel,'Position', [10 150 200 30],'HorizontalAlignment','right', 'Text','Number of Microstates : ','FontSize',fontsize,'FontColor',foregroundColor);
