@@ -5,7 +5,7 @@ function s = createpath(s)
 s.path.eeglab = 'D:\eeglab\eeglab2023.0';%% EEGLAB LOCATION  %% A MODIFIER
 
 s.path.src =fileparts(matlab.desktop.editor.getActiveFilename); 
-s.path.preprocessed_data = [s.path.project,filesep,s.name,filesep,'Preprocessed_Data'];
+%s.path.preprocessed_data = [s.path.project,filesep,s.name,filesep,'Preprocessed_Data'];
 s.path.MS_results= [s.path.project,filesep,s.name,filesep,'Microstates_Results'];
 s.path.chanloc = [s.path.project,filesep,'external_files',filesep,'Loc_10-20_64Elec.elp'];
 
