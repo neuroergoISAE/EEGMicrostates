@@ -34,24 +34,24 @@ if input_files_exist && (~output_files_exist || s.todo.override) %if gfppeaks (o
     load([fp_input,fn_eegdata],'EEG')
     
     %% Gfp peak detection & get peaks
-    try
+   % try
         %number of peaks : 
-        if s.microstate.gfppeaks.takeAllPeaks %all available peaks should be taken
+        if s.microstate.gfp.takeallpeaks %all available peaks should be taken
             Npeaks = EEG.pnts; % Npeaks = maximum peaks possible (= total amount of data points)
         else %only a subset of the peaks should be taken
-            Npeaks = s.microstate.gfppeaks.Npeaks; % Npeaks = predetermined number
+            Npeaks = s.microstate.gfp.Npeaks; % Npeaks = predetermined number
         end
         
         %get GFP peaks
         EEG = pop_micro_selectdata( ...
             EEG, ...
             [], ... 
-            'datatype',    s.microstate.gfppeaks.datatype, ... %default : 'spontaneous'
-            'avgref',      s.microstate.gfppeaks.avgref, ... %default : 1
-            'normalise',   s.microstate.gfppeaks.normalise, ... %default : 1
-            'MinPeakDist', s.microstate.gfppeaks.MinPeakDist, ... %default : 10
+            'datatype',    s.microstate.gfp.datatype, ... %default : 'spontaneous'
+            'avgref',      s.microstate.gfp.avgref, ... %default : 1
+            'normalise',   s.microstate.gfp.normalise, ... %default : 1
+            'MinPeakDist', s.microstate.gfp.MinPeakDist, ... %default : 10
             'Npeaks',      Npeaks, ... % if Npeaks >= available GFP peaks, all the peaks get taken
-            'GFPthresh',   s.microstate.gfppeaks.GFPthresh); %default  : 1
+            'GFPthresh',   s.microstate.gfp.GFPthresh); %default  : 1
         
         %plot the taken peaks & save it
         plot(std(EEG.microstate.data,1))
@@ -69,7 +69,7 @@ if input_files_exist && (~output_files_exist || s.todo.override) %if gfppeaks (o
         fn_chanlocs = 'chanlocs.mat';
         save([fp_output,fn_chanlocs],'chanlocs');
         
-    catch
-        disp('!! Error in gfp peak extraction!!')
-    end
+   % catch
+       % disp('!! Error in gfp peak extraction!!')
+   %end
 end

@@ -32,7 +32,7 @@ function pl_microstates_reordering(toreorder_folder,lastlevel_orderedmicrostates
       
       %compare the individual prototypes with the sample-level prototypes
       %to get the appropriate sort order using a function of thomas koenig
-      [~,SortOrder, Communality, polarity] = ArrangeMapsBasedOnMean(maps2sort,lastlevel_orderedmicrostates',s.microstate.orderingPolarity);
+      [~,SortOrder, Communality, polarity] = ArrangeMapsBasedOnMean(maps2sort,lastlevel_orderedmicrostates',s.microstate.orderingpolarity);
       
       %order the individual microstates
       microstate_ordered(:,:) =  squeeze(maps2sort(1,:,:))'; %back to 2D & transpose back

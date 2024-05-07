@@ -38,7 +38,7 @@ if ~output_files_exist || s.todo.override % if eegdata does not exist or can be 
             mkdir(fp_output); %make it a directory
         end
         load([eeg_files.folder,filesep,eeg_files.name],'EEG'); % load EEG data (to determine Nsamples, only save this file if  enough samples)
-        if EEG.pnts <= s.nGoodSamples % if not enough samples
+        if EEG.pnts <= 20*s.sr % 20 secondes min for MS Analysis %s.nGoodSamples % if not enough samples
             disp(['..skipping this file because not enough (good) samples: ',inputfolder.name]) % skip subject
         end
         %% Save Files in GFP directory

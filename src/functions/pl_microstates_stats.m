@@ -40,7 +40,7 @@ function pl_microstates_stats(inputfolder,level,h,s)
                 %% Microstates Stats
                 load(fn_microstate,'microstate');
                 %loop over microstates input variables
-                for vn = s.microstate.stats
+                for vn = s.microstate.metrics
                     vals = microstate.stats.(vn{1}); %get values from input variable
                     if length(vals)==1 %if single value
                         %add value to output table

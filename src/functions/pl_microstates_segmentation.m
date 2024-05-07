@@ -22,7 +22,7 @@ if ~isfolder(fp_output_plots)
 end
 for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clusters)
     
-    try
+  %  try
         %% Load Input Data
         disp('.. load data');
         if strcmp(level,s.levels{1}) %first level : GFP as input (no previous level to cluster on)
@@ -79,9 +79,9 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
         EEG.microstate.data = EEG.data; %CEEG
         
         if levelnum == 1 % if clustering is done directly on GFP : requires more repetitions
-            nrepetitions  =  s.microstate.Nrepetitions_FirstLevel;
+            nrepetitions  =  s.microstate.Nrepfirstlevel;
         else
-            nrepetitions = s.microstate.Nrepetitions_OtherLevels;
+            nrepetitions = s.microstate.Nrepotherlevel;
         end
         
         %cluster the data
@@ -136,7 +136,7 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
             close;
         clear EEG microstate EEG_u
        
-    catch
-       disp('!! Error in clustering !!')
-    end
+   % catch
+    %   disp('!! Error in clustering !!')
+    %end
 end
