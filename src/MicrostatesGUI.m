@@ -6,6 +6,7 @@ backgroundColor = '#344372';
 foregroundColor = '#FFFFFF';
 fontsize = 16;
 microstates_fig = uifigure('Position', [745 200 800 700], 'Color', backgroundColor, 'Icon', 'external_files/cerveau.png','WindowStyle','modal','Resize','off');
+% if already existing settings in path, load settings, else default
 settings = defaultsettings();
 guidata(microstates_fig,settings);
 
