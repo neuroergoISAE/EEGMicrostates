@@ -17,6 +17,7 @@ function s = Microstates()
 
 addpath('settings');
 addpath('functions');
+addpath(fullfile(fileparts(which('Microstates.m')),'external_files'));
 
 s = MicrostatesGUI();
 %% create path 
