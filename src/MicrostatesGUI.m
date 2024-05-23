@@ -34,7 +34,7 @@ btn_outputfolder = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 6
 %EEGLAB PATH
 l_eeglabpath = uilabel(project_panel,'Position', [10 10 200 30],'HorizontalAlignment','right', 'Text','EEGLAB Path : ','FontSize',fontsize,'FontColor',foregroundColor);
 ef_eeglabpath = uieditfield(project_panel, 'Position', [220, 10, 250, 30],'Value','D:\eeglab\eeglab2023.0','HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
-btn_eeglabpath = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 10, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_outputfolder));
+btn_eeglabpath = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 10, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_eeglabpath));
 
 % Number of Microstates
 l_nbmicrostates = uilabel(microstates_panel,'Position', [10 150 200 30],'HorizontalAlignment','right', 'Text','Number of Microstates : ','FontSize',fontsize,'FontColor',foregroundColor);
@@ -86,6 +86,7 @@ end
 function runanalysis()
     settings.path.project = ef_outputfolder.Value;
     settings.path.data = ef_datafolder.Value;
+    settings.path.eeglab = ef_eeglabpath.Value;
     settings.name = ef_projectname.Value;
     settings.microstate.Nmicrostates = str2num(ef_nbmicrostates.Value);
     settings.dataformat = dd_datatype.Value;

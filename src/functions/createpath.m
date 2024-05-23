@@ -2,6 +2,9 @@
 % April 2024 - CH
 
 function s = createpath(s)
+
+addpath(s.path.eeglab);
+eeglab; close %add egglab functions to path
 s.path.src =fileparts(matlab.desktop.editor.getActiveFilename); 
 %s.path.preprocessed_data = [s.path.project,filesep,s.name,filesep,'Preprocessed_Data'];
 s.path.MS_results= [s.path.project,filesep,s.name,filesep,'Microstates_Results'];
@@ -13,7 +16,7 @@ function createfolder(fn)
         mkdir(fn);
     end
 end
-createfolder(s.path.preprocessed_data);
+%createfolder(s.path.preprocessed_data);
 createfolder(s.path.MS_results);
 cd(s.path.src);
 s.path.gfp = [s.path.MS_results,filesep,'gfp',filesep]; %intermediate gfp output (participant or session)
