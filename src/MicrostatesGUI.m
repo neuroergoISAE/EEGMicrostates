@@ -56,8 +56,7 @@ btn_config = uibutton(microstates_fig, 'Text', 'Change Settings', 'Position', [1
 % Run Button
 btn_run = uibutton(microstates_fig, 'Text', 'Run Analysis', 'Position', [450, 20, 200, 40],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) runanalysis());
 
-
-
+exportapp(microstates_fig,"uifig.tif")
 %% FUNCTIONS
 waitfor(microstates_fig);
 function selectDirectory(editField)
@@ -104,11 +103,14 @@ function runanalysis()
             end
         end
     end
-    if settings.multipleSessions
-        settings.levels = {'session','participant','group'}; % please follow this order
-    else
-        settings.levels = {'participant','group'};
-    end
+    settings.levels = settings.backfittingLevels;
+
+%     if settings.multipleSessions
+%         %settings.levels = {'session','participant','group'}; % please follow this order
+%         settings.levels = settings.backfittingLevels;
+%     else
+%         %settings.levels = {'participant','group'};
+%     end
     close(microstates_fig);
 end
 end

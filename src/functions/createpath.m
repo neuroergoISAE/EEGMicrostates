@@ -29,7 +29,7 @@ s.path.group=[s.path.MS_results,filesep,'group',filesep]; %intermediate group ou
 createfolder(s.path.group);
 s.path.participant=[s.path.MS_results,filesep,'participant',filesep]; %intermediate participant output (participant-level prototypes)
 createfolder(s.path.participant);
-s.path.backfitting=[s.path.MS_results,'backfitting',filesep]; %backfitting output (participant or session levels)
+s.path.backfitting=[s.path.MS_results,filesep,'backfitting',filesep]; %backfitting output (participant or session levels)
 createfolder(s.path.backfitting);
 if any(strcmp(s.backfittingLevels,'session')) %if session level required
     s.path.session=[s.path.MS_results,filesep,'session',filesep]; %intermediate session output (session-level prototypes)

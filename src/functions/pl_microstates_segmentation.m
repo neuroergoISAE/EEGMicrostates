@@ -26,9 +26,12 @@ for u = s.microstate.Nmicrostates %loop over microstate models (~ number of clus
         %% Load Input Data
         disp('.. load data');
         if strcmp(level,s.levels{1}) %first level : GFP as input (no previous level to cluster on)
-            disp([inputfolder.folder,filesep,inputfolder.name,filesep,'gfppeaks.mat']);
-            load([inputfolder.folder,filesep,inputfolder.name,filesep,'gfppeaks.mat'],'CEEG'); %load gfppeaks as CEEG variable
-            load([inputfolder.folder,filesep,inputfolder.name,filesep,'chanlocs.mat'],'chanlocs'); %load chanlocs
+            %disp([inputfolder.folder,filesep,inputfolder.name,filesep,'gfppeaks.mat']);
+            %load([inputfolder.folder,filesep,inputfolder.name,filesep,'gfppeaks.mat'],'CEEG'); %load gfppeaks as CEEG variable
+            %load([inputfolder.folder,filesep,inputfolder.name,filesep,'chanlocs.mat'],'chanlocs'); %load chanlocs
+            disp([inputfolder.folder,filesep,inputfolder.name]);
+            load([inputfolder.folder,filesep,inputfolder.name],'CEEG'); %load gfppeaks as CEEG variable
+            load([inputfolder.folder,filesep,'chanlocs.mat'],'chanlocs'); %load chanlocs
         else % other level : previous level as input
             previouslevel =  s.levels{levelnum-1};
             %% Append all files of the inferior level (input) for the clustering

@@ -17,7 +17,7 @@ if settings.todo.microstates_backfitting
     for h = settings.microstate.Nmicrostates % for each number of cluster
         fp_lastlevel_prototypes = dir([fp_level,'**\*',num2str(h),'MS_reordered.mat']); % directory containing the reordered prototypes .mat file (if group level backfitting: one file)
         for i=1:length(fp_gfp_eeg) % for each available data (each participant or each session if existing)
-            disp(['p05: (nMS = ',num2str(h),') - backfitting from ',lastLevel,'-level prototypes']);
+            disp(['p05: (nMS = ',num2str(h),') - backfitting :',fp_gfp_eeg(i).folder]);
             fn_eeg_data = [fp_gfp_eeg(i).folder,filesep,fp_gfp_eeg(i).name];
             pl_microstates_backfitting(fn_eeg_data,fp_lastlevel_prototypes,h, settings); %backfitting of this file
         end

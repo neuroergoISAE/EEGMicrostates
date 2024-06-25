@@ -12,9 +12,10 @@
 
 function pl_load_data(inputfolder,outputfolder,s)
 %% Check existing files and Override
-fp_output = [outputfolder,inputfolder.name,filesep];
+%fp_output = [outputfolder,inputfolder.name,filesep];
+fp_output = outputfolder;
 fn_eegdata = 'eegdata.mat';
-output_files_exist = exist([fp_output,fn_eegdata],'file') == 2 ; % check if eegdata.mat already exists
+output_files_exist = exist([fp_output,filesep,fn_eegdata],'file') == 2 ; % check if eegdata.mat already exists
 
 if ~output_files_exist || s.todo.override % if eegdata does not exist or can be overriden
     if s.todo.override && (exist(fp_output,'dir') == 7)%if override requested & old first level folder of the subject exists
@@ -26,24 +27,26 @@ if ~output_files_exist || s.todo.override % if eegdata does not exist or can be 
         end
     end
     %% Check if eegdata file exist
-    eeg_files = dir([inputfolder.folder,filesep, inputfolder.name,filesep, 'eeg', filesep]);
-    eeg_files = eeg_files(contains({eeg_files.name},'.mat')& ~contains({eeg_files.name},'reduced'));
+    %eeg_files = dir([inputfolder.folder,filesep, inputfolder.name,filesep, 'eeg', filesep]);
+    %eeg_files = eeg_files(contains({eeg_files.name},s.dataformat)& ~contains({eeg_files.name},'reduced'));
+    eeg_file = [inputfolder.folder,filesep, inputfolder.name];
     % eeg_files(contains({eeg_files.name},'preprocessed') & contains({eeg_files.name},'.mat') ...
     % string should not contain 'reduced' (automagic process file)
     
     %% Load EEG file
     disp('.. load eeg file');
-    if ~isempty(eeg_files) % input file exists
+    if ~isempty(eeg_file) % input file exists
         if ~isfolder(fp_output) %if fp_output is not a directory
             mkdir(fp_output); %make it a directory
         end
-        load([eeg_files.folder,filesep,eeg_files.name],'EEG'); % load EEG data (to determine Nsamples, only save this file if  enough samples)
+        %load([eeg_files.folder,filesep,eeg_files.name],'EEG'); % load EEG data (to determine Nsamples, only save this file if  enough samples)
+        load(eeg_file,'EEG'); % load EEG data (to determine Nsamples, only save this file if  enough samples)
         if EEG.pnts <= 20*s.sr % 20 secondes min for MS Analysis %s.nGoodSamples % if not enough samples
             disp(['..skipping this file because not enough (good) samples: ',inputfolder.name]) % skip subject
         end
         %% Save Files in GFP directory
-        disp(['..copying file in gfp directory: ',fp_output, fn_eegdata]);
-        save([fp_output, fn_eegdata],'EEG');
+        disp(['..copying file in gfp directory: ',fp_output,filesep, fn_eegdata]);
+        save([fp_output,filesep, fn_eegdata],'EEG');
     else
         disp(['..skipping due to inexisting input file: ',inputfolder.folder,filesep,inputfolder.name]) % skip subject
     end

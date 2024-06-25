@@ -12,7 +12,8 @@ settings = s;
 
 if settings.todo.paramgui
     %[param ,~] = paramGUI; %WAS MODIFIED FOR DEMO
-    [param ,~] = ConfigGUI;
+    %[param ,~] = ConfigGUI;
+    param = MicrostatesGUI();
     settings  = param; 
     settings.todo = s.todo; 
 %    settings.todo.eyes_epoching  = param.todo.eyes_epoching;  %WAS MODIFIED FOR DEMO

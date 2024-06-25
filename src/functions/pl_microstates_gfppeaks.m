@@ -10,9 +10,10 @@
 % Outputs: gfppeaks.mat and gfppeaks.png files for each participant/session
 function pl_microstates_gfppeaks(inputfolder,outputfolder,s)
 %% Check existing files
-fp_input = [inputfolder.folder,filesep,inputfolder.name,filesep];
-fn_eegdata = 'eegdata.mat';
-input_files_exist = exist([fp_input,fn_eegdata],'file') == 2 ; % check if input file exists
+fp_input = [inputfolder.folder,filesep,inputfolder.name];%,filesep];
+%fn_eegdata = 'eegdata.mat';
+%input_files_exist = exist([fp_input,fn_eegdata],'file') == 2 ; % check if input file 
+input_files_exist = exist(fp_input,'file') == 2 ; % check if input file exists
 
 fp_output = [outputfolder,filesep];%output path and names
 fp_output_plots = [fp_output, 'plots', filesep];
@@ -30,8 +31,10 @@ if input_files_exist && (~output_files_exist || s.todo.override) %if gfppeaks (o
     
     %% load eegdata file
     
-    disp(['..loading ',fp_input,fn_eegdata]);
-    load([fp_input,fn_eegdata],'EEG')
+    %disp(['..loading ',fp_input,fn_eegdata]);
+    %load([fp_input,fn_eegdata],'EEG')
+    disp(['..loading ',fp_input]);
+    load(fp_input,'EEG');
     
     %% Gfp peak detection & get peaks
    % try
