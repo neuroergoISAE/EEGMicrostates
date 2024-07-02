@@ -15,6 +15,8 @@ function pl_microstates_stats(inputfolder,level,h,s)
     output_table = table; %empty table
     fn_output_mat = [s.path.tables,'stats_',level,'_backfit_',num2str(h),'MS.mat']; %output table with all files stats
     fn_output_csv = [s.path.csv,'stats_',level,'_backfit_',num2str(h),'MS.csv']; %output csv with all files stats
+    fn_output_settings = [s.path.MS_results,filesep,'settings.mat']; %output .mat settings file
+
 
     if ~(exist(fn_output_csv,'file')==2 && exist(fn_output_mat,'file')==2) || s.todo.override
         %if override & files already exist, delete the files
@@ -30,7 +32,8 @@ function pl_microstates_stats(inputfolder,level,h,s)
                 
                 %% Participant Id and Session (if existing)
                 file_IDs = extractBetween(fn_microstate,s.path.backfitting,inputfolder(i).name);
-                file_IDs =split(file_IDs,'\'); %if multiple sessions : will show ses number and sub id
+                %file_IDs =split(file_IDs,'\'); %if multiple sessions : will show ses number and sub id
+                file_IDs =split(file_IDs,filesep); %if multiple sessions : will show ses number and sub id
                 file_IDs = file_IDs(~cellfun('isempty',file_IDs)); 
                 file_table.subjectID = char(file_IDs(1));% participant id
                 if length(file_IDs)>1 % participant session if existing
@@ -82,5 +85,10 @@ function pl_microstates_stats(inputfolder,level,h,s)
         %% Save microstate features as .csv file
             disp(['..saving ',fn_output_csv])
             writetable(output_table, fn_output_csv, 'Delimiter', ',');
+            
+        %% Save settings in output folder
+            disp(['... saving', fn_output_settings]);
+            save(fn_output_settings,'s');
+
     end
 end

@@ -43,6 +43,7 @@ function pl_microstates_reordering(toreorder_folder,lastlevel_orderedmicrostates
       for q = 1:nMS
           subplot(1,nMS,q);
           topoplot(microstate_ordered(:,q),chanlocs, 'maplimits', s.customColorMap.range);
+          title(q); % add title
           set(gcf,'color','w'); % set backround color to white
           colormap(mycolormap); % use customized color map
       end 
@@ -50,7 +51,8 @@ function pl_microstates_reordering(toreorder_folder,lastlevel_orderedmicrostates
       %save the reordered prototypes & the corresponding plots
       disp(['..saving ',fn_microstates_ordered]);
       save(fn_microstates_ordered,'microstate_ordered')
-      saveas(gcf,fn_plot_ordered,'png')
+      exportgraphics(gcf,[fn_microstates_ordered,'.png'],'Resolution',600)
+
       close;
   end
 end
