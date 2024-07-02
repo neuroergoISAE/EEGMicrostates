@@ -33,6 +33,7 @@ if settings.todo.load_data
         case "group"
             fp_all_eeg = dir([settings.path.gfp,filesep, '**',filesep,'*',settings.dataformat]); % all gfp files of all subjects and all sessions
             concat_eeg = load([fp_all_eeg(1).folder,filesep,fp_all_eeg(1).name]);
+            chanlocs = concat_eeg.EEG.chanlocs;
             for g = 2:length(fp_all_eeg)
                 tmp_eeg = load([fp_all_eeg(g).folder,filesep,fp_all_eeg(g).name]);
                 concat_eeg.EEG = pop_mergeset(concat_eeg.EEG,tmp_eeg.EEG);  %merge EEG data
@@ -40,11 +41,12 @@ if settings.todo.load_data
             %             % write concat gfp and eeg in order to read it later (for segmentation)
             %             % concat gfp is written as 'gfppeaks.mat' in the group folder, concat eeg as "eegdata.mat"
             %             % erase all sessions and participant single gfp
-            rmdir(settings.path.gfp,'s');
-            mkdir(settings.path.gfp);
+            %rmdir(settings.path.gfp,'s');
+            %mkdir(settings.path.gfp);
             mkdir([settings.path.gfp,filesep,'group']);
-            save([settings.path.gfp,filesep,'group',filesep,'eegdata.mat'],'-struct','concat_eeg'); % save EEG only
-            
+            save([settings.path.gfp,filesep,'group',filesep,'group_eegdata.mat'],'-struct','concat_eeg'); % save EEG only
+            save([settings.path.gfp,filesep,'group',filesep,'chanlocs.mat'],'chanlocs'); % save chanlocs
+
         case "participant"
             % if multiple session : create single eeg file for each participantn, else: do nothing
             if settings.multipleSessions
@@ -55,13 +57,13 @@ if settings.todo.load_data
                     fp_p  = [fp_participants(p).folder,filesep,fp_participants(p).name];
                     fp_all_eeg = dir([fp_p,filesep, '**',filesep,'*',settings.dataformat]); % all gfp files of all subjects and all sessions
                     concat_eeg = load([fp_all_eeg(1).folder,filesep,fp_all_eeg(1).name]);
-                    for g = 2:length(fp_all_eeg)
+                    chanlocs = concat_eeg.EEG.chanlocs;
+                    for g = 1:length(fp_all_eeg)
                         tmp_eeg = load([fp_all_eeg(g).folder,filesep,fp_all_eeg(g).name]);
                         concat_eeg.EEG = pop_mergeset(concat_eeg.EEG,tmp_eeg.EEG);  %merge EEG data
                     end
-                    rmdir(fp_p,'s');
-                    mkdir(fp_p);
-                    save([fp_p,filesep,'eegdata.mat'],'-struct','concat_eeg'); % save EEG only                    
+                    save([fp_p,filesep,'participant_eegdata.mat'],'-struct','concat_eeg'); % save EEG only   
+                    save([settings.path.gfp,filesep,fp_participants(p).name,filesep,'chanlocs.mat'],'chanlocs'); % save chanlocs
                 end
             end
     end
