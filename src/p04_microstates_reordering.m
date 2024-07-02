@@ -80,9 +80,8 @@ if settings.todo.microstates_reordering
 
             for q = 1:h
                 subplot(1,h,q);
-                topoplot(samplePrototypes_ordered(:,q),chanlocs, 'maplimits', settings.customColorMap.range);
-                title(q); % add title
-                set(gcf,'color','w'); %set backround color to white
+                topoplot(samplePrototypes_ordered(:,q),chanlocs, 'maplimits', settings.customColorMap.range,'style','both');
+                title(q); % add title                set(gcf,'color','none'); %set backround color to white
                 colormap(mycolormap); %use customized color map
             end
             %aks for validation of the new order
@@ -97,7 +96,7 @@ if settings.todo.microstates_reordering
                 disp(['..saving ',fn_microstates_ordered]);
                 save(fn_microstates_ordered,'microstate_ordered');
                 disp(['..saving ',fn_plot_ordered]);
-                saveas(gcf,fn_plot_ordered,'png');
+                exportgraphics(gcf,[fn_plot_ordered,'.png'],'Resolution',600)
             end
             close; %close the figure
         end
@@ -118,7 +117,6 @@ if settings.todo.microstates_reordering
             end
         end
     end
-    
 end
 clear samplePrototypes microstate
 end
