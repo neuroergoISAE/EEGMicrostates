@@ -3,6 +3,11 @@
 function [default] = defaultsettings()
     default = struct();
 
+    default.name = ['Project_' date()];
+    default.path.data ='';
+    default.dataformat = '.mat';
+    default.path.project = '';
+    default.path.eeflab ='D:\eeglab\eeglab2023.0';
     %% Additional Pre-processing
     default.preproc.avgref = true; %Additional average re-reference
     default.preproc.notch.low = 48; %Low noch filter
@@ -19,6 +24,7 @@ function [default] = defaultsettings()
     default.sr = 512; % Sampling Rate
 
     %% Microstates
+    default.microstates.Nmicrostates = '[4 5]';
     % GFP
     %default.microstate.gfp.datatype = 'spontaneaous'; %or : 'ERPavg','ERPconc', 'ERPconc'.
     default.microstate.gfp.avgref = true; %Additional average re-reference
