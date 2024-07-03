@@ -18,18 +18,18 @@ The multiple levels microstates analysis will extract microstates on available l
 ### :hourglass_flowing_sand: Process
 - ```p00_settings.m``` : parameters selection with or without GUI, a previous setting file can be loaded.
 - ```p01_load_data.m``` : loads the data to analyis. If required, can epoch the data to analyse (closed or opened eyes for example).
-- ```p002_gfp_peaks.m``` : extracts gfp peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
-- ```p003_microstates_segmentation.m``` : performs the segmentation (in our case, the **modified k-means clustering**) on each existing level and save the prototypes in the corresponding folders (```session``` if existing, ```participant``` and ```group```).
-- ```p004_microstates_reordering.m``` : asks the user to input the right order of the last level (group) prototypes. Reording of all the other levels prototypes according to the group prototypes order.
-- ```p005_microstates_backfitting.m``` : performs the backfitting on the requested levels. The default backfitting level is on the group prototypes. Other can be added as an option. Results are saved in the ```backfitting``` folder. 
-- ```p006_microstates_stats.m``` : extracts the statistics of the backfitted microstates for each level and save them in .csv and .mat files in the ```stats``` folder.
+- ```p02_gfp_peaks.m``` : extracts gfp peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
+- ```p03_microstates_segmentation.m``` : performs the segmentation (in our case, the **modified k-means clustering**) on each existing level and save the prototypes in the corresponding folders (```session``` if existing, ```participant``` and ```group```).
+- ```p04_microstates_reordering.m``` : asks the user to input the right order of the last level (group) prototypes. Reording of all the other levels prototypes according to the group prototypes order.
+- ```p05_microstates_backfitting.m``` : performs the backfitting on the requested levels. The default backfitting level is on the group prototypes. Other can be added as an option. Results are saved in the ```backfitting``` folder. 
+- ```p06_microstates_stats.m``` : extracts the statistics of the backfitted microstates for each level and save them in .csv and .mat files in the ```stats``` folder.
 
 ## :airplane: Launch
 
 run the ```Microstates.m``` file. The Main GUI will appear. In case of already existing settings in the path, they will be loaded. Change needed informations and settings (```Change Settings``` button).
 ![Microstates GUI](external_files/MainGUI.JPG)
 
-The settings GUI appears when clicking on ```Change Settings```. The reset the parameters to defaults, click on ```Reset``` button. To launch the pipeline, click on ```Save and Quit``` and then on ```Run analysis``` buttons.
+The settings GUI appears when clicking on ```Change Settings```. The reset the parameters to defaults, click on ```Reset``` button. To launch the pipeline, click on ```Save and Quit``` and then on ```Run analysis``` buttons. Default settings are defined in the [defaultsettings](src/settings/defaultsettings.m) file.
 
 ![Microstates Settings GUI](external_files/SettingsGUI.JPG)
 
