@@ -26,7 +26,8 @@ The multiple levels microstates analysis will extract microstates on available l
 
 ## :airplane: Launch
 
-![Microstates GUI](external_files/MainGUI.JPG =200x)
+
+<img src="https://github.com/neuroergoISAE/EEGMicrostates/tree/main/external_files/MainGUI.JPG" width="48">
 ![Microstates GUI](external_files/SettingsGUI.JPG)
 
 
