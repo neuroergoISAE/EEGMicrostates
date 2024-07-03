@@ -26,7 +26,7 @@ The multiple levels microstates analysis will extract microstates on available l
 
 ## :airplane: Launch
 
-![Microstates GUI](external_files/MainGUI.JGP)
+![Microstates GUI](external_files/MainGUI.JPG)
 ![Microstates GUI](external_files/SettingsGUI.JPG)
 
 
