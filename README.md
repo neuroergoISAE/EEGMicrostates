@@ -1,7 +1,6 @@
 # EEGMicrostates :brain:
 **Multiple levels Microstates Analysis for EEG data** 
-
-<sup><sub>Adapted from Christian Pfeiffer ([repository](https://github.com/cp3fr/Resting-State-EEG-Features)) and Moritz Truninger</sub></sup>
+Adapted from Christian Pfeiffer ([repository](https://github.com/cp3fr/Resting-State-EEG-Features)) and Moritz Truninger
 
 ## :toolbox: Requirements
 
