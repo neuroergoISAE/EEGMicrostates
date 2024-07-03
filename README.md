@@ -26,7 +26,9 @@ The multiple levels microstates analysis will extract microstates on available l
 
 ## :airplane: Launch
 
-![Microstates GUI](external_files/MainGUI.jpeg)
+![Microstates GUI](external_files/MainGUI.jpg)
+![Microstates GUI](external_files/SettingsGUI.jpg)
+
 
 The Microstates Analysis will launch. Wait until the process ask you to reoder the microstates prototypes. When finished, the message ```Microstates Analysis Finished``` will appear in the Command Window.
 
