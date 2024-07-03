@@ -25,14 +25,8 @@ The multiple levels microstates analysis will extract microstates on available l
 - ```p006_microstates_stats.m``` : extracts the statistics of the backfitted microstates for each level and save them in .csv and .mat files in the ```stats``` folder.
 
 ## :airplane: Launch
-Open ```main.m``` file.
 
-The ```paramGUI``` variable (default : *true*) permits the opening of a small GUI asking for required path and parameters. If you wish, you can put this variable to *false* and change the parameters by hand in the ```p00_settings.m``` file.
-If the data folder is placed in the global project folder and you want all the results to save in the same folder as your data folder, just write your data folder's name in the "Project Name" input field of the GUI.
-
-You can change the required steps and skip unwanted one by changing the corresponding variable ```settings.todo.var``` with ```false```
-
-**Run** ```main.m```, if the GUI parameter is true, please fill it and press ```Save Parameters```.
+![Microstates GUI](external_files/MainGUI.png)
 
 The Microstates Analysis will launch. Wait until the process ask you to reoder the microstates prototypes. When finished, the message ```Microstates Analysis Finished``` will appear in the Command Window.
 
@@ -42,14 +36,14 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 
 ## :compass: Short glossary
 
-- microstates: Topographical results of n cluster segmentation on the gfp peaks. Commonly, 4 clusters are extracted
-- prototypes : microstate clusters defined for a group, a participant or a session. Used as the reference for the backfitting procedure
+- microstates: Topographical results of n cluster segmentation on the gfp peaks. Commonly, at least 4 clusters are extracted.
+- prototypes : microstate clusters defined for a group, a participant or a session. Used as the reference for the backfitting procedure.
 - levels : each step when an eeg recording was done.
-- session level : experimental protocol includes multiple sessions for each participant. Please note: same session for each participant. If participant perform a single session, the session level will not exist.
+- session level : experimental protocol includes multiple sessions for each participant. If participant perform a single session, the session level will not exist.
 - participant level : each individual (subject, patient or participant) included in the experiment.
-- group level : all the existing participants and sessions, always single group for the global population.
+- group level : all the existing participants and sessions (if existing), always single group for the global population.
 - segmentation : clustering process, in our case : modified k-means cluster. The number of clusters is 4 by default but can be changed. A list of cluster number can also be included (will increase the number of output and time of procedure).
-- In case of single sessions but mulitple conditions analysis: conditions can be considered as sessions
+- In case of single sessions but multiple conditions analysis: conditions can be considered as sessions.
 
 ## :microscope: Details 
 Parameters settings : 
