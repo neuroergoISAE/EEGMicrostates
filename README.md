@@ -7,7 +7,7 @@ Adapted from Christian Pfeiffer ([repository](https://github.com/cp3fr/Resting-S
 - [ ] **Matlab** (>= 2019a)
     - [ ] Signal Processing Toolbox (signal)
     - [ ] Statistics and Machine Learning Toolbox (stats)
-    - [ ] custom colormap (is located in the [```external_files``` folder](external_files))
+    - [ ] custom colormap (is located in the [```external_files folder```](external_files))
 - [ ] **eeglab** (latest)
     - [ ] Microstates Analysis Toolbox : Microstates1.2 (Thomas Koenig) [download](https://www.thomaskoenig.ch/Download/EEGLAB_Microstates/Microstates1.2.zip)
     - [ ] Microstates EEGlab Toolbox : MST1.0 (Poulsen et al., 2018) [github](https://github.com/atpoulsen/Microstate-EEGlab-toolbox)
