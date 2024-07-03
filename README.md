@@ -26,7 +26,7 @@ The multiple levels microstates analysis will extract microstates on available l
 
 ## :airplane: Launch
 
-run the ```[Mainfile](src/Microstates.m)``` file. The Main GUI will appear. In case of already existing settings in the path, they will be loaded. Change needed informations and settings (```Change Settings``` button).
+run the [Mainfile](src/Microstates.m) file. The Main GUI will appear. In case of already existing settings in the path, they will be loaded. Change needed informations and settings (```Change Settings``` button).
 ![Microstates GUI](external_files/MainGUI.JPG)
 
 The settings GUI appears when clicking on ```Change Settings```. The reset the parameters to defaults, click on ```Reset``` button. To launch the pipeline, click on ```Save and Quit``` and then on ```Run analysis``` buttons. Default settings are defined in the [defaultsettings](src/settings/defaultsettings.m) file.
