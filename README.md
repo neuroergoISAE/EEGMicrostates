@@ -26,9 +26,8 @@ The multiple levels microstates analysis will extract microstates on available l
 
 ## :airplane: Launch
 
-
-<img src="https://github.com/neuroergoISAE/EEGMicrostates/tree/main/external_files/MainGUI.JPG" width="48">
-![Microstates GUI](external_files/SettingsGUI.JPG)
+![Microstates GUI](external_files/MainGUI.JPG)
+![Microstates Settings GUI](external_files/SettingsGUI.JPG)
 
 
 The Microstates Analysis will launch. Wait until the process ask you to reoder the microstates prototypes. When finished, the message ```Microstates Analysis Finished``` will appear in the Command Window.
