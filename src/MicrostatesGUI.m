@@ -1,13 +1,16 @@
 %% Microstates Main GUI
-% April 2024 - CH
-function [settings] = MicrostatesGUI()
+% April 2024 - C. Hamery
+% Main GUI window for the microstates analysis
+% This window allows the user to modify project's information
+% If a settings.mat file already exists in the settings folder, will load this file instead of default parameters
 
+function [settings] = MicrostatesGUI()
 backgroundColor = '#004675';
 foregroundColor = '#FFFFFF';
 fontsize = 20;
 microstates_fig = uifigure('Position', [745 200 800 700], 'Color', backgroundColor, 'Icon', 'external_files/cerveau.png','WindowStyle','modal','Resize','off');
-% if already existing settings in path, load settings, else default
-if isfile(['settings',filesep,'settings.mat'])
+if isfile(['settings',filesep,'settings.mat'])% if already existing settings in path, load settings, else default
+
     settings = load(['settings',filesep,'settings.mat']);
 else
     settings = defaultsettings();
@@ -17,9 +20,8 @@ guidata(microstates_fig,settings);
 %% Panels
 project_panel =  uipanel(microstates_fig, 'Position', [50 350 700 290], 'BackgroundColor', backgroundColor,'Title','Project ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 microstates_panel =  uipanel(microstates_fig, 'Position', [50 100 700 225], 'BackgroundColor', backgroundColor,'Title','Microstates ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
-%button_panel =  uipanel(microstates_fig, 'Position', [50 0 700 100], 'BackgroundColor', backgroundColor,'Title','','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 
-%%
+%% GUI
 % Project Name
 l_projectname = uilabel(project_panel,'Position', [10 210 200 30],'HorizontalAlignment','right', 'Text','Project Name : ','FontSize',fontsize,'FontColor',foregroundColor);
 ef_projectname = uieditfield(project_panel, 'Position', [220, 210, 250, 30],'Value',settings.name,'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
@@ -60,7 +62,6 @@ btn_config = uibutton(microstates_fig, 'Text', 'Change Settings', 'Position', [1
 % Run Button
 btn_run = uibutton(microstates_fig, 'Text', 'Run Analysis', 'Position', [450, 30, 200, 40],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) runanalysis());
 
-%exportapp(microstates_fig,"uifig.tif")
 %% FUNCTIONS
 waitfor(microstates_fig);
 function selectDirectory(editField)
@@ -108,15 +109,7 @@ function runanalysis()
         end
     end
     settings.levels = settings.backfittingLevels;
-
-%     if settings.multipleSessions
-%         %settings.levels = {'session','participant','group'}; % please follow this order
-%         settings.levels = settings.backfittingLevels;
-%     else
-%         %settings.levels = {'participant','group'};
-%     end
     save('settings/settings','-struct','settings'); % Save the 'param' structure variable to a file for future use
-
     close(microstates_fig);
 end
 end

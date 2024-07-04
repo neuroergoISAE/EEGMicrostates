@@ -7,17 +7,7 @@ function [default] = defaultsettings()
     default.path.data ='';
     default.dataformat = '.mat';
     default.path.project = '';
-    default.path.eeflab ='D:\eeglab\eeglab2023.0';
-    %% Additional Pre-processing
-    default.preproc.avgref = true; %Additional average re-reference
-    default.preproc.notch.low = 48; %Low noch filter
-    default.preproc.notch.high = 52; %High notch filter
-    default.preproc.bandpass.low = 2; %Low band-pass filter
-    default.preproc.bandpass.high = 20; %High band-pass filter
-    default.preproc.mvmax = 90; %Maximun mV for data cleaning
-    default.preproc.EClabel = 'RS_EC'; %Resting state closed eyes trigger label
-    default.preproc.EOlabel = 'RS_EO'; %Resting state opened eyes trigger label
-    default.preproc.timelimits = [0 30]; %Resting state duration
+    default.path.eeglab ='D:\eeglab\eeglab2023.0';
 
     %%
     default.nGoodSamples = 1000; %Minimum number of good sample per epoch
@@ -58,8 +48,6 @@ function [default] = defaultsettings()
     default.customColorMap.range = [-0.25 0.25];
     
     %TODO
-    default.todo.RS = false;
-    default.todo.addpreproc = false;
     default.todo.override = true; % Flag indicating whether to override old outputs
     default.todo.load_data = true; % Flag indicating whether to load data
     default.todo.microstates_gfppeaks = true; % Flag indicating whether to perform GFP peaks analysis

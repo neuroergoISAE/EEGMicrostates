@@ -1,5 +1,8 @@
 %% Param Window for MicrostatesGUI
-% March 2024 - CH
+% March 2024 - C. Hamery
+% GUI containing all customizable parameters for the microstates analysis
+% If a settings.mat file already exists in the settings folder, will load this file instead of default parameters
+
 function [settings, cancel] = MicrostatesParamGUI(settings)
 
 default =defaultsettings();
@@ -9,23 +12,18 @@ foregroundColor = '#FFFFFF';
 fontsize = 20;
 cancel = 0;
 settings_fig = uifigure('Position', [745 200 800 600], 'Color', backgroundColor, 'Icon', 'external_files/cerveau.png','WindowStyle','modal','Resize','off');
-
 guidata(settings_fig,settings);
+
 %% panels
 gfp_panel= uipanel(settings_fig, 'Position', [20 300 360 280], 'BackgroundColor', backgroundColor,'Title','GFP ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 clustering_panel  = uipanel(settings_fig, 'Position', [420 270 360 310], 'BackgroundColor', backgroundColor,'Title','Clustering ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 backfitting_panel = uipanel(settings_fig, 'Position', [420  100 360 150], 'BackgroundColor', backgroundColor,'Title','Backfitting ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 metrics_panel = uipanel(settings_fig, 'Position', [20 100 360 180], 'BackgroundColor', backgroundColor,'Title','Metrics ','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 
-%subpanels
+% subpanels
 repetition_panel = uipanel(clustering_panel, 'Position', [10 120 340 55], 'BackgroundColor', backgroundColor,'Title','','FontSize',fontsize+2,'ForegroundColor', foregroundColor);
 
-
-
 %% GFP
-%l_gfpType = uilabel(gfp_panel,'Position', [10 160 200 20],'HorizontalAlignment','right','Text','GFP Data Type : ','FontSize',fontsize,'FontColor',foregroundColor);
-%dd_gfpType = uidropdown(gfp_panel,'Items', {'spontaneous', 'others'},'Value','spontaneous','Position',[210 160 130 20],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
-
 l_gfpaverageRef = uilabel(gfp_panel,'Position', [10 210 230 30],'HorizontalAlignment','right','Text','Average Reference : ','FontSize',fontsize,'FontColor',foregroundColor);
 cb_gfpaverageRef = uicheckbox(gfp_panel,'Position',[240 210 20 30],'Value',settings.microstate.gfp.avgref,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
 
@@ -49,7 +47,6 @@ if ~settings.microstate.gfp.takeallpeaks
     ef_nbPeaks.Value = settings.microstate.gfp.Npeaks;
 end
 
-%add function if cb nbPeaks unchecked : show ef_nbpeaks
 %% Clustering
 l_algorithm = uilabel(clustering_panel,'Position', [10 230 200 30],'HorizontalAlignment','right','Text','Clustering Algorithm : ','FontSize',fontsize,'FontColor',foregroundColor);
 dd_algorithm = uidropdown(clustering_panel,'Items', {'modkmeans','kmeans','taahc','aahc','varmicro'},'Value',settings.microstate.algorithm,'Position',[210 230 130 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
@@ -112,51 +109,14 @@ b_save = uibutton(settings_fig,'Text','Save and Quit','Position', [450, 30, 200,
 %% FUNCTIONS
 waitfor(settings_fig);
 function metricscbx(cbx,label)
-    disp(label.Text);
-    disp(cbx.Value)
     if cbx.Value & ismember(settings.microstate.metrics,label.Text)
         settings.microstate.metrics(end+1) = label.Text;
     end
     if ~cbx.Value
         settings.microstate.metrics(ismember(settings.microstate.metrics,label.Text)) = [];
     end
-    disp(settings.microstate.metrics)
 end
-function Enable_RS(cbx)
-    if cbx.Value
-        ef_RSEC.Enable = true;
-        ef_RSEO.Enable=true;
-        ef_RSLatencystart.Enable = true;
-        ef_RSLatencyend.Enable = true;
-    else
-        ef_RSEC.Enable = false;
-        ef_RSEO.Enable=false;
-        ef_RSLatencystart.Enable = false;
-        ef_RSLatencyend.Enable = false;
-    end
 
-end
-function Enable_Preproc(cbx)
-    if cbx.Value
-        cb_averageRef.Enable = true;
-        ef_lowNotch.Enable = true;
-        ef_highNotch.Enable = true;
-        ef_lowPb.Enable = true;
-        ef_highPb.Enable = true;
-        ef_mvMax.Enable = true;
-        ef_nGoodSample.Enable = true;
-        ef_sampleRate.Enable = true;
-    else
-        cb_averageRef.Enable = false;
-        ef_lowNotch.Enable = false;
-        ef_highNotch.Enable = false;
-        ef_lowPb.Enable = false;
-        ef_highPb.Enable = false;
-        ef_mvMax.Enable = false;
-        ef_nGoodSample.Enable = false;
-        ef_sampleRate.Enable = false;
-    end
-end
 function Enable_Npeaks(cbx)
     if cbx.Value
         ef_nbPeaks.Enable = false;
@@ -166,18 +126,6 @@ function Enable_Npeaks(cbx)
 end
 
 function resetParam()
-    set(cb_averageRef,'Value',default.preproc.avgref);
-    set(ef_lowNotch,'Value',default.preproc.notch.low);
-    set(ef_highNotch,'Value',default.preproc.notch.high);
-    set(ef_lowPb,'Value',default.preproc.bandpass.low);
-    set(ef_highPb,'Value',default.preproc.bandpass.high);
-    set(ef_mvMax,'Value',default.preproc.mvmax);
-    set(ef_RSEC,'Value',default.preproc.EClabel);
-    set(ef_RSEO,'Value',default.preproc.EOlabel);
-    set(ef_RSLatencystart,'Value',default.preproc.timelimits(1)); 
-    set(ef_RSLatencyend,'Value',default.preproc.timelimits(2));
-    set(ef_nGoodSample,'Value',default.nGoodSamples);
-    set(ef_sampleRate,'Value',default.sr);
     set(cb_gfpaverageRef,'Value',default.microstate.gfp.avgref);
     set(cb_GFPnormalise,'Value',default.microstate.gfp.normalise);
     set(ef_minPeakDist,'Value',default.microstate.gfp.MinPeakDist);
@@ -201,29 +149,12 @@ function resetParam()
     set(cb_GFP,'Value',true);   
     set(cb_MSParCorr,'Value',true);
     
-    set(cb_RS,'Value',false);
-    Enable_RS(cb_RS);
-    set(cb_addPreproc,'Value',false);
-    Enable_Preproc(cb_addPreproc);
     set(ef_nbPeaks,'Value',0);
     set(cb_allPeaks,'Value',true);
 
 end
 
 function saveButtonPushed()
-    settings.todo.RS = cb_RS.Value;
-    settings.todo.addpreproc = cb_addPreproc.Value;
-    settings.preproc.avgref = cb_averageRef.Value;
-    settings.preproc.notch.low = ef_lowNotch.Value;
-    settings.preproc.notch.high = ef_highNotch.Value;
-    settings.preproc.bandpass.low = ef_lowPb.Value;
-    settings.preproc.bandpass.high = ef_highPb.Value;
-    settings.preproc.mvmax = ef_mvMax.Value;
-    settings.preproc.EClabel = ef_RSEC.Value;
-    settings.preproc.EOlabel = ef_RSEO.Value;
-    settings.preproc.timelimits = [ef_RSLatencystart.Value ef_RSLatencyend.Value] ;
-    settings.nGoodSamples = ef_nGoodSample.Value;
-    settings.sr = ef_sampleRate.Value;
     settings.microstate.gfp.avgref = cb_gfpaverageRef.Value; 
     settings.microstate.gfp.normalise = cb_GFPnormalise.Value;
     settings.microstate.gfp.MinPeakDist = ef_minPeakDist.Value;
@@ -234,7 +165,6 @@ function saveButtonPushed()
     else
         settings.microstate.gfp.Npeaks = ef_nbPeaks.Value;
     end
-    %settings.microstate.gfp.Npeaks = ef_nbPeaks.Value;
     settings.microstate.algorithm = dd_algorithm.Value;
     settings.microstate.sorting = dd_sorting.Value;
     settings.microstate.Nrepfirstlevel = ef_nbRepFirst.Value;
@@ -245,7 +175,7 @@ function saveButtonPushed()
     settings.microstate.backfitting.smoothtype = dd_smoothType.Value;
     settings.microstate.backfitting.mintime = ef_minTime.Value;
     settings.microstate.backfitting.polarity = cb_BackfitPolarity.Value; 
-    %settings.microstate.metrics = {'GEVtotal','Gfp','Occurence','Duration','Coverage','GEV','MspatCorr'};
+    save('settings/settings','-struct','settings'); % Save the 'param' structure variable to a file for future use
     close(settings_fig);
 end
 
