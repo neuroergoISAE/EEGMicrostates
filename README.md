@@ -17,7 +17,7 @@ Adapted from Christian Pfeiffer ([repository](https://github.com/cp3fr/Resting-S
 The multiple levels microstates analysis will extract microstates on available levels (session if existing, participant and group) and then backfit the original data on the microstates prototypes of the requested levels. The backfitting is by default done on the group level. Other levels backfitting can be added by selecting them in the backfit section of the GUI or by changing the parameters in the ```p00_setting.m``` file.
 
 ### :hourglass_flowing_sand: Process
-- [```p01_load_data.m```](src/p01_load_data.m) : loads the data to analyis. If required, can epoch the data to analyse (closed or opened eyes for example).
+- [```p01_load_data.m```](src/p01_load_data.m) : loads the data to analyis. If required, it can epoch the data to analyse (closed or opened eyes for example).
 - [```p02_gfp_peaks.m```](src/p02_gfp_peaks.m) : extracts gfp peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
 - [```p03_microstates_segmentation.m```](src/p03_microstates_segmentation.m) : performs the segmentation (in our case, the **modified k-means clustering**) on each existing level and save the prototypes in the corresponding folders (```session``` if existing, ```participant``` and ```group```).
 - [```p04_microstates_reordering.m```](src/p04_microstates_reordering.m) : asks the user to input the right order of the last level (group) prototypes. Reording of all the other levels prototypes according to the group prototypes order.
