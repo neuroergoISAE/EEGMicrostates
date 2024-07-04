@@ -9,7 +9,7 @@ Adapted from Christian Pfeiffer ([repository](https://github.com/cp3fr/Resting-S
     - [ ] Signal Processing Toolbox (signal)
     - [ ] Statistics and Machine Learning Toolbox (stats)
     - [ ] custom colormap (is located in [```external_files```](external_files))
-- [ ] **eeglab** (latest) [github]([https://github.com/atpoulsen/Microstate-EEGlab-toolbox](https://github.com/sccn/eeglab))
+- [ ] **eeglab** (latest) [github](https://github.com/sccn/eeglab)
     - [ ] Microstates Analysis Toolbox : Microstates1.2 (Thomas Koenig) [download](https://www.thomaskoenig.ch/Download/EEGLAB_Microstates/Microstates1.2.zip)
     - [ ] Microstates EEGlab Toolbox : MST1.0 (Poulsen et al., 2018) [github](https://github.com/atpoulsen/Microstate-EEGlab-toolbox)
 ## :jigsaw: Description
