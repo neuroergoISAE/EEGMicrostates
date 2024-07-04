@@ -113,7 +113,7 @@ Parameters settings :
 
 ![Microstates pipeline](external_files/MSTree.png)
 
-![Processes Pipelines](external_files/Pipeline.png)
+![Processes Pipelines](external_files/Pipeline.png | width=100)
 
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
