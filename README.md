@@ -58,7 +58,7 @@ Parameters settings :
 | s.name | string   | global project folder name   | "" | 
 | s.multipleSessions	| boolean	| Do the data include multiple sessions per participant |	false |
 | s.levels | array of string each segmentation possibility (session, participant, group)	| {’participant’,’group’} if multiple Sessions : {’session’,’participant’,’group’} |
-| s.sr |	double |	sample rate (Hz)	| 500 | 
+| s.sr |	double |	sample rate (Hz)	| 512 | 
 | s.nGoodSamples	| double	| minimum number of good samples after excluding bad epochs |	1000 | 
 | **s.path** |    |   | |		
 | s.path.datatoepoch | 	string	| data to epoched folder (if required) | ""	 |
@@ -114,7 +114,8 @@ Parameters settings :
 <img src="external_files/Pipeline.png" width="400">    <img src="external_files/MSTree.png" width="600">
 
 ## 💻 Try it with your Data !
-Test the tool, and tell us about any issues you encounter! We're constantly trying to improve the tool by correcting errors or optimazing the code. We're happy to get feedback!
+Test the tool, and tell us about any issues you encounter!
+We're constantly trying to improve the tool by correcting errors or optimazing the code. We're happy to get feedback!
 
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
