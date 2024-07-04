@@ -28,11 +28,7 @@ The multiple levels microstates analysis will extract microstates on available l
 Run the [```Microstates.m```](src/Microstates.m) file. The Main GUI will appear. In case of already existing settings in the path, they will be loaded. Change needed informations and settings (```Change Settings``` button).
 The settings GUI appears when clicking on ```Change Settings```. The reset the parameters to defaults, click on ```Reset``` button. To launch the pipeline, click on ```Save and Quit``` and then on ```Run analysis``` buttons. Default settings are defined in the [```defaultsettings.m```](src/settings/defaultsettings.m) file.
 
-<img src="external_files/MainGUI.JPG" width="400"><img src="external_files/SettingsGUI.JPG" width="400">
-
-
-<img src="external_files/SettingsGUI.JPG" width="400">
-
+<img src="external_files/MainGUI.JPG" width="400">            <img src="external_files/SettingsGUI.JPG" width="400">
 
 The Microstates Analysis will launch. Wait until the process ask you to reoder the microstates prototypes. When finished, the message ```Microstates Analysis Finished``` will appear in the Command Window.
 
