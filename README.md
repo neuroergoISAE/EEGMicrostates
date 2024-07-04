@@ -12,8 +12,8 @@ Adapted from Christian Pfeiffer ([repository](https://github.com/cp3fr/Resting-S
 - [ ] **eeglab** (latest) [github](https://github.com/sccn/eeglab)
     - [ ] Microstates Analysis Toolbox : Microstates1.2 (Thomas Koenig) [download](https://www.thomaskoenig.ch/Download/EEGLAB_Microstates/Microstates1.2.zip)
     - [ ] Microstates EEGlab Toolbox : MST1.0 (Poulsen et al., 2018) [github](https://github.com/atpoulsen/Microstate-EEGlab-toolbox)
-- [ ] **Data**
-    - [ ] Data in BIDS format
+- [ ] **Data format**
+    - [ ] Data in **BIDS** format
     - [ ] .set or .mat files 
 ## :jigsaw: Description
 
