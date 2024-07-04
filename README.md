@@ -18,7 +18,7 @@ The multiple levels microstates analysis will extract microstates on available l
 
 ### :hourglass_flowing_sand: Process
 - [```p01_load_data.m```](src/p01_load_data.m) : loads the data to analyis. If required, it can epoch the data to analyse (closed or opened eyes for example).
-- [```p02_gfp_peaks.m```](src/p02_gfp_peaks.m) : extracts gfp peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
+- [```p02_gfp_peaks.m```](src/p02_gfp_peaks.m) : extracts Global Field Potential (gfp) peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
 - [```p03_microstates_segmentation.m```](src/p03_microstates_segmentation.m) : performs the segmentation (in our case, the **modified k-means clustering**) on each existing level and save the prototypes in the corresponding folders (```session``` if existing, ```participant``` and ```group```).
 - [```p04_microstates_reordering.m```](src/p04_microstates_reordering.m) : asks the user to input the right order of the last level (group) prototypes. Reording of all the other levels prototypes according to the group prototypes order.
 - [```p05_microstates_backfitting.m```](src/p05_microstates_backfitting.m) : performs the backfitting on the requested levels. The default backfitting level is on the group prototypes. Other can be added as an option. Results are saved in the ```backfitting``` folder. 
