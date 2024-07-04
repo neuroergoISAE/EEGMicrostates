@@ -24,14 +24,11 @@ The multiple levels microstates analysis will extract microstates on available l
 - [```p05_microstates_backfitting.m```](src/p05_microstates_backfitting.m) : performs the backfitting on the requested levels. The default backfitting level is on the group prototypes. Other can be added as an option. Results are saved in the ```backfitting``` folder. 
 - [```p06_microstates_stats.m```](src/p06_microstates_stats.m) : extracts the statistics of the backfitted microstates for each level and save them in .csv and .mat files in the ```stats``` folder.
 
-## :airplane: Launch
+## 🚀 Launch
 Run the [```Microstates.m```](src/Microstates.m) file. The Main GUI will appear. In case of already existing settings in the path, they will be loaded. Change needed informations and settings (```Change Settings``` button).
-![Microstates GUI](external_files/MainGUI.JPG)
-
 The settings GUI appears when clicking on ```Change Settings```. The reset the parameters to defaults, click on ```Reset``` button. To launch the pipeline, click on ```Save and Quit``` and then on ```Run analysis``` buttons. Default settings are defined in the [```defaultsettings.m```](src/settings/defaultsettings.m) file.
 
-![Microstates Settings GUI](external_files/SettingsGUI.JPG)
-
+<img src="external_files/MainGUI.JPG" width="400">            <img src="external_files/SettingsGUI.JPG" width="400">
 
 The Microstates Analysis will launch. Wait until the process ask you to reoder the microstates prototypes. When finished, the message ```Microstates Analysis Finished``` will appear in the Command Window.
 
@@ -111,8 +108,10 @@ Parameters settings :
 - ‘taahc’ Topograhpical Atomize and Agglormerate Hierarchical Clustering 
 - ‘aahc’ Atomize and Agglomerate Hierarchical Clustering 
 
-![Microstates pipeline](external_files/MSTree.png)
-![Processes Pipelines](external_files/Pipelines.png)
+<img src="external_files/Pipeline.png" width="400">    <img src="external_files/MSTree.png" width="600">
+
+## 💻 Try it with your Data !
+Test the tool, and tell us about any issues you encounter! We're constantly trying to improve the tool by correcting errors or optimazing the code. We're happy to get feedback!
 
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
