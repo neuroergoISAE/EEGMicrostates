@@ -108,7 +108,7 @@ Parameters settings :
 - ‘taahc’ Topograhpical Atomize and Agglormerate Hierarchical Clustering 
 - ‘aahc’ Atomize and Agglomerate Hierarchical Clustering 
 
-<img src="external_files/MSTree.png" width="400">
+<img src="external_files/MSTree.png" width="600">
 <img src="external_files/Pipeline.png" width="400">
 
 ##  :crystal_ball: Help
