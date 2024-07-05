@@ -1,10 +1,9 @@
 %% p05_microstates_backfitting.m
-% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Author : C. Hamery adapted from Christian Pfeiffer & Moritz Truninger
 % Date : 2023
 % Description : this script backfits the eeg data on each required level for requested each number of cluster (microstates) 
-% Dependencies : EEGlab
-% Inputs : settings, structure containing all settings for the analysis
-% Outputs: backfitting results for each participant/session for each level and each number of cluster (microstates)
+% Input : settings, structure containing all settings for the analysis
+% Output : backfitting results for each participant/session for each level and each number of cluster (microstates)
 
 function p05_microstates_backfitting(settings)
 if settings.todo.microstates_backfitting

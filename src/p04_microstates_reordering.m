@@ -1,10 +1,9 @@
 %% p04_microstates_reordering.m
-% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Author :  C.Hamery adapted from Christian Pfeiffer & Moritz Truninger
 % Date : 2023
 % Description : this script reoders the microstates prototype according to the users' inputs
-% Dependencies : EEGlab
-% Inputs : settings, structure containing all settings for the analysis
-% Outputs: reordered cluster for the last level and each number of cluster (microstates)
+% Input: settings, structure containing all settings for the analysis
+% Output: reordered cluster for the last level and each number of cluster (microstates)
 
 function p04_microstates_reordering(settings)
 
@@ -96,7 +95,7 @@ if settings.todo.microstates_reordering
                 disp(['..saving ',fn_microstates_ordered]);
                 save(fn_microstates_ordered,'microstate_ordered');
                 disp(['..saving ',fn_plot_ordered]);
-                exportgraphics(gcf,[fn_plot_ordered,'.png'],'Resolution',600)
+                exportgraphics(gcf,[fn_plot_ordered,'.png'],'Resolution',600) %the resolution can be changed for lighter files
             end
             close; %close the figure
         end

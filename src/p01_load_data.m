@@ -1,15 +1,12 @@
 %% p01_load_data.m
-% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
-% Date : 2023
-% Description : this script loads the eeg data and select the epochs of interest if requested
-% Dependencies : same as main
-% Inputs : settings, structure containing all settings for the analysis
-% Outputs: eegdata.mat file for each participant/session in the gfp folder
-
-
+% Author : C. Hamery
+% Date : 06.2024
+% Description : This script loads the eeg data and select the epochs of interest if requested
+% Depending on the required clustering levels, will create a concatenate eegdata.mat file in the corresponding folder
+% Input : settings, structure containing all settings for the analysis
+% Output : eegdata.mat file for each participant/session in the gfp folder
 
 function p01_load_data(settings)
-
 if settings.todo.load_data
     
     if numel(dir(settings.path.gfp)) >2 % if gfp folder not empty : remove files from folder
@@ -31,18 +28,13 @@ if settings.todo.load_data
     firstlevel = char(settings.levels(1));
     switch firstlevel
         case "group"
-            fp_all_eeg = dir([settings.path.gfp,filesep, '**',filesep,'*',settings.dataformat]); % all gfp files of all subjects and all sessions
+            fp_all_eeg = dir([settings.path.gfp,filesep, '**',filesep,'*.mat']); % all gfp files of all subjects and all sessions
             concat_eeg = load([fp_all_eeg(1).folder,filesep,fp_all_eeg(1).name]);
             chanlocs = concat_eeg.EEG.chanlocs;
             for g = 2:length(fp_all_eeg)
                 tmp_eeg = load([fp_all_eeg(g).folder,filesep,fp_all_eeg(g).name]);
                 concat_eeg.EEG = pop_mergeset(concat_eeg.EEG,tmp_eeg.EEG);  %merge EEG data
             end
-            %             % write concat gfp and eeg in order to read it later (for segmentation)
-            %             % concat gfp is written as 'gfppeaks.mat' in the group folder, concat eeg as "eegdata.mat"
-            %             % erase all sessions and participant single gfp
-            %rmdir(settings.path.gfp,'s');
-            %mkdir(settings.path.gfp);
             mkdir([settings.path.gfp,filesep,'group']);
             save([settings.path.gfp,filesep,'group',filesep,'group_eegdata.mat'],'-struct','concat_eeg'); % save EEG only
             save([settings.path.gfp,filesep,'group',filesep,'chanlocs.mat'],'chanlocs'); % save chanlocs
@@ -69,90 +61,3 @@ if settings.todo.load_data
     end
 end
 end
-
-% function p01_load_data(settings)
-% 
-% if settings.todo.load_data
-%     if settings.todo.RS
-%         %epochfolders = dir(settings.path.datatoepoch);
-%         RSfolders = dir(settings.path.data);%dir(settings.path.preprocessed_data);
-%         RSfolders  = RSfolders(~contains({RSfolders.name},'.')); % ignore parent folders
-%         if settings.multipleSessions %First level : Session
-%             for i=1:length(RSfolders) %each participant
-%                 fp_epoch = dir([RSfolders(i).folder, filesep, RSfolders(i).name]);
-%                 fp_epoch = fp_epoch(~contains({fp_epoch.name},'.'));
-%                 for j = 1:length(fp_epoch)%each session
-%                     disp(['p01 Load Data & Data Epoching: ', num2str(j), '/ ', num2str(length(fp_epoch)*length(fp_epoch))])
-%                     fn_output = [RSfolders(i).name,filesep,fp_epoch(j).name];
-%                     pl_epoching(fp_epoch(j),fn_output,settings);
-%                 end
-%             end
-%         else
-%             for k=1:length(RSfolders) %First level : Participants
-%                 disp(['p01 Load Data & Data Epoching:', num2str(k), '/ ', num2str(length(RSfolders))])
-%                 %pl_epoching(RSfolders(k),RSfolders(k).name,settings);
-%                 pl_addpreproc(RSfolders(k),settings);
-%             end
-%         end
-%         
-%     else %else: load the data
-%         
-%         % find input data folders
-%         %folders = dir(settings.path.preprocessed_data); % get folder content of (input) data folder
-%         folders = dir(settings.path.data);
-%         folders = folders(~contains({folders.name},'.')); % ignore parent folders
-%         
-%         if settings.multipleSessions % First Level : Sessions
-%             for i=1:length(folders) %each participant
-%                 fp_folder = dir([folders(i).folder, filesep, folders(i).name]);
-%                 fp_folder = fp_folder(~contains({fp_folder.name},'.')); % ignore parent folders
-%                 fp_folder = fp_folder(~contains({fp_folder.name},'project_state.mat')); % potentiel automagic files
-%                 fp_folder = fp_folder(~contains({fp_folder.name},'desktio.ini')); % drive files
-%                 
-%                 
-%                 for j = 1:length(fp_folder) %each session
-%                     fp_file = fp_folder(j);
-%                     outputfile = [settings.path.gfp,folders(i).name,filesep];
-%                     disp(['p01 Load Data: ', 'participant: ',num2str(i), '/ ', num2str(length(folders)),' session: ',num2str(j),'/ ',num2str(length(fp_folder))]);
-%                     pl_load_data(fp_file,outputfile, settings);
-%                 end
-%             end
-%         else % First level : Participants
-%             for i=1:length(folders)
-%                 disp(['p01 Load Data: ', num2str(i), '/ ', num2str(length(folders))])
-%                 pl_load_data(folders(i), settings.path.gfp, settings);
-%             end
-%         end
-%         
-%         
-%         %% TEST switch
-%         if settings.levels(1)=="group"
-%             switch settings.levels(1)
-%                 case "group"
-%                     %             fp_all_gfp = dir(fullfile(settings.path.gfp, '**\gfppeaks.mat')); % all gfp files of all subjects and all sessions
-%                     % ATTENTION .mat ou .set!!
-%                     fp_all_eeg = dir(fullfile(settings.path.data, '**\*.',settings.dataformat)); % all gfp files of all subjects and all sessions
-%                     concat_eeg = load([fp_all_eeg(1).folder,filesep,fp_all_eeg(1).name]);
-%                     for g = 2:length(fp_all_eeg)
-%                         tmp_eeg = load([fp_all_eeg(g).folder,filesep,fp_all_eeg(g).name]);
-%                         concat_eeg.EEG = pop_mergeset(concat_eeg.EEG,tmp_eeg.EEG);  %merge EEG data
-%                     end
-%                     %             % write concat gfp and eeg in order to read it later (for segmentation)
-%                     %             % concat gfp is written as 'gfppeaks.mat' in the group folder, concat eeg as "eegdata.mat"
-%                     %             % erase all sessions and participant single gfp
-%                     mkdir([settings.path.gfp,filesep,'group']);
-%                     save([settings.path.gfp,filesep,'group',filesep,'eegdata.mat'],'-struct','concat_eeg'); % save EEG only
-%                     
-%                     pl_load_data(fp_file,outputfile, settings);
-%                     
-%                     %             chanlocs = concat_eeg.EEG.chanlocs;
-%                     %             save([settings.path.gfp,'chanlocs.mat'],'chanlocs'); % save chanlocs for further analysis
-%             end
-%             
-%         end
-%         
-%         %%
-%     end
-% end
-% end
-

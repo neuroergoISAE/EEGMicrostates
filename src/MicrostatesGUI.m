@@ -1,8 +1,11 @@
 %% Microstates Main GUI
-% April 2024 - C. Hamery
-% Main GUI window for the microstates analysis
+% Author : C. Hamery
+% Date : 04.2024
+% Description : Main GUI window for the microstates analysis
+% Dependencies : EEGlab, Signal Processin Toolbox, Statistics and Machine Learning Toolbox, customcolormap
 % This window allows the user to modify project's information
 % If a settings.mat file already exists in the settings folder, will load this file instead of default parameters
+% Output : settings.mat file for reproducibility or further uses
 
 function [settings] = MicrostatesGUI()
 backgroundColor = '#004675';
@@ -31,7 +34,11 @@ ef_datafolder = uieditfield(project_panel, 'Position', [220, 160, 250, 30],'Valu
 btn_datafolder = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 160, 100, 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor, 'ButtonPushedFcn', @(~, ~) selectDirectory(ef_datafolder));
 % Data Type
 l_datatype = uilabel(project_panel,'Position', [10 100 200 30],'HorizontalAlignment','right','Text','Data Type : ','FontSize',fontsize,'FontColor',foregroundColor);
-dd_datatype = uidropdown(project_panel,'Items', {'.set','.fdt','.mat'},'Value',settings.dataformat,'Position',[220 100 130 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+dd_datatype = uidropdown(project_panel,'Items', {'.set','.mat'},'Value',settings.dataformat,'Position',[220 100 130 30],'BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+%Sanpling Rate
+l_sr = uilabel(project_panel,'Position', [350 100 200 30],'HorizontalAlignment','right','Text','Sampling Rate : ','FontSize',fontsize,'FontColor',foregroundColor);
+ef_sr = uieditfield(project_panel, 'Value',string(settings.sr),'Position', [550 100 100 30],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+
 %Output Data Folder
 l_outputfolder = uilabel(project_panel,'Position', [10 60 200 30],'HorizontalAlignment','right', 'Text','Output Folder : ','FontSize',fontsize,'FontColor',foregroundColor);
 ef_outputfolder = uieditfield(project_panel, 'Position', [220, 60, 250, 30],'Value',settings.path.project,'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
@@ -44,13 +51,17 @@ btn_eeglabpath = uibutton(project_panel, 'Text', 'Browse', 'Position', [485, 10,
 
 % Number of Microstates
 l_nbmicrostates = uilabel(microstates_panel,'Position', [10 150 250 30],'HorizontalAlignment','right', 'Text','Number of Microstates : ','FontSize',fontsize,'FontColor',foregroundColor);
-ef_nbmicrostates = uieditfield(microstates_panel, 'Value',string(settings.microstate.Nmicrostates),'Position', [270, 150, 100, 30],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
+ef_nbmicrostates = uieditfield(microstates_panel, 'Value',string(settings.microstates.Nmicrostates),'Position', [270, 150, 100, 30],'HorizontalAlignment','left','BackgroundColor', backgroundColor,'FontSize',fontsize,'FontColor',foregroundColor);
 im_interrogation = uiimage(microstates_panel,'Position',[375 155 18 18],'ImageSource','infoicon.png','BackgroundColor','none','Tooltip','[x y] for multiple microstates');
 % Clustering Param
 l_cluster = uilabel(microstates_panel,'Position', [30 100 300 25], 'Text','Select Clustering levels: ','FontSize',fontsize,'FontColor',foregroundColor);
-cbx_session = uicheckbox(microstates_panel,'Position',[320 100 200 25],'Enable','off','Text','Session','FontSize',fontsize,'FontColor',foregroundColor);
-cbx_participant = uicheckbox(microstates_panel,'Position',[450 100 200 25],'Text','Participant','FontSize',fontsize,'FontColor',foregroundColor);
-cbx_group = uicheckbox(microstates_panel,'Position',[600 100 200 25],'Value',1,'Text','Group','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cbx,event) groubCbx(cbx));
+cbx_participant = uicheckbox(microstates_panel,'Position',[450 100 25 25],'Text','','ValueChangedFcn', @(cbx,event) cBoxChanged_Participant(cbx));
+l_participant = uilabel(microstates_panel,'Position', [480 100 100 25], 'Text','Participant','FontSize',fontsize,'FontColor',foregroundColor);
+cbx_session = uicheckbox(microstates_panel,'Position',[320 100 25 25],'Enable','off','Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn', @(cbx,event) cBoxChanged_MultipleSessions(cbx,cbx_participant));
+l_session = uilabel(microstates_panel,'Position', [350 100 100 25], 'Text','Session','FontSize',fontsize,'FontColor',foregroundColor);
+cbx_group = uicheckbox(microstates_panel,'Position',[600 100 25 25],'Value',1,'Text','','FontSize',fontsize,'FontColor',foregroundColor,'ValueChangedFcn',@(cbx,event) groubCbx(cbx));
+l_group = uilabel(microstates_panel,'Position', [630 100 150 25], 'Text','Group','FontSize',fontsize,'FontColor',foregroundColor);
+
 % Multiple or Single Sessions
 l_bg_session = uilabel(microstates_panel,'Position',[30 10 250 50],'WordWrap','on', 'Text','Multiple or Single Session for each participant: ','FontSize',fontsize,'FontColor', foregroundColor);
 bg_session = uibuttongroup('Parent',microstates_panel,'Position',[300 10 350 50],'BackgroundColor',backgroundColor,'SelectionChangedFcn',@(bg_session,event) cBoxChanged_Session(bg_session,cbx_session));
@@ -76,16 +87,26 @@ end
 function groubCbx(cbx)
         cbx.Value = 1; % group checkbox is mandatory
     end
-function cBoxChanged_Session(cbx,cbx2) 
+function cBoxChanged_Session(cbx,cbxsess) 
     val = cbx.SelectedObject.Text;
-    
-    if strcmp(val,rb_single.Text)
-        cbx2.Enable = 'off';
-        cbx2.Value = 0;
+    if strcmp(val,rb_single.Text) %single session
+        cbxsess.Enable = 'off';
+        cbxsess.Value = 0;
     else
-        cbx2.Enable = 'on';
-
+        cbxsess.Enable = 'on';
     end
+end
+function cBoxChanged_Participant(cbxpart)
+    if cbx_session.Value == 1 % if session cbx is checked, must check participant session (cannot be unchecked unless session is unchecked)
+        set(cbxpart, 'Value', 1);
+    end
+end
+function cBoxChanged_MultipleSessions(cbxsess,cbxpart)
+    disp(cbxpart.Value);
+    if cbxsess.Value == 1 % if session cbx is checked, must check participant session (cannot be unchecked unless session is unchecked)
+        set(cbxpart, 'Value', 1);
+    end
+
 end
 function runanalysis()
     settings.path.project = ef_outputfolder.Value;
@@ -94,6 +115,7 @@ function runanalysis()
     settings.name = ef_projectname.Value;
     settings.microstate.Nmicrostates = str2num(ef_nbmicrostates.Value);
     settings.dataformat = dd_datatype.Value;
+    settings.sr = ef_sr.Value;
     settings.multipleSessions = rb_multiple.Value;
     if cbx_session.Value && cbx_participant.Value
             settings.backfittingLevels ={'session','participant','group'};

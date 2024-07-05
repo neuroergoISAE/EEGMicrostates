@@ -1,6 +1,7 @@
 %% Param Window for MicrostatesGUI
-% March 2024 - C. Hamery
-% GUI containing all customizable parameters for the microstates analysis
+% Author : C. Hamery
+% Date : 03.2024
+% Description : GUI containing all customizable parameters for the microstates analysis
 % If a settings.mat file already exists in the settings folder, will load this file instead of default parameters
 
 function [settings, cancel] = MicrostatesParamGUI(settings)
@@ -68,7 +69,6 @@ ef_threshold = uieditfield(clustering_panel,'numeric','Value',settings.microstat
 
 l_polarity = uilabel(clustering_panel,'Position', [10 10 200 30],'HorizontalAlignment','right','Text','Polarity : ','FontSize',fontsize,'FontColor',foregroundColor);
 cb_polarity = uicheckbox(clustering_panel,'Position',[210 10 30 30],'Value',settings.microstate.orderingpolarity,'Text','','FontSize',fontsize,'FontColor',foregroundColor);
-
 
 %% Backfitting
 l_smoothType = uilabel(backfitting_panel,'Position', [10 80 200 30],'HorizontalAlignment','right','Text','Smoothing Type : ','FontSize',fontsize,'FontColor',foregroundColor);

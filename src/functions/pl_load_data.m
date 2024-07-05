@@ -40,7 +40,11 @@ if ~output_files_exist || s.todo.override % if eegdata does not exist or can be 
             mkdir(fp_output); %make it a directory
         end
         %load([eeg_files.folder,filesep,eeg_files.name],'EEG'); % load EEG data (to determine Nsamples, only save this file if  enough samples)
-        load(eeg_file,'EEG'); % load EEG data (to determine Nsamples, only save this file if  enough samples)
+        if s.dataformat ==".set"
+            EEG = pop_loadset('filename',inputfolder.name,'filepath',[inputfolder.folder,filesep]);
+        elseif s.dataformat == ".mat"
+            load(eeg_file,'EEG'); % load EEG data (to determine Nsamples, only save this file if  enough samples)
+        end
         if EEG.pnts <= 20*s.sr % 20 secondes min for MS Analysis %s.nGoodSamples % if not enough samples
             disp(['..skipping this file because not enough (good) samples: ',inputfolder.name]) % skip subject
         end

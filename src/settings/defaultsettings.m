@@ -1,13 +1,15 @@
 %% Default settings for MicrostatesGUI
+% Author : C. Hamery
+% Date : 06.2024
+% Description : all default settings if no existing settings.mat file or when the button 'reset settings' is clicked
 
 function [default] = defaultsettings()
     default = struct();
-
     default.name = ['Project_' date()];
     default.path.data ='';
     default.dataformat = '.mat';
     default.path.project = '';
-    default.path.eeglab ='D:\eeglab\eeglab2023.0';
+    default.path.eeglab ='';
 
     %%
     default.nGoodSamples = 1000; %Minimum number of good sample per epoch
@@ -16,7 +18,6 @@ function [default] = defaultsettings()
     %% Microstates
     default.microstates.Nmicrostates = '[4 5]';
     % GFP
-    %default.microstate.gfp.datatype = 'spontaneaous'; %or : 'ERPavg','ERPconc', 'ERPconc'.
     default.microstate.gfp.avgref = true; %Additional average re-reference
     default.microstate.gfp.normalise = true; %Normalise channels into zscores for amplitude and variance uniformity
     default.microstate.gfp.MinPeakDist = 10; %Minimum distance between two peaks (ms)

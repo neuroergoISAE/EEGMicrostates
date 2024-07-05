@@ -1,10 +1,9 @@
 %% p06_microstates_stats.m
-% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Author : C. Hamery
 % Date : 2023
 % Description : this script computes the backfitting results stats for all participants/session and on all levels
-% Dependencies : EEGlab
-% Inputs : settings, structure containing all settings for the analysis
-% Outputs: csv and tables for each level and each number of cluster (microstates)
+% Input : settings, structure containing all settings for the analysis
+% Output : csv and tables for each level and each number of cluster (microstates)
 
 function p06_microstates_stats(settings)
 

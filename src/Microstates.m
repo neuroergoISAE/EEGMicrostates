@@ -1,6 +1,10 @@
-
-%Launch MS Analysis
-% April 2024 - CH
+%% Microstates Main file
+% Author : C. Hamery
+% Date : 04.2024
+% Launch microstates Analysis
+% Dependencies : EEGlab, Signal Processin Toolbox, Statistics and Machine Learning Toolbox, customcolormap
+% This file will open the GUI and launch each of the processing files 
+% Output : Microstates metrics, figures and whole analysis process for each required levels
 
 function s = Microstates()
 % 
@@ -32,6 +36,6 @@ p03_microstates_segmentation(s); % Perform microstates segmentation
 p04_microstates_reordering(s); % ask reordering to user for the last level and reorder sub levels. OR : reorder based on template
 p05_microstates_backfitting(s);% Perform microstates backfitting
 p06_microstates_stats(s);% Compute microstates statistics
-% 
+
 save('settings/s','s'); % Save the 's' structure variable to a file for future use
 end
