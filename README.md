@@ -9,16 +9,19 @@ Adapted from Christian Pfeiffer ([repository](https://github.com/cp3fr/Resting-S
     - [ ] Signal Processing Toolbox (signal)
     - [ ] Statistics and Machine Learning Toolbox (stats)
     - [ ] custom colormap (is located in [```external_files```](external_files))
-- [ ] **eeglab** (latest)
+- [ ] **eeglab** (latest) [github](https://github.com/sccn/eeglab)
     - [ ] Microstates Analysis Toolbox : Microstates1.2 (Thomas Koenig) [download](https://www.thomaskoenig.ch/Download/EEGLAB_Microstates/Microstates1.2.zip)
     - [ ] Microstates EEGlab Toolbox : MST1.0 (Poulsen et al., 2018) [github](https://github.com/atpoulsen/Microstate-EEGlab-toolbox)
+- [ ] **Data format**
+    - [ ] Data in **BIDS** format
+    - [ ] .set or .mat files 
 ## :jigsaw: Description
 
 The multiple levels microstates analysis will extract microstates on available levels (session if existing, participant and group) and then backfit the original data on the microstates prototypes of the requested levels. The backfitting is by default done on the group level. Other levels backfitting can be added by selecting them in the backfit section of the GUI or by changing the parameters in the ```p00_setting.m``` file.
 
 ### :hourglass_flowing_sand: Process
-- [```p01_load_data.m```](src/p01_load_data.m) : loads the data to analyis. If required, can epoch the data to analyse (closed or opened eyes for example).
-- [```p02_gfp_peaks.m```](src/p02_gfp_peaks.m) : extracts gfp peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
+- [```p01_load_data.m```](src/p01_load_data.m) : loads the data to analyis. If required, it can epoch the data to analyse (closed or opened eyes for example).
+- [```p02_gfp_peaks.m```](src/p02_gfp_peaks.m) : extracts Global Field Potential (gfp) peaks of each file of the first level (session or participant) and save them in the ```gfp``` folder
 - [```p03_microstates_segmentation.m```](src/p03_microstates_segmentation.m) : performs the segmentation (in our case, the **modified k-means clustering**) on each existing level and save the prototypes in the corresponding folders (```session``` if existing, ```participant``` and ```group```).
 - [```p04_microstates_reordering.m```](src/p04_microstates_reordering.m) : asks the user to input the right order of the last level (group) prototypes. Reording of all the other levels prototypes according to the group prototypes order.
 - [```p05_microstates_backfitting.m```](src/p05_microstates_backfitting.m) : performs the backfitting on the requested levels. The default backfitting level is on the group prototypes. Other can be added as an option. Results are saved in the ```backfitting``` folder. 
@@ -55,7 +58,7 @@ Parameters settings :
 | s.name | string   | global project folder name   | "" | 
 | s.multipleSessions	| boolean	| Do the data include multiple sessions per participant |	false |
 | s.levels | array of string each segmentation possibility (session, participant, group)	| {’participant’,’group’} if multiple Sessions : {’session’,’participant’,’group’} |
-| s.sr |	double |	sample rate (Hz)	| 500 | 
+| s.sr |	double |	sample rate (Hz)	| 512 | 
 | s.nGoodSamples	| double	| minimum number of good samples after excluding bad epochs |	1000 | 
 | **s.path** |    |   | |		
 | s.path.datatoepoch | 	string	| data to epoched folder (if required) | ""	 |
@@ -95,7 +98,6 @@ Parameters settings :
 
 **Default Stats output** : 
 - GEVtotal : Global explained variance of the n Microstates  
-- Gfp : Global field potential
 - Occurence : number of time each microstate appears over the epoch
 - Duration : mean duration of each microstate at each occurence
 - Coverage : total duration of each microstate over the epoch
@@ -111,7 +113,8 @@ Parameters settings :
 <img src="external_files/Pipeline.png" width="400">    <img src="external_files/MSTree.png" width="600">
 
 ## 💻 Try it with your Data !
-Test the tool, and tell us about any issues you encounter! We're constantly trying to improve the tool by correcting errors or optimazing the code. We're happy to get feedback!
+Test the tool, and tell us about any issues you encounter!
+We're constantly trying to improve the tool by correcting errors or optimazing the code. We're happy to get feedback!
 
 ##  :crystal_ball: Help
 For help, you can contact us at : :envelope: caroline.hamery@isae-supaero.fr or post a new issue.
