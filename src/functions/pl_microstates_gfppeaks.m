@@ -1,13 +1,13 @@
 %% pl_microstates_gfppeaks.m
-% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Author : C. Hamery adapted from Christian Pfeiffer & Moritz Truninger
 % Date : 2023
 % Description : this script loads each of the eeg data, extracts the gfp peaks maps and save them in the gfp folder for each participant/session
-% Dependencies : EEGlab
-% Inputs :
+% Input:
 % - inputfolder :  location of the eeg data of each participant/session
 % - outputfolder : location for the output gfppeaks.mat and gfppeaks.png file (in gfp>sub> or gfp>sub>ses> folder)
 % - s : structure containing all settings
-% Outputs: gfppeaks.mat and gfppeaks.png files for each participant/session
+% Output: gfppeaks.mat and gfppeaks.png files for each participant/session
+
 function pl_microstates_gfppeaks(inputfolder,outputfolder,s)
 %% Check existing files
 fp_input = [inputfolder.folder,filesep,inputfolder.name];%,filesep];

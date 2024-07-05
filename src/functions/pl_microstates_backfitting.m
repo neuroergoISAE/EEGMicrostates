@@ -1,14 +1,13 @@
 %% pl_microstates_backfitting.m
-% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Author : C. Hamery adapted from Christian Pfeiffer & Moritz Truninger
 % Date : 2023
 % Description : this script backfits the eeg data on each requested level and for requested each number of cluster (microstates) 
-% Dependencies : EEGlab, customcolormap
-% Inputs :
+% Input :
 % - eeg_data :  eeg data of the participant/session, on which the backfitting will be applied 
 % - fp_lastlevel_prototypes : directory of the prototypes used for the last level backfitting (group level)
 % - h : number of microstates cluster
 % - s : structure containing all settings
-% Outputs: backfitting>sub>ses>'level'_microstate_backfitting_'n'MS.mat or backfitting>sub>'level'_microstate_backfitting_'n'MS.matfiles 
+% Output: backfitting>sub>ses>'level'_microstate_backfitting_'n'MS.mat or backfitting>sub>'level'_microstate_backfitting_'n'MS.matfiles 
 
 
 function pl_microstates_backfitting(eeg_data, fp_lastlevel_prototypes,h, s)

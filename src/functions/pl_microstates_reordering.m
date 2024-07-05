@@ -1,15 +1,14 @@
 %% pl_microstates_reordering.m
-% Author : hamery adapted from Christian Pfeiffer & Moritz Truninger
+% Author : C. Hamery adapted from Christian Pfeiffer & Moritz Truninger
 % Date : 2023
 % Description : this script reorders the microstates prototypes of each sub levels according to the last level reordered prototypes
-% Dependencies : EEGlab, customcolormap
-% Inputs :
+% Input :
 % - toreorder_folder :  location of the microstates prototype to reorder
 % - lastlevel_orderedmicrostates : reordered microstates prototypes (last level)
 % - nMS : number of cluster
 % - chanlocs : chanlocs file location
 % - s : structure containing all settings
-% Outputs: 'level'_microstate_prototype_'n'MS_reordered.mat and 'level'_microstate_prototype_'n'MS_reordered.png files for each participant/session and each level
+% Output: 'level'_microstate_prototype_'n'MS_reordered.mat and 'level'_microstate_prototype_'n'MS_reordered.png files for each participant/session and each level
 
 function pl_microstates_reordering(toreorder_folder,lastlevel_orderedmicrostates,nMS,chanlocs,s)
 
