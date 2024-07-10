@@ -115,7 +115,7 @@ function runanalysis()
     settings.name = ef_projectname.Value;
     settings.microstate.Nmicrostates = str2num(ef_nbmicrostates.Value);
     settings.dataformat = dd_datatype.Value;
-    settings.sr = ef_sr.Value;
+    settings.sr = str2num(ef_sr.Value);
     settings.multipleSessions = rb_multiple.Value;
     if cbx_session.Value && cbx_participant.Value
             settings.backfittingLevels ={'session','participant','group'};

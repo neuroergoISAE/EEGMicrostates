@@ -9,7 +9,6 @@ s.path.src =fileparts(matlab.desktop.editor.getActiveFilename);
 %s.path.preprocessed_data = [s.path.project,filesep,s.name,filesep,'Preprocessed_Data'];
 s.path.MS_results= [s.path.project,filesep,s.name,filesep,'Microstates_Results'];
 s.path.chanloc = [s.path.project,filesep,'external_files',filesep,'Loc_10-20_64Elec.elp'];
-
 %% Folders
 function createfolder(fn)
     if ~isfolder(fn)
