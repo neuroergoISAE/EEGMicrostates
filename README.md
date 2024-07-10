@@ -51,6 +51,7 @@ The Microstates Analysis will launch. Wait until the process ask you to reoder t
 - In case of single sessions but multiple conditions analysis: conditions can be considered as sessions.
 
 ## :microscope: Details 
+Default settings are defined in the [```defaultsettings.m```](settings/defaultsettings.m) file. You can restore the default settings by clicking on the ```restore default``` button in the settings GUI.
 Parameters settings : 
 
 | **Parameter** | **Type**    | **Description**    | **Default** |
@@ -61,11 +62,10 @@ Parameters settings :
 | s.sr |	double |	sample rate (Hz)	| 512 | 
 | s.nGoodSamples	| double	| minimum number of good samples after excluding bad epochs |	1000 | 
 | **s.path** |    |   | |		
-| s.path.datatoepoch | 	string	| data to epoched folder (if required) | ""	 |
 | s.path.data | 	string	| preprocessed and epoched data folder	| “” |
-| s.path.globalpath	| string	| global project path 	| .\pwd |
+| s.path.project	| string	| global project path 	| ""|
 | s.path.src	| string	| source folder, including functions and settings	| “” |
-| s.path.results	| string	| results folder, will include sub folders for each step of the processing	| “” |
+| s.path.MS_results	| string	| results folder, will include sub folders for each step of the processing	| “” |
 | s.path.tables	| string	| tables folder, microstates statistics of all data results in .mat files	| “” |
 | s.path.csv	| string	| csv folder, microstates statistics results of all data in .csv files	| “” |
 | s.path.session	| string	| session folder, segmentation results and plots for the session level	| “” |
@@ -85,7 +85,7 @@ Parameters settings :
 | s.microstate.algorithm	| char	| algorithm used for the microstates segmentation process | ‘modkmeans’ |  
 | s.microstate.sorting	| char	| Order based on GEV (first MS is the one explaining the most variance)	| 'Global explained variance’ |
 | s.microstate.normalise	| double	| | 0 |
-| s.microstate.Nmicrostates	| double	| Range of numbers of clusters	| 4 (for multiple ms clusters analysis : [n:m] |
+| s.microstate.Nmicrostates	| double	| Range of numbers of clusters	| [4 5] (for multiple ms clusters analysis : [n:m] |
 | s.microstate.verbose	| double	| Print status messages to command window	| 1 |
 | s.microstate.Nrepetitions_FistLevel | double	| Number of random initialization of algorithm when applied on already clustered data	| 100 |
 | s.microstate.Nrepetitions_OtherLevels	| double	| Number of random initialization of algorithm when applied on gfp data (first level segmentation)	| 1000 |
